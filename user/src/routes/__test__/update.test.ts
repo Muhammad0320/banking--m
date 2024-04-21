@@ -71,3 +71,29 @@ it('returns a 400 in invalid name', async () => {
 
   expect(notUpdatedUser!.email).toBe('Lisan Al-gaib');
 });
+
+it('returns a 200 in invalid name', async () => {
+  const {
+    body: { data: signupData }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'Lisan Al-gaib',
+
+      email: 'shitman@gmail.com',
+
+      password: 'shijgtneeewr',
+      passwordConfirm: 'shijgtnjejngnrgnr'
+    })
+    .expect(201);
+
+  await request(app)
+    .patch('/api/v1/user/' + signupData.id)
+    .set('Cookie', await global.signin())
+    .send({ name: 'mehdi Usul' })
+    .expect(200);
+
+  const notUpdatedUser = await User.findById(signupData.id);
+
+  expect(notUpdatedUser!.email).toBe('mehdi Usul');
+});
