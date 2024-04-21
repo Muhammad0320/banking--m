@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from '../../app';
 import request from 'supertest';
+import User from '../../model/user';
 
 it('returns error order that 400, if route exists', async () => {
   const response = await request(app)
@@ -16,5 +17,31 @@ it('returs a 400 on invalid id', async () => {
     .patch('/api/v1/user/' + new mongoose.Types.ObjectId().toString('hex'))
     .set('Cookie', await global.signin())
     .send({ email: 'njvvfnjnvnjv' })
+    .expect(404);
+});
+
+it('returns a 400 in invalid email', async () => {
+  const {
+    body: { data: signupData }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'shit man',
+
+      email: 'shitman@gmail.com',
+
+      password: 'shijgtneeewr',
+      passwordConfirm: 'shijgtnjejngnrgnr'
+    })
+    .expect(201);
+
+  await request(app)
+    .patch('/api/v1/user/' + signupData.id)
+    .set('Cookie', await global.signin())
+    .send({ email: 'njvvfnjnvnjv' })
     .expect(400);
+
+  const notUpdatedUser = await User.findById(signupData.id);
+
+  expect(notUpdatedUser!.email).toBe('shitman@gmail.com');
 });
