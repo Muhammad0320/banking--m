@@ -1,15 +1,15 @@
-import { CustomError } from './CustomError';
+import { CustomError } from "./CustomError";
 
 export class Forbidden extends CustomError {
   statusCode = 403;
 
-  constructor() {
+  constructor(public message: string) {
     super();
 
     Object.setPrototypeOf(this, Forbidden.prototype);
   }
 
   serializeError() {
-    return [{ message: 'Not allowed to access this route' }];
+    return [{ message: this.message }];
   }
 }
