@@ -6,7 +6,7 @@ import { app } from '../app';
 let mongo: any;
 
 declare global {
-  var signin: () => Promise<string[]>;
+  var signin: (id?: string) => Promise<string[]>;
 }
 
 beforeAll(async () => {
