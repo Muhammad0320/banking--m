@@ -5,6 +5,7 @@ import { emailValidator, nameValidator } from '../services/validators';
 import {
   BadRequest,
   currentUser,
+  Forbidden,
   NotFound,
   paramsChecker,
   requireAuth,
@@ -36,7 +37,10 @@ router.patch(
       throw new BadRequest('Invalid  inputs');
     }
 
-    if (user.role === UserRole.User) {
+    if (user.role === UserRole.User && req.currentUser.id !== user.id) {
+      throw new Forbidden(
+        "You are not allowed to update another user's  profile"
+      );
     }
 
     res.status(200).json({ status: 'success', data: user });

@@ -12,6 +12,8 @@ type UserAttrs = {
   avatar: string;
   createdAt: Date;
 };
+
+
 type UserDoc = mongoose.Document & UserAttrs & { version: number };
 
 type UserModel = mongoose.Model<UserDoc> & {
