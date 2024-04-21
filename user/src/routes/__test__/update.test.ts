@@ -26,7 +26,7 @@ it('returns a 400 in invalid email', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man',
+      name: 'Lisan Al-gaib',
 
       email: 'shitman@gmail.com',
 
@@ -44,4 +44,30 @@ it('returns a 400 in invalid email', async () => {
   const notUpdatedUser = await User.findById(signupData.id);
 
   expect(notUpdatedUser!.email).toBe('shitman@gmail.com');
+});
+
+it('returns a 400 in invalid name', async () => {
+  const {
+    body: { data: signupData }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'Lisan Al-gaib',
+
+      email: 'shitman@gmail.com',
+
+      password: 'shijgtneeewr',
+      passwordConfirm: 'shijgtnjejngnrgnr'
+    })
+    .expect(201);
+
+  await request(app)
+    .patch('/api/v1/user/' + signupData.id)
+    .set('Cookie', await global.signin())
+    .send({ name: '' })
+    .expect(400);
+
+  const notUpdatedUser = await User.findById(signupData.id);
+
+  expect(notUpdatedUser!.email).toBe('Lisan Al-gaib');
 });
