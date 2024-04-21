@@ -17,8 +17,7 @@ it('returns a 400 on invalid email', async () => {
       name: 'shit man',
       email: '',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(400);
 
@@ -27,8 +26,7 @@ it('returns a 400 on invalid email', async () => {
     .send({
       name: 'shit man',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(400);
 });
@@ -40,8 +38,7 @@ it('returns a 400 on invalid name', async () => {
       name: '',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(400);
 
@@ -51,8 +48,7 @@ it('returns a 400 on invalid name', async () => {
       email: 'shitman@gmail.com',
 
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(400);
 });
@@ -65,8 +61,7 @@ it('returns a 400 on invalid password ', async () => {
 
       email: 'shitman@gmail.com',
       password: 'snr',
-      passwordConfirm: 'snr',
-      status: 'shit'
+      passwordConfirm: 'snr'
     })
     .expect(400);
 
@@ -77,8 +72,7 @@ it('returns a 400 on invalid password ', async () => {
 
       email: 'shitman@gmail.com',
 
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(400);
 });
@@ -92,8 +86,7 @@ it('returns a 400 if both inputs are not the same', async () => {
       email: 'shitman@gmail.com',
 
       password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtnjejngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjejngnrgnr'
     })
     .expect(400);
 });
@@ -105,8 +98,7 @@ it(' returns a 201 on valid inputs', async () => {
       name: 'shit man',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 });
@@ -118,8 +110,7 @@ it('adds a cookie to the header on valid inputs', async () => {
       name: 'shit man',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
@@ -140,8 +131,7 @@ it('asserts that the mongoDB collcection is updated', async () => {
       name: 'shit man',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
