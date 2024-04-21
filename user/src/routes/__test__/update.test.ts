@@ -3,7 +3,10 @@ import { app } from '../../app';
 import request from 'supertest';
 
 it('returns error order that 400, if route exists', async () => {
-  const response = await request(app).patch(
-    '/api/v1/user/' + new mongoose.Types.ObjectId().toString('hex')
-  );
+  const response = await request(app)
+    .patch('/api/v1/user/' + new mongoose.Types.ObjectId().toString('hex'))
+    .set('Cookie', await global.signin())
+    .send();
+
+  expect(response.statusCode).not.toEqual(404);
 });
