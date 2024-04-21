@@ -12,3 +12,5 @@ export * from "./middleware/globalErrorHandler";
 export * from "./validator/nameValidator";
 export * from "./validator/emailValiddator";
 export * from "./validator/passwordsValidator";
+export * from "./enums/UserRoles";
+export * from "./enums/UserStatus";

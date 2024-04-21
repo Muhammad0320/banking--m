@@ -1,12 +1,14 @@
 import User from '../model/user';
 import express, { Request, Response } from 'express';
 import { emailValidator, nameValidator } from '../services/validators';
+
 import {
   BadRequest,
   currentUser,
   NotFound,
   paramsChecker,
-  requireAuth
+  requireAuth,
+  UserRole
 } from '@m0banking/common';
 
 const router = express.Router();
@@ -32,6 +34,9 @@ router.patch(
 
     if (!user) {
       throw new BadRequest('Invalid  inputs');
+    }
+
+    if (user.role === UserRole.User) {
     }
 
     res.status(200).json({ status: 'success', data: user });

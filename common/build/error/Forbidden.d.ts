@@ -1,7 +1,8 @@
-import { CustomError } from './CustomError';
+import { CustomError } from "./CustomError";
 export declare class Forbidden extends CustomError {
+    message: string;
     statusCode: number;
-    constructor();
+    constructor(message: string);
     serializeError(): {
         message: string;
     }[];
