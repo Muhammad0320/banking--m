@@ -15,17 +15,22 @@ router.patch(
   currentUser,
   requireAuth,
   paramsChecker('id'),
-  nameValidator().optional(),
-  emailValidator().optional(),
+  [nameValidator().optional(), emailValidator().optional()],
   async (req: Request, res: Response) => {
     const inputs = req.body;
+
+    const idIsMatched = await User.findById(req.params.id);
+
+    if (!idIsMatched) {
+      throw new BadRequest('Invalid user id');
+    }
 
     const user = await User.findByIdAndUpdate(req.params.id, inputs, {
       new: true
     });
 
     if (!user) {
-      throw new BadRequest('Please validate inputs');
+      throw new BadRequest('Invalid  inputs');
     }
 
     res.status(200).json({ status: 'success', data: user });
