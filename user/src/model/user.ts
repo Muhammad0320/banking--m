@@ -1,16 +1,17 @@
 import mongoose from 'mongoose';
 import { Passwords } from '../services/Password';
+import { UserRole, UserStatus } from '@m0banking/common';
 
 type UserAttrs = {
   name: string;
   email: string;
+  status: UserStatus;
   password: string;
   passwordConfirm: string;
-  status: string;
-  role: string;
+  role: UserRole;
+  avatar: string;
   createdAt: Date;
 };
-
 type UserDoc = mongoose.Document & UserAttrs & { version: number };
 
 type UserModel = mongoose.Model<UserDoc> & {
@@ -50,12 +51,14 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      default: 'user'
+      default: 'user',
+      enum: Object.values(UserRole)
     },
 
     status: {
       type: String,
-      required: [true, 'This field is required']
+      required: [true, 'This field is required'],
+      enum: Object.values(UserStatus)
     },
 
     createdAt: {
