@@ -9,6 +9,7 @@ export * from "./error/RequestValidation";
 
 export * from "./middleware/requireAuth";
 export * from "./middleware/currentUser";
+export * from "./middleware/accessibleTo";
 export * from "./middleware/paramsChecker";
 export * from "./middleware/requestValidator";
 export * from "./middleware/globalErrorHandler";
