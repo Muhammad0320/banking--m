@@ -15,3 +15,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: muhammad0320/account
+      context: account
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

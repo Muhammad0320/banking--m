@@ -17,3 +17,11 @@ spec:
                 name: user-srv
                 port:
                   number: 3000
+
+          - path: /api/v1/account/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: account-srv
+                port:
+                  number: 3000
