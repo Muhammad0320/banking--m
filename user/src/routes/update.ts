@@ -1,8 +1,12 @@
-import express, { Request, Response } from 'express';
-
 import User from '../model/user';
-import { BadRequest, currentUser, requireAuth } from '@m0banking/common';
+import express, { Request, Response } from 'express';
 import { emailValidator, nameValidator } from '../services/validators';
+import {
+  BadRequest,
+  currentUser,
+  paramsChecker,
+  requireAuth
+} from '@m0banking/common';
 
 const router = express.Router();
 
@@ -16,7 +20,9 @@ router.patch(
   async (req: Request, res: Response) => {
     const inputs = req.body;
 
-    const user = await User.findByIdAndUpdate(req.params.id, inputs);
+    const user = await User.findByIdAndUpdate(req.params.id, inputs, {
+      new: true
+    });
 
     if (!user) {
       throw new BadRequest('Please validate inputs');
