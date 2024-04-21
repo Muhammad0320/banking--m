@@ -23,6 +23,7 @@ __exportStar(require("./error/NotAuthorized"), exports);
 __exportStar(require("./error/RequestValidation"), exports);
 __exportStar(require("./middleware/requireAuth"), exports);
 __exportStar(require("./middleware/currentUser"), exports);
+__exportStar(require("./middleware/accessibleTo"), exports);
 __exportStar(require("./middleware/paramsChecker"), exports);
 __exportStar(require("./middleware/requestValidator"), exports);
 __exportStar(require("./middleware/globalErrorHandler"), exports);
