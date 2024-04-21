@@ -4,6 +4,7 @@ import { emailValidator, nameValidator } from '../services/validators';
 import {
   BadRequest,
   currentUser,
+  NotFound,
   paramsChecker,
   requireAuth
 } from '@m0banking/common';
@@ -22,7 +23,7 @@ router.patch(
     const idIsMatched = await User.findById(req.params.id);
 
     if (!idIsMatched) {
-      throw new BadRequest('Invalid user id');
+      throw new NotFound('User not found');
     }
 
     const user = await User.findByIdAndUpdate(req.params.id, inputs, {
