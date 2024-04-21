@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import User from '../model/user';
 import { Passwords } from '../services/Password';
 import express, { Request, Response } from 'express';
-import { emailValidator, passwordValidator } from '../services/validators';
 import { BadRequest, requestValidator } from '@m0banking/common';
+import { emailValidator, passwordValidator } from '../services/validators';
 
 const router = express.Router();
 

@@ -49,6 +49,10 @@ const userSchema = new mongoose.Schema(
       }
     },
 
+    avatar: {
+      type: String
+    },
+
     role: {
       type: String,
       default: 'user',
