@@ -6,8 +6,8 @@ import {
   requireAuth,
   UserRole
 } from '@m0banking/common';
-import express, { Request, Response } from 'express';
 import Account from '../model/account';
+import express, { Request, Response } from 'express';
 
 const router = express.Router();
 
