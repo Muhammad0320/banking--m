@@ -1,11 +1,13 @@
 import {
   accessibleTo,
+  NotFound,
   paramsChecker,
   requireAuth,
   UserRole
 } from '@m0banking/common';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import Account from '../model/account';
+import { AccountStatus } from '../enums/AccountStatusEnum';
 
 const router = express.Router();
 
@@ -14,8 +16,16 @@ router.patch(
   requireAuth,
   accessibleTo(UserRole.Admin, UserRole.CustomerService),
   paramsChecker('id'),
-  async () => {
-    const unblockedUser = await Account.findByIdAndUpdate({});
+  async (req: Request, res: Response) => {
+    const unblockedUser = await Account.findByIdAndUpdate(req.params.id, {
+      status: AccountStatus.Active
+    });
+
+    if (!unblockedUser) {
+      throw new NotFound('Account not found');
+    }
+
+    res.status(200).json({ status: 'success', data: unblockedUser });
   }
 );
 
