@@ -96,7 +96,7 @@ accountSchema.statics.buildAccount = async (attrs: AccountAttrs) => {
 };
 
 accountSchema.pre('save', async function(next) {
-  if (!this.isModified()) return next();
+  if (!this.isNew) return next();
 
   this.pin = await CryptoManager.hash(this.pin);
 
