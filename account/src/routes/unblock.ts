@@ -29,4 +29,4 @@ router.patch(
   }
 );
 
-export { router as unblockUserRouter };
+export { router as unblockAccountRouter };
