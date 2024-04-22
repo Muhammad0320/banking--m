@@ -1,4 +1,11 @@
-import { BadRequest, NotFound, paramsChecker } from '@m0banking/common';
+import {
+  accessibleTo,
+  BadRequest,
+  NotFound,
+  paramsChecker,
+  requireAuth,
+  UserRole
+} from '@m0banking/common';
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
 import { AccountStatus } from '../enums/AccountStatusEnum';
@@ -7,6 +14,8 @@ const router = express.Router();
 
 router.patch(
   '/block/:id',
+  requireAuth,
+  accessibleTo(UserRole.Admin, UserRole.CustomerService),
   paramsChecker('id'),
   async (req: Request, res: Response) => {
     const updatedAccount = await Account.findByIdAndUpdate(
@@ -23,4 +32,4 @@ router.patch(
   }
 );
 
-export { router as BlockUserRouter };
+export { router as blockUserRouter };
