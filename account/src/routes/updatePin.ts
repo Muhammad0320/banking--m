@@ -7,6 +7,7 @@ import {
 } from '@m0banking/common';
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
+import { pinConfirmValidator, pinValidator } from '../services/validators';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.patch(
   '/updatePin/:id',
   requireAuth,
   paramsChecker('id'),
+  [pinValidator(), pinConfirmValidator()],
   async (req: Request, res: Response) => {
     const { newPin, oldPin } = req.body;
 
