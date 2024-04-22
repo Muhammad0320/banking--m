@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Passwords } from '../services/Password';
+import { Passwords } from '../services/Crypto';
 import { UserRole, UserStatus } from '@m0banking/common';
 
 type UserAttrs = {
@@ -12,7 +12,6 @@ type UserAttrs = {
   avatar: string;
   createdAt: Date;
 };
-
 
 type UserDoc = mongoose.Document & UserAttrs & { version: number };
 

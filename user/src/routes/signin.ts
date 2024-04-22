@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../model/user';
-import { Passwords } from '../services/Password';
+import { Passwords } from '../services/Crypto';
 import express, { Request, Response } from 'express';
 import { BadRequest, requestValidator } from '@m0banking/common';
 import { emailValidator, passwordValidator } from '../services/validators';
