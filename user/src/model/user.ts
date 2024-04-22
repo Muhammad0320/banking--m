@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { CryptoManager } from '../services/Crypto';
-import { UserRole, UserStatus } from '@m0banking/common';
+
+import { CryptoManager, UserRole, UserStatus } from '@m0banking/common';
 
 type UserAttrs = {
   name: string;

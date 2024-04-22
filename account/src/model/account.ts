@@ -3,11 +3,16 @@ import { AccountStatus } from '../enums/AccountStatusEnum';
 import { AccountType } from '../enums/AccountTypeEnum';
 import { AccountCurrency } from '../enums/AccountCurrencyEnum';
 import { AccountTier } from '../enums/AccountTier';
+import { CryptoManager } from '@m0banking/common';
 
 type AccountAttrs = {
-  pin: number;
+  pin: string;
+
+  pinConfirm: string;
 
   //  dob: string;
+
+  email: string;
 
   userId: string;
 
@@ -30,6 +35,27 @@ const accountSchema = new mongoose.Schema({
     type: String,
 
     default: 0
+  },
+
+  pin: {
+    type: String,
+    required: true,
+    select: false
+  },
+
+  pinConfirm: {
+    type: String,
+    validate: {
+      validator: function(this: AccountDoc, val: string): boolean {
+        return this.pin === val;
+      },
+
+      message: 'Pins are not the same'
+    }
+  },
+
+  mobileNo: {
+    type: Number
   },
 
   status: {
@@ -74,6 +100,14 @@ const accountSchema = new mongoose.Schema({
 accountSchema.statics.buildAccount = async (attrs: AccountAttrs) => {
   return await Account.create(attrs);
 };
+
+accountSchema.pre('save', async function(next) {
+  if (!this.isModified()) return next();
+
+  this.pin = await CryptoManager.hash(this.pin);
+
+  this.pinConfirm = undefined;
+});
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
   'Account',
