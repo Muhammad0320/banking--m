@@ -5,6 +5,7 @@ import cookieSession from 'cookie-session';
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 import { createAccountRouter } from './routes/new';
 import { allAccountsRouter } from './routes/all';
+import { showAccountRouter } from './routes/show';
 
 const app = express();
 
@@ -29,6 +30,7 @@ const rootUrl = '/api/v1/account';
 app.use(currentUser);
 
 app.use(rootUrl, allAccountsRouter);
+app.use(rootUrl, showAccountRouter);
 app.use(rootUrl, createAccountRouter);
 
 app.all('*', () => {
