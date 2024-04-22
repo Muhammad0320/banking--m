@@ -15,3 +15,4 @@ export * from "./validator/emailValiddator";
 export * from "./validator/passwordsValidator";
 export * from "./enums/UserRoles";
 export * from "./enums/UserStatus";
+export * from "./service/Crypto";

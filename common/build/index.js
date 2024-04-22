@@ -32,3 +32,4 @@ __exportStar(require("./validator/emailValiddator"), exports);
 __exportStar(require("./validator/passwordsValidator"), exports);
 __exportStar(require("./enums/UserRoles"), exports);
 __exportStar(require("./enums/UserStatus"), exports);
+__exportStar(require("./service/Crypto"), exports);
