@@ -5,6 +5,7 @@ import {
   UserRole
 } from '@m0banking/common';
 import express from 'express';
+import Account from '../model/account';
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.patch(
   accessibleTo(UserRole.Admin, UserRole.CustomerService),
   paramsChecker('id'),
   async () => {
-    const unblockedUser = await '';
+    const unblockedUser = await Account.findByIdAndUpdate({});
   }
 );
 

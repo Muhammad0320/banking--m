@@ -32,4 +32,4 @@ router.patch(
   }
 );
 
-export { router as blockUserRouter };
+export { router as blockAccountRouter };
