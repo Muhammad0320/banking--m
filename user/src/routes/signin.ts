@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../model/user';
-import { Passwords } from '../services/Crypto';
 import express, { Request, Response } from 'express';
-import { BadRequest, requestValidator } from '@m0banking/common';
+import { BadRequest, CryptoManager, requestValidator } from '@m0banking/common';
 import { emailValidator, passwordValidator } from '../services/validators';
 
 const router = express.Router();
@@ -23,7 +22,7 @@ router.post(
       throw new BadRequest('Invalid login credentials');
     }
 
-    const isCorrectPassword = await Passwords.compare(
+    const isCorrectPassword = await CryptoManager.compare(
       existingUser.password,
       password
     );
