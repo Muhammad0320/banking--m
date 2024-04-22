@@ -1,14 +1,6 @@
-import mongoose from 'mongoose';
-import { body } from 'express-validator';
-import { AccountTier } from '../enums/AccountTier';
 import express, { Request, Response } from 'express';
-import { AccountCurrency } from '../enums/AccountCurrencyEnum';
-import {
-  BadRequest,
-  emailValidator,
-  requestValidator,
-  requireAuth
-} from '@m0banking/common';
+
+import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
 import Account from '../model/account';
 import { AccountType } from '../enums/AccountTypeEnum';
 import {
