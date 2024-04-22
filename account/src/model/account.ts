@@ -4,6 +4,7 @@ import { AccountType } from '../enums/AccountTypeEnum';
 import { AccountCurrency } from '../enums/AccountCurrencyEnum';
 import { AccountTier } from '../enums/AccountTier';
 import { CryptoManager } from '@m0banking/common';
+import { NextFunction } from 'express';
 
 type AccountAttrs = {
   pin: string;
@@ -102,6 +103,19 @@ accountSchema.pre('save', async function(next) {
 
   this.pinConfirm = undefined;
   console.log(' I can see my sekf invoked');
+});
+
+accountSchema.pre(/^find/, async function(
+  this: AccountDoc & AccountModel,
+  next
+) {
+  if (this.getChanges().status === AccountStatus.Blocked) {
+    this.find({ status: { $ne: AccountStatus.Blocked } });
+  } else {
+    this.find();
+  }
+
+  next();
 });
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
