@@ -10,6 +10,7 @@ import {
   requireAuth
 } from '@m0banking/common';
 import Account from '../model/account';
+import { AccountType } from '../enums/AccountTypeEnum';
 
 const router = express.Router();
 
@@ -65,6 +66,17 @@ router.post(
     }
 
     // create the account
+
+    const newAccount = await Account.buildAccount({
+      currency,
+      tier,
+      userId: req.currentUser.id,
+      pin: `${pin}`,
+      pinConfirm: `${pinConfirm}`,
+      type: AccountType.Savings
+    });
+
+    res.status(201).json({ status: 'success', data: newAccount });
   }
 );
 
