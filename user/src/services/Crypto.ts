@@ -3,7 +3,7 @@ import { promisify } from 'util';
 
 const scryptAsync = promisify(scrypt);
 
-export class Crypto {
+export class CryptoManager {
   static async hash(password: string): Promise<string> {
     const salt = randomBytes(8).toString('hex');
 

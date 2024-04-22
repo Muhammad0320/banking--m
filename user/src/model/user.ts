@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Passwords } from '../services/Crypto';
+import { CryptoManager } from '../services/Crypto';
 import { UserRole, UserStatus } from '@m0banking/common';
 
 type UserAttrs = {
@@ -87,7 +87,7 @@ userSchema.statics.buildUser = async (attrs: UserAttrs) => {
 
 userSchema.pre('save', async function(next) {
   if (this.isModified()) {
-    this.password = (await Passwords.hash(this.password)) as string;
+    this.password = (await CryptoManager.hash(this.password)) as string;
 
     this.passwordConfirm = undefined;
   }
