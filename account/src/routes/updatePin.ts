@@ -22,6 +22,20 @@ router.patch(
     if (!existingAccount) {
       throw new NotFound('Account with such id nit found');
     }
+
+    const isSamePin = await CryptoManager.compare(existingAccount.pin, oldPin);
+
+    if (!isSamePin) {
+      throw new BadRequest('Incorrect pin');
+    }
+
+    const hasedPin = await CryptoManager.hash(newPin);
+
+    existingAccount.set({ pin: hasedPin });
+
+    await existingAccount.save();
+
+    res.status(200).json({ status: 'success', data: existingAccount });
   }
 );
 

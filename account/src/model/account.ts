@@ -101,6 +101,7 @@ accountSchema.pre('save', async function(next) {
   this.pin = await CryptoManager.hash(this.pin);
 
   this.pinConfirm = undefined;
+  console.log(' I can see my sekf invoked');
 });
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
