@@ -54,10 +54,6 @@ const accountSchema = new mongoose.Schema({
     }
   },
 
-  mobileNo: {
-    type: Number
-  },
-
   status: {
     type: String,
 
