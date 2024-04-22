@@ -1,10 +1,9 @@
-import { requireAuth } from '@m0banking/common';
-import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
 import mongoose from 'mongoose';
-import { AccountStatus } from '../enums/AccountStatusEnum';
+import { body } from 'express-validator';
 import { AccountTier } from '../enums/AccountTier';
+import express, { Request, Response } from 'express';
 import { AccountCurrency } from '../enums/AccountCurrencyEnum';
+import { requestValidator, requireAuth } from '@m0banking/common';
 
 const router = express.Router();
 
@@ -37,6 +36,8 @@ router.post(
       .isInt({ min: 4, max: 4 })
       .withMessage('Account pin should be exactly 4 numbers')
   ],
+  requestValidator,
+
   async (req: Request, rees: Response) => {}
 );
 
