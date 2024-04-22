@@ -2,10 +2,11 @@ import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
-import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
-import { createAccountRouter } from './routes/new';
 import { allAccountsRouter } from './routes/all';
 import { showAccountRouter } from './routes/show';
+import { createAccountRouter } from './routes/new';
+import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
+import { updatePinRouter } from './routes/updatePin';
 
 const app = express();
 
@@ -29,6 +30,7 @@ const rootUrl = '/api/v1/account';
 
 app.use(currentUser);
 
+app.use(rootUrl, updatePinRouter);
 app.use(rootUrl, allAccountsRouter);
 app.use(rootUrl, showAccountRouter);
 app.use(rootUrl, createAccountRouter);
