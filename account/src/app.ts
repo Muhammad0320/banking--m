@@ -5,10 +5,10 @@ import cookieSession from 'cookie-session';
 import { allAccountsRouter } from './routes/all';
 import { showAccountRouter } from './routes/show';
 import { createAccountRouter } from './routes/new';
-import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
-import { updatePinRouter } from './routes/updatePin';
 import { blockAccountRouter } from './routes/block';
-import { unblockAccountRouter } from './routes/unBlock';
+import { updatePinRouter } from './routes/updatePin';
+import { unblockAccountRouter } from './routes/unblock';
+import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 
 const app = express();
 

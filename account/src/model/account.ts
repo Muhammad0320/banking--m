@@ -107,6 +107,7 @@ accountSchema.pre('save', async function(next) {
   if (!this.isNew) return next();
 
   this.pin = await CryptoManager.hash(this.pin);
+  this.no = generateTenDigitInt();
 
   this.pinConfirm = undefined;
   console.log(' I can see my self invoked');
