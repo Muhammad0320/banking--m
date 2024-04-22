@@ -7,7 +7,8 @@ import { showAccountRouter } from './routes/show';
 import { createAccountRouter } from './routes/new';
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 import { updatePinRouter } from './routes/updatePin';
-import { blockUserRouter } from './routes/block';
+import { blockAccountRouter } from './routes/block';
+import { unblockAccountRouter } from './routes/unBlock';
 
 const app = express();
 
@@ -32,10 +33,11 @@ const rootUrl = '/api/v1/account';
 app.use(currentUser);
 
 app.use(rootUrl, updatePinRouter);
-app.use(rootUrl, blockUserRouter);
 app.use(rootUrl, allAccountsRouter);
 app.use(rootUrl, showAccountRouter);
+app.use(rootUrl, blockAccountRouter);
 app.use(rootUrl, createAccountRouter);
+app.use(rootUrl, unblockAccountRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');
