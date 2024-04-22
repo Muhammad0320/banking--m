@@ -2,11 +2,13 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import jwt from 'jsonwebtoken';
+import { UserRole, UserStatus } from '@m0banking/common';
 
 let mongo: any;
 
 declare global {
-  var signin: () => Promise<string[]>;
+  var signin: (id?: string) => Promise<string[]>;
 }
 
 beforeAll(async () => {
@@ -35,23 +37,41 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const response = await request(app)
-    .post('/api/v1/user/signup')
-    .send({
-      name: 'shit man',
-      email: 'shitman@gmail.com',
-      password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
-    })
-    .expect(201);
+global.signin = async (id?: string, role?: UserRole) => {
+  const userId = id || new mongoose.Types.ObjectId().toHexString();
 
-  const cookie = response.get('Set-Cookie');
+  // const payload = {
 
-  if (!cookie) {
-    throw new Error('cookie not found');
-  }
+  //   id: userId,
+  //   name: 'Lisan al-gaib',
+  //   email: 'lisanalgaib@gmail.com',
+  //   password: 'ngjiorjrioiojrriior',
+  //   role: role || UserRole.User,
+  //   avatar: 'shit image',
+  //   createdAt: new Date(),
+  //   status: UserStatus.Active,
 
-  return cookie;
+  // }
+
+  // // create a jwt
+
+  // if (!process.env.JWT_KEY) throw new Error("");
+
+  // const token = jwt.sign(payload, process.env.JWT_KEY);
+
+  // // Build a session obj { jwt: MY_JWT }
+
+  // const sessionObj = { jwt: token };
+
+  // // Turn the session obj into json string
+
+  // const sessionJSon = JSON.stringify(sessionObj);
+
+  // // Encode the json as base 64
+
+  // const base64 = Buffer.from(sessionJSon).toString("base64");
+
+  // // returns a string and that's the cookie with encoded data
+
+  // return [`session=${base64}`];
 };
