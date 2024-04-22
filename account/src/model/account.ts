@@ -23,7 +23,12 @@ type AccountAttrs = {
 };
 
 type AccountDoc = mongoose.Document &
-  AccountAttrs & { version: number; status: AccountStatus; balace: number };
+  AccountAttrs & {
+    version: number;
+    status: AccountStatus;
+    balace: number;
+    no: number;
+  };
 
 type AccountModel = mongoose.Model<AccountDoc> & {
   buildAccount(attrs: AccountAttrs): Promise<AccountDoc>;
@@ -89,7 +94,9 @@ const accountSchema = new mongoose.Schema({
     type: Date,
 
     default: new Date()
-  }
+  },
+
+  no: Number
 });
 
 accountSchema.statics.buildAccount = async (attrs: AccountAttrs) => {
@@ -102,7 +109,7 @@ accountSchema.pre('save', async function(next) {
   this.pin = await CryptoManager.hash(this.pin);
 
   this.pinConfirm = undefined;
-  console.log(' I can see my sekf invoked');
+  console.log(' I can see my self invoked');
 });
 
 accountSchema.pre(/^find/, async function(
@@ -110,8 +117,11 @@ accountSchema.pre(/^find/, async function(
   next
 ) {
   if (this.getChanges().status === AccountStatus.Blocked) {
+    console.log('shit day');
     this.find({ status: { $ne: AccountStatus.Blocked } });
   } else {
+    console.log('shit day 2');
+
     this.find();
   }
 
