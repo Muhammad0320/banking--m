@@ -12,8 +12,6 @@ type AccountAttrs = {
 
   //  dob: string;
 
-  email: string;
-
   userId: string;
 
   tier: AccountTier;
