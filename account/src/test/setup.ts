@@ -40,38 +40,36 @@ afterAll(async () => {
 global.signin = async (id?: string, role?: UserRole) => {
   const userId = id || new mongoose.Types.ObjectId().toHexString();
 
-  // const payload = {
+  const payload = {
+    id: userId,
+    name: 'Lisan al-gaib',
+    email: 'lisanalgaib@gmail.com',
+    password: 'ngjiorjrioiojrriior',
+    role: role || UserRole.User,
+    avatar: 'shit image',
+    createdAt: new Date(),
+    status: UserStatus.Active
+  };
 
-  //   id: userId,
-  //   name: 'Lisan al-gaib',
-  //   email: 'lisanalgaib@gmail.com',
-  //   password: 'ngjiorjrioiojrriior',
-  //   role: role || UserRole.User,
-  //   avatar: 'shit image',
-  //   createdAt: new Date(),
-  //   status: UserStatus.Active,
+  // create a jwt
 
-  // }
+  if (!process.env.JWT_KEY) throw new Error('');
 
-  // // create a jwt
+  const token = jwt.sign(payload, process.env.JWT_KEY);
 
-  // if (!process.env.JWT_KEY) throw new Error("");
+  // Build a session obj { jwt: MY_JWT }
 
-  // const token = jwt.sign(payload, process.env.JWT_KEY);
+  const sessionObj = { jwt: token };
 
-  // // Build a session obj { jwt: MY_JWT }
+  // Turn the session obj into json string
 
-  // const sessionObj = { jwt: token };
+  const sessionJSon = JSON.stringify(sessionObj);
 
-  // // Turn the session obj into json string
+  // Encode the json as base 64
 
-  // const sessionJSon = JSON.stringify(sessionObj);
+  const base64 = Buffer.from(sessionJSon).toString('base64');
 
-  // // Encode the json as base 64
+  // returns a string and that's the cookie with encoded data
 
-  // const base64 = Buffer.from(sessionJSon).toString("base64");
-
-  // // returns a string and that's the cookie with encoded data
-
-  // return [`session=${base64}`];
+  return [`session=${base64}`];
 };
