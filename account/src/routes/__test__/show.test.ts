@@ -33,7 +33,9 @@ it('returns a 400, if user passes invalid mongoose id', async () => {
 });
 
 it('returns a 403, if user tried to check other users account', async () => {
-  const { body } = await request(app)
+  const {
+    body: { data }
+  } = await request(app)
     .post('/api/v1/account')
     .set(
       'Cookie',
@@ -47,14 +49,12 @@ it('returns a 403, if user tried to check other users account', async () => {
     })
     .expect(201);
 
-  console.log(body);
-
-  //   await request(app)
-  //     .get('/api/v1/account/' + .id)
-  //     .set(
-  //       'Cookie',
-  //       await global.signin(new mongoose.Types.ObjectId().toHexString())
-  //     )
-  //     .send()
-  //     .expect(403);
+  await request(app)
+    .get('/api/v1/account/' + data.id)
+    .set(
+      'Cookie',
+      await global.signin(new mongoose.Types.ObjectId().toHexString())
+    )
+    .send()
+    .expect(403);
 });
