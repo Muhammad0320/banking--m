@@ -42,3 +42,27 @@ it('returns a 400 on invalid input: oldPin ', async () => {
     })
     .expect(404);
 });
+
+it('returns a 400 on invalid input: pin ', async () => {
+  const accountId = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .patch('/api/v1/account/updatePin/' + accountId)
+    .set('Cookie', await global.signin())
+    .send({
+      pin: 3232,
+      pinComfirm: 2345,
+      oldPin: 1234
+    })
+    .expect(404);
+
+  await request(app)
+    .patch('/api/v1/account/updatePin/' + accountId)
+    .set('Cookie', await global.signin())
+    .send({
+      pin: 2345,
+      pinComfirm: 2345,
+      oldPin: 1234
+    })
+    .expect(404);
+});
