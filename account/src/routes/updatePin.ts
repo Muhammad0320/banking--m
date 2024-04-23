@@ -20,7 +20,7 @@ router.patch(
   [pinValidator(), pinConfirmValidator(), pinValidator('oldPin')],
 
   async (req: Request, res: Response) => {
-    const { newPin, oldPin } = req.body;
+    const { pin, oldPin } = req.body;
 
     const existingAccount = await Account.findById(req.params.id);
 
@@ -28,10 +28,13 @@ router.patch(
       throw new NotFound('Account with such id not found');
     }
 
-    const isSamePin = await CryptoManager.compare(existingAccount.pin, oldPin);
+    const isSamePin = await CryptoManager.compare(
+      existingAccount.pin,
+      oldPin + ''
+    );
 
     if (!isSamePin) {
-      throw new BadRequest('Incorrect pin');
+      throw new BadRequest('invalid pin');
     }
 
     if (
@@ -43,7 +46,7 @@ router.patch(
       );
     }
 
-    const hasedPin = await CryptoManager.hash(newPin);
+    const hasedPin = await CryptoManager.hash(pin);
 
     existingAccount.set({ pin: hasedPin });
 
