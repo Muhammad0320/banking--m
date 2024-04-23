@@ -7,7 +7,7 @@ import { UserRole } from '@m0banking/common';
 
 it('returns 404 for invalid path', async () => {
   await request(app)
-    .get(
+    .patch(
       '/api/v1/account/updatePin' + new mongoose.Types.ObjectId().toHexString()
     )
     .set('Cookie', await global.signin())
@@ -124,7 +124,7 @@ it('returns a 403, if another user tries to update pin', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin/' + data.id)
+    .patch('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin())
     .send({
       oldPin: 1234,
@@ -151,7 +151,7 @@ it('returns a 400, when rigt user updated w/ incorrect oldpin', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin/' + data.id)
+    .patch('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin(userId))
     .send({
       oldPin: 1234,
@@ -178,7 +178,7 @@ it(' returns a 200, if admin tried to updatePin ', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin/' + data.id)
+    .patch('/api/v1/account/updatePin/' + data.id)
     .set(
       'Cookie',
       await global.signin(
@@ -215,7 +215,7 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
   console.log(path);
 
   await request(app)
-    .get(path)
+    .patch(path)
     .set('Cookie', await global.signin(userId))
     .send({
       oldPin: 1234,
