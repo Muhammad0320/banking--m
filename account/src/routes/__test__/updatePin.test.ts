@@ -28,7 +28,7 @@ it('returns a 400 on invalid input: oldPin ', async () => {
     .set('Cookie', await global.signin())
     .send({
       pin: 2345,
-      pinComfirm: 2345,
+      pinConfirm: 2345,
       oldPin: 92928282828_89
     })
     .expect(404);
@@ -38,7 +38,7 @@ it('returns a 400 on invalid input: oldPin ', async () => {
     .set('Cookie', await global.signin())
     .send({
       pin: 2345,
-      pinComfirm: 2345
+      pinConfirm: 2345
     })
     .expect(404);
 });
@@ -51,7 +51,7 @@ it('returns a 400 on invalid input: pin ', async () => {
     .set('Cookie', await global.signin())
     .send({
       pin: 3232,
-      pinComfirm: 2345,
+      pinConfirm: 2345,
       oldPin: 1234
     })
     .expect(404);
@@ -61,7 +61,31 @@ it('returns a 400 on invalid input: pin ', async () => {
     .set('Cookie', await global.signin())
     .send({
       pin: 2345,
-      pinComfirm: 2345,
+      pinConfirm: 2345,
+      oldPin: 1234
+    })
+    .expect(404);
+});
+
+it('returns a 400 on invalid input: pinConfirm ', async () => {
+  const accountId = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .patch('/api/v1/account/updatePin/' + accountId)
+    .set('Cookie', await global.signin())
+    .send({
+      pin: 3232,
+      pinConfirm: 2345,
+      oldPin: 1234
+    })
+    .expect(404);
+
+  await request(app)
+    .patch('/api/v1/account/updatePin/' + accountId)
+    .set('Cookie', await global.signin())
+    .send({
+      pin: 2345,
+
       oldPin: 1234
     })
     .expect(404);
