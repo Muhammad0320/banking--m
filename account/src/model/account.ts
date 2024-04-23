@@ -119,7 +119,7 @@ accountSchema.pre(/^find/, async function(
   this: AccountDoc & AccountModel,
   next
 ) {
-  console.log(this.getChanges(), 'ehn yesss');
+  console.log(this.getChanges, 'ehn yesss');
 
   if (this.getChanges().status === AccountStatus.Blocked) {
     console.log('shit day');
