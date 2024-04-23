@@ -72,7 +72,9 @@ it('returns a 201, for valid inputs', async () => {
 
   expect(responseBody1.length).toEqual(0);
 
-  await request(app)
+  const {
+    body: { data }
+  } = await request(app)
     .post('/api/v1/account')
     .set('Cookie', await global.signin())
     .send({
@@ -82,6 +84,8 @@ it('returns a 201, for valid inputs', async () => {
       pinConfirm: 1234
     })
     .expect(201);
+
+  console.log(data);
 
   const responseBody2 = await Account.find();
 

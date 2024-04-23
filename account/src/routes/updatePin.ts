@@ -24,12 +24,16 @@ router.patch(
   async (req: Request, res: Response) => {
     const { pin, oldPin } = req.body;
 
-    const existingAccount = await Account.findById(req.params.id);
+    const existingAccount = await Account.findById(req.params.id).select(
+      '+pin'
+    );
 
     if (!existingAccount) {
       console.log(!!existingAccount);
       throw new NotFound('Account with such id not found');
     }
+
+    console.log(existingAccount, 'from the update pin');
 
     const isSamePin = await CryptoManager.compare(
       existingAccount.pin,
@@ -49,7 +53,7 @@ router.patch(
       );
     }
 
-    const hasedPin = await CryptoManager.hash(pin);
+    const hasedPin = await CryptoManager.hash(pin + '');
 
     existingAccount.set({ pin: hasedPin });
 
