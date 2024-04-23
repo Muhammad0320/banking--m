@@ -154,7 +154,7 @@ it('returns a 400, when rigt user updated w/ incorrect oldpin', async () => {
     .patch('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin(userId))
     .send({
-      oldPin: 1234,
+      oldPin: 2323,
       pin: 2345,
       pinConfirm: 2345
     })
