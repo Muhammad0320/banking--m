@@ -4,6 +4,7 @@ import {
   Forbidden,
   NotFound,
   paramsChecker,
+  requestValidator,
   requireAuth,
   UserRole
 } from '@m0banking/common';
@@ -18,6 +19,7 @@ router.patch(
   requireAuth,
   paramsChecker('id'),
   [pinValidator(), pinConfirmValidator(), pinValidator('oldPin')],
+  requestValidator,
 
   async (req: Request, res: Response) => {
     const { pin, oldPin } = req.body;
@@ -25,6 +27,7 @@ router.patch(
     const existingAccount = await Account.findById(req.params.id);
 
     if (!existingAccount) {
+      console.log(!!existingAccount);
       throw new NotFound('Account with such id not found');
     }
 

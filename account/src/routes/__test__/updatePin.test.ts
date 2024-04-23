@@ -13,14 +13,14 @@ it('returns a 400 on invalid  mongoose id', async () => {
     .expect(400);
 });
 
-it('returns a 404 on invalid mongoose id', async () => {
+it('returns a 400 on invalid mongoose id', async () => {
   const accountId = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
     .patch('/api/v1/account/updatePin/' + accountId)
     .set('Cookie', await global.signin())
     .send()
-    .expect(404);
+    .expect(400);
 });
 
 it('returns a 400 on invalid input: oldPin ', async () => {
@@ -85,6 +85,8 @@ it('returns a 400 on invalid input: pinConfirm ', async () => {
       pinConfirm: 1234
     })
     .expect(201);
+
+  console.log(data.id);
 
   await request(app)
     .patch('/api/v1/account/updatePin/' + data.id)
