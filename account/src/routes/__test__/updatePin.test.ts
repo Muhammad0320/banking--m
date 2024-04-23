@@ -111,6 +111,37 @@ it('returns a 401, if another user tries to update pin', async () => {
   await request(app)
     .get('/api/v1/account/updatePin' + data.id)
     .set('Cookie', await global.signin())
-    .send()
+    .send({
+      oldPin: 1234,
+      pin: 2345,
+      pinConfirm: 2345
+    })
     .expect(400);
+});
+
+it('returns a 400, when rigt user updated w/ invalid oldpin', async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/account')
+    .set('Cookie', await global.signin(userId))
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: 1234,
+      pinConfirm: 1234
+    })
+    .expect(201);
+
+  await request(app)
+    .get('/api/v1/account/updatePin' + data.id)
+    .set('Cookie', await global.signin(userId))
+    .send({
+      oldPin: 1234,
+      pin: 2345,
+      pinConfirm: 2345
+    })
+    .expect(200);
 });
