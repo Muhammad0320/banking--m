@@ -5,6 +5,18 @@ import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
 import { AccountTier } from '../../enums/AccountTier';
 import { UserRole } from '@m0banking/common';
 
+it('returns 404 for invalid path', async () => {
+  await request(app)
+    .get('/api/v1/account/updatePin' + 'shit-user')
+    .set('Cookie', await global.signin())
+    .send({
+      oldPin: 1234,
+      pin: 2345,
+      pinConfirm: 2345
+    })
+    .expect(404);
+});
+
 it('returns a 400 on invalid  mongoose id', async () => {
   await request(app)
     .patch('/api/v1/account/updatePin/shitId')
