@@ -118,6 +118,8 @@ accountSchema.pre(/^find/, async function(
   this: AccountDoc & AccountModel,
   next
 ) {
+  if (!this.getChanges()) return next();
+
   if (this.getChanges().status === AccountStatus.Blocked) {
     console.log('shit day');
     this.find({ status: { $ne: AccountStatus.Blocked } });
