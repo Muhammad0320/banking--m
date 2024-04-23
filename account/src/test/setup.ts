@@ -8,7 +8,7 @@ import { UserRole, UserStatus } from '@m0banking/common';
 let mongo: any;
 
 declare global {
-  var signin: (id?: string) => Promise<string[]>;
+  var signin: (id?: string, role?: UserRole) => Promise<string[]>;
 }
 
 beforeAll(async () => {
