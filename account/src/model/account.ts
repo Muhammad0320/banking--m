@@ -114,11 +114,12 @@ accountSchema.pre('save', async function(next) {
   console.log(' I can see my self invoked');
 });
 
+// @ts-ignore
 accountSchema.pre(/^find/, async function(
   this: AccountDoc & AccountModel,
   next
 ) {
-  if (!this.getChanges()) return next();
+  console.log(this.getChanges(), 'ehn yesss');
 
   if (this.getChanges().status === AccountStatus.Blocked) {
     console.log('shit day');
