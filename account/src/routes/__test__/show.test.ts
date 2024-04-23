@@ -1,0 +1,13 @@
+import request from 'supertest';
+import { app } from '../../app';
+import mongoose from 'mongoose';
+
+it('returns a 400, if a user w/ such id does not exist', async () => {
+  const accountId = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .get('/api/v1/account/' + accountId)
+    .set('Cookie', await global.signin())
+    .send()
+    .expect(400);
+});
