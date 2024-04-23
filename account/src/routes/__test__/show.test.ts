@@ -89,3 +89,26 @@ it('returns a 200, if user is an admin', async () => {
     .send()
     .expect(200);
 });
+
+it('returns a 200, if a user checks his/her own account', async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/account')
+    .set('Cookie', await global.signin(userId))
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: 1234,
+      pinConfirm: 1234
+    })
+    .expect(201);
+
+  await request(app)
+    .get('/api/v1/account/' + data.id)
+    .set('Cookie', await global.signin(userId))
+    .send()
+    .expect(200);
+});
