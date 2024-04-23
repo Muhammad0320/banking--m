@@ -1,13 +1,14 @@
 import { Request, NextFunction, Response } from "express";
 import { CustomError } from "../error/CustomError";
 
-
 export const globalErrorHandler = (
   err: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  console.log(err);
+
   if (err instanceof CustomError) {
     return res
       .status(err.statusCode)

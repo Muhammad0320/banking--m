@@ -24,7 +24,7 @@ it('returns a 400 on invalid pin', async () => {
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
 
-      pinConfirm: '1234'
+      pinConfirm: 1234
     })
     .expect(400);
 });
@@ -36,8 +36,8 @@ it('returns a 400, if pins are not the same', async () => {
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
-      pin: '6877',
-      pinConfirm: '1234'
+      pin: 6877,
+      pinConfirm: 1234
     })
     .expect(400);
 });
@@ -49,8 +49,8 @@ it('returns a 400, if pins are longer that 4', async () => {
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
-      pin: '123456',
-      pinConfirm: '123456'
+      pin: 123456,
+      pinConfirm: 123456
     })
     .expect(400);
 });
@@ -61,8 +61,8 @@ it('returns a 401, for unautheticated user', async () => {
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
-      pin: '1234',
-      pinConfirm: '1234'
+      pin: 1234,
+      pinConfirm: 1234
     })
     .expect(401);
 });
@@ -78,8 +78,8 @@ it('returns a 201, for valid inputs', async () => {
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
-      pin: '1234',
-      pinConfirm: '1234'
+      pin: 1234,
+      pinConfirm: 1234
     })
     .expect(201);
 
