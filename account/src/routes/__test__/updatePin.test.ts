@@ -3,6 +3,7 @@ import { app } from '../../app';
 import mongoose, { mongo } from 'mongoose';
 import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
 import { AccountTier } from '../../enums/AccountTier';
+import { UserRole } from '@m0banking/common';
 
 it('returns a 400 on invalid  mongoose id', async () => {
   await request(app)
@@ -33,7 +34,7 @@ it('returns a 400 on invalid input: oldPin ', async () => {
       pinConfirm: 2345,
       oldPin: 92928282828_89
     })
-    .expect(404);
+    .expect(400);
 
   await request(app)
     .patch('/api/v1/account/updatePin/' + accountId)
@@ -42,7 +43,7 @@ it('returns a 400 on invalid input: oldPin ', async () => {
       pin: 2345,
       pinConfirm: 2345
     })
-    .expect(404);
+    .expect(400);
 });
 
 it('returns a 400 on invalid input: pin ', async () => {
@@ -56,7 +57,7 @@ it('returns a 400 on invalid input: pin ', async () => {
       pinConfirm: 2345,
       oldPin: 1234
     })
-    .expect(404);
+    .expect(400);
 
   await request(app)
     .patch('/api/v1/account/updatePin/' + accountId)
@@ -66,7 +67,7 @@ it('returns a 400 on invalid input: pin ', async () => {
       pinConfirm: 2345,
       oldPin: 1234
     })
-    .expect(404);
+    .expect(400);
 });
 
 it('returns a 400 on invalid input: pinConfirm ', async () => {
@@ -80,7 +81,7 @@ it('returns a 400 on invalid input: pinConfirm ', async () => {
       pinConfirm: 2345,
       oldPin: 1234
     })
-    .expect(404);
+    .expect(400);
 
   await request(app)
     .patch('/api/v1/account/updatePin/' + accountId)
@@ -89,10 +90,10 @@ it('returns a 400 on invalid input: pinConfirm ', async () => {
       pin: 2345,
       oldPin: 1234
     })
-    .expect(404);
+    .expect(400);
 });
 
-it('returns a 401, if another user tries to update pin', async () => {
+it('returns a 403, if another user tries to update pin', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
 
   const {
@@ -116,10 +117,10 @@ it('returns a 401, if another user tries to update pin', async () => {
       pin: 2345,
       pinConfirm: 2345
     })
-    .expect(400);
+    .expect(403);
 });
 
-it('returns a 400, when rigt user updated w/ invalid oldpin', async () => {
+it('returns a 400, when rigt user updated w/ incorrect oldpin', async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
 
   const {
@@ -138,6 +139,39 @@ it('returns a 400, when rigt user updated w/ invalid oldpin', async () => {
   await request(app)
     .get('/api/v1/account/updatePin' + data.id)
     .set('Cookie', await global.signin(userId))
+    .send({
+      oldPin: 1234,
+      pin: 2345,
+      pinConfirm: 2345
+    })
+    .expect(400);
+});
+
+it(' returns a 200, if admin tried to updatePin ', async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/account')
+    .set('Cookie', await global.signin(userId))
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: 1234,
+      pinConfirm: 1234
+    })
+    .expect(201);
+
+  await request(app)
+    .get('/api/v1/account/updatePin' + data.id)
+    .set(
+      'Cookie',
+      await global.signin(
+        new mongoose.Types.ObjectId().toHexString(),
+        UserRole.Admin
+      )
+    )
     .send({
       oldPin: 1234,
       pin: 2345,
