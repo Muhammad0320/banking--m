@@ -17,7 +17,7 @@ router.patch(
   '/updatePin/:id',
   requireAuth,
   paramsChecker('id'),
-  [pinValidator(), pinConfirmValidator()],
+  [pinValidator(), pinConfirmValidator(), pinValidator('oldPin')],
 
   async (req: Request, res: Response) => {
     const { newPin, oldPin } = req.body;

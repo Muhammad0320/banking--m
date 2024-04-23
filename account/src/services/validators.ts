@@ -3,7 +3,7 @@ import { AccountTier } from '../enums/AccountTier';
 import { AccountCurrency } from '../enums/AccountCurrencyEnum';
 import mongoose from 'mongoose';
 
-export const pinValidator = (field: string) =>
+export const pinValidator = (field?: string) =>
   body(field || 'pin')
     .isNumeric()
     .withMessage('pin must be a number')
