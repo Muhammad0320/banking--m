@@ -52,3 +52,16 @@ it('returns a 400, if pins are longer that 4', async () => {
     })
     .expect(400);
 });
+
+it('returns a 401, for unautheticated user', async () => {
+  await request(app)
+    .post('/api/v1/account')
+
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: '123456',
+      pinConfirm: '123456'
+    })
+    .expect(400);
+});
