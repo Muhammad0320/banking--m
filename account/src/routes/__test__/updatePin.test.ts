@@ -87,6 +87,7 @@ it('returns a 400 on invalid input: pinConfirm ', async () => {
     .set('Cookie', await global.signin())
     .send({
       pin: 2345,
+
       oldPin: 1234
     })
     .expect(400);
@@ -109,7 +110,7 @@ it('returns a 403, if another user tries to update pin', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin' + data.id)
+    .get('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin())
     .send({
       oldPin: 1234,
@@ -136,7 +137,7 @@ it('returns a 400, when rigt user updated w/ incorrect oldpin', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin' + data.id)
+    .get('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin(userId))
     .send({
       oldPin: 1234,
@@ -163,7 +164,7 @@ it(' returns a 200, if admin tried to updatePin ', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin' + data.id)
+    .get('/api/v1/account/updatePin/' + data.id)
     .set(
       'Cookie',
       await global.signin(
@@ -196,7 +197,7 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
     .expect(201);
 
   await request(app)
-    .get('/api/v1/account/updatePin' + data.id)
+    .get('/api/v1/account/updatePin/' + data.id)
     .set('Cookie', await global.signin(userId))
     .send({
       oldPin: 1234,
