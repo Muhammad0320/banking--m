@@ -45,6 +45,7 @@ global.signin = async (id?: string, role?: UserRole) => {
     name: 'Lisan al-gaib',
     email: 'lisanalgaib@gmail.com',
     password: 'ngjiorjrioiojrriior',
+    passwordConfirm: 'ngjiorjrioiojrriior',
     role: role || UserRole.User,
     avatar: 'shit image',
     createdAt: new Date(),
