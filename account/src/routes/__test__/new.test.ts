@@ -39,3 +39,16 @@ it('returns a 400, if pins are not the same', async () => {
     })
     .expect(400);
 });
+
+it('returns a 400, if pins are longer that 4', async () => {
+  await request(app)
+    .post('/api/v1/account')
+    .set('Cookie', await global.signin())
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: '123456',
+      pinConfirm: '123456'
+    })
+    .expect(400);
+});
