@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+
 import { AccountStatus } from '../enums/AccountStatusEnum';
 import { AccountType } from '../enums/AccountTypeEnum';
-import { AccountCurrency } from '../enums/AccountCurrencyEnum';
 import { AccountTier } from '../enums/AccountTier';
 import { CryptoManager } from '@m0banking/common';
-import { NextFunction } from 'express';
+import { AccountCurrency } from '../enums/AccountCurrencyEnum';
+import { generateTenDigitInt } from '../services/generateAccountNumber';
 
 type AccountAttrs = {
   pin: string;
