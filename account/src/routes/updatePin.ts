@@ -1,9 +1,11 @@
 import {
   BadRequest,
   CryptoManager,
+  Forbidden,
   NotFound,
   paramsChecker,
-  requireAuth
+  requireAuth,
+  UserRole
 } from '@m0banking/common';
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
@@ -23,13 +25,22 @@ router.patch(
     const existingAccount = await Account.findById(req.params.id);
 
     if (!existingAccount) {
-      throw new NotFound('Account with such id nit found');
+      throw new NotFound('Account with such id not found');
     }
 
     const isSamePin = await CryptoManager.compare(existingAccount.pin, oldPin);
 
     if (!isSamePin) {
       throw new BadRequest('Incorrect pin');
+    }
+
+    if (
+      existingAccount.userId !== req.currentUser.id &&
+      req.currentUser.role === UserRole.User
+    ) {
+      throw new Forbidden(
+        "You do not have permission to change other people's pin "
+      );
     }
 
     const hasedPin = await CryptoManager.hash(newPin);
