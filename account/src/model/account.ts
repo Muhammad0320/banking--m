@@ -132,6 +132,10 @@ accountSchema.pre(/^find/, async function(
 });
 
 accountSchema.pre('find', function(next) {
+  console.log(this.getUpdate());
+
+  console.log(this.getQuery());
+
   next();
 });
 
