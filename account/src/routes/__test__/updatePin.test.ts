@@ -1,13 +1,15 @@
 import request from 'supertest';
 import { app } from '../../app';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
 import { AccountTier } from '../../enums/AccountTier';
 import { UserRole } from '@m0banking/common';
 
 it('returns 404 for invalid path', async () => {
   await request(app)
-    .get('/api/v1/account/updatePin' + 'shit-user')
+    .get(
+      '/api/v1/account/updatePin' + new mongoose.Types.ObjectId().toHexString()
+    )
     .set('Cookie', await global.signin())
     .send({
       oldPin: 1234,
