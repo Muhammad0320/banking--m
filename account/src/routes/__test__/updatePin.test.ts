@@ -210,8 +210,12 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
     })
     .expect(201);
 
+  const path = '/api/v1/account/updatePin/' + data.id;
+
+  console.log(path);
+
   await request(app)
-    .get('/api/v1/account/updatePin/' + data.id)
+    .get(path)
     .set('Cookie', await global.signin(userId))
     .send({
       oldPin: 1234,
