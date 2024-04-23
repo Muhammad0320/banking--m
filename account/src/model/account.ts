@@ -119,16 +119,24 @@ accountSchema.pre(/^find/, async function(
   this: AccountDoc & AccountModel,
   next
 ) {
-  console.log(this.getChanges, 'ehn yesss');
+  console.table(this);
 
-  if (this.getChanges().status === AccountStatus.Blocked) {
-    console.log('shit day');
-    this.find({ status: { $ne: AccountStatus.Blocked } });
-  } else {
-    console.log('shit day 2');
+  // if (this.getChanges().status === AccountStatus.Blocked) {
+  //   console.log('shit day');
+  //   this.find({ status: { $ne: AccountStatus.Blocked } });
+  // } else {
+  //   console.log('shit day 2');
 
-    this.find();
-  }
+  //   this.find();
+  // }
+
+  next();
+});
+
+accountSchema.pre('find', function(next) {
+  console.log(this.getUpdate());
+
+  console.log(this.getQuery());
 
   next();
 });

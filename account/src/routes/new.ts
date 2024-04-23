@@ -1,8 +1,7 @@
-import express, { Request, Response } from 'express';
-
-import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
 import Account from '../model/account';
+import express, { Request, Response } from 'express';
 import { AccountType } from '../enums/AccountTypeEnum';
+import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
 import {
   currencyValidator,
   pinConfirmValidator,
@@ -16,13 +15,7 @@ const router = express.Router();
 router.post(
   '/',
   requireAuth,
-  [
-    pinValidator(),
-    pinConfirmValidator(),
-    tierValidator(),
-    currencyValidator(),
-    userIdValidator()
-  ],
+  [pinValidator(), pinConfirmValidator(), tierValidator(), currencyValidator()],
   requestValidator,
 
   async (req: Request, res: Response) => {
