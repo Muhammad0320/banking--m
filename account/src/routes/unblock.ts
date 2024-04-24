@@ -17,9 +17,13 @@ router.patch(
   accessibleTo(UserRole.Admin, UserRole.CustomerService),
   paramsChecker('id'),
   async (req: Request, res: Response) => {
-    const unblockedUser = await Account.findByIdAndUpdate(req.params.id, {
-      status: AccountStatus.Active
-    });
+    const unblockedUser = await Account.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: AccountStatus.Active
+      },
+      { new: true }
+    );
 
     if (!unblockedUser) {
       throw new NotFound('Account not found');
