@@ -22,3 +22,13 @@ it('returns a 401, for unauthorized user', async () => {
     .send()
     .expect(401);
 });
+
+it('returns a 403, if a user tries to unblock', async () => {
+  await request(app)
+    .post(
+      '/api/v1/account/block/' + new mongoose.Types.ObjectId().toHexString()
+    )
+    .set('Cookie', await global.signin())
+    .send()
+    .expect(403);
+});
