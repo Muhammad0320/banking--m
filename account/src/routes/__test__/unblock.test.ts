@@ -16,7 +16,7 @@ it('returns a 400  for invalid mongoose  id', async () => {
 it('returns a 401, for unauthorized user', async () => {
   await request(app)
     .post(
-      '/api/v1/account/block/' + new mongoose.Types.ObjectId().toHexString()
+      '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
     )
 
     .send()
@@ -26,9 +26,25 @@ it('returns a 401, for unauthorized user', async () => {
 it('returns a 403, if a user tries to unblock', async () => {
   await request(app)
     .post(
-      '/api/v1/account/block/' + new mongoose.Types.ObjectId().toHexString()
+      '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
     )
     .set('Cookie', await global.signin())
     .send()
     .expect(403);
+});
+
+it('returns a 404, on invalid id', async () => {
+  await request(app)
+    .post(
+      '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
+    )
+    .set(
+      'Cookie',
+      await global.signin(
+        new mongoose.Types.ObjectId().toHexString(),
+        UserRole.CustomerService
+      )
+    )
+    .send()
+    .expect(404);
 });
