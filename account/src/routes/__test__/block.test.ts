@@ -49,7 +49,7 @@ it('returns a 404, on invalid id', async () => {
     .expect(404);
 });
 
-it('returns a 200, when everything is valid', async () => {
+it('returns a 204, when everything is valid', async () => {
   const {
     body: { data }
   } = await request(app)
@@ -73,5 +73,5 @@ it('returns a 200, when everything is valid', async () => {
       )
     )
     .send()
-    .expect(200);
+    .expect(204);
 });
