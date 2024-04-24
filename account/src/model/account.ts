@@ -98,7 +98,9 @@ const accountSchema = new mongoose.Schema(
       default: new Date()
     },
 
-    no: Number
+    no: Number,
+
+    _block: Boolean
   },
   {
     toJSON: {
@@ -122,13 +124,13 @@ accountSchema.pre('save', async function(next) {
   this.no = generateTenDigitInt();
 
   this.pinConfirm = undefined;
-  console.log(' I can see my self invoked');
 });
 
 accountSchema.pre('findOneAndUpdate', function(this: any, next) {
   const update = this.getUpdate();
 
   // from Conner Ardman'
+  console.log(this._block, 'from the find one and update it self');
   this._block = update && update.status === AccountStatus.Blocked;
 
   next();
@@ -136,6 +138,8 @@ accountSchema.pre('findOneAndUpdate', function(this: any, next) {
 
 accountSchema.pre(/^find/, async function(this: any, next) {
   console.log(this._block, 'from the new // find regex');
+
+  this._block === undefined && next();
 
   this._block
     ? this.find({ status: { $ne: AccountStatus.Blocked } })

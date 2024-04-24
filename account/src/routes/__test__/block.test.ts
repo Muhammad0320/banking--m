@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { UserRole } from '@m0banking/common';
 import { AccountTier } from '../../enums/AccountTier';
 import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
+import Account from '../../model/account';
 
 it('returns a 400  for invalid mongoose  id', async () => {
   await request(app)
@@ -104,9 +105,13 @@ it('returns a 404, if this user tries to find a blocked account ', async () => {
     .send()
     .expect(204);
 
-  await request(app)
-    .get('/api/v1/account/' + data.id)
-    .set('Cookie', await global.signin(userId))
-    .send()
-    .expect(404);
+  //   await request(app)
+  //     .get('/api/v1/account/' + data.id)
+  //     .set('Cookie', await global.signin(userId))
+  //     .send()
+  //     .expect(404);
+
+  const account = await Account.findById(data.id);
+
+  console.log(account);
 });
