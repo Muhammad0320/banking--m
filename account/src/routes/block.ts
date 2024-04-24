@@ -1,6 +1,5 @@
 import {
   accessibleTo,
-  BadRequest,
   NotFound,
   paramsChecker,
   requireAuth,
@@ -28,7 +27,7 @@ router.patch(
       throw new NotFound('User not found');
     }
 
-    res.status(200).json({ status: 'success', data: updatedAccount });
+    res.status(204).json({ status: 'success', data: updatedAccount });
   }
 );
 
