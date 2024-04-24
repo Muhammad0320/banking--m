@@ -1,11 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { UserRole, UserStatus } from '@m0banking/common';
-import mongoose from 'mongoose';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
-import { AccountTier } from '../../enums/AccountTier';
 import Account from '../../model/account';
-import { response } from 'express';
+import { AccountTier } from '../../enums/AccountTier';
+import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
 
 it('returns a error other that 404 if the route exists', async () => {
   const response = await request(app)
@@ -72,9 +69,7 @@ it('returns a 201, for valid inputs', async () => {
 
   expect(responseBody1.length).toEqual(0);
 
-  const {
-    body: { data }
-  } = await request(app)
+  await request(app)
     .post('/api/v1/account')
     .set('Cookie', await global.signin())
     .send({
@@ -84,8 +79,6 @@ it('returns a 201, for valid inputs', async () => {
       pinConfirm: 1234
     })
     .expect(201);
-
-  console.log(data);
 
   const responseBody2 = await Account.find();
 
