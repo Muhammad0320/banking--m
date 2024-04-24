@@ -29,6 +29,7 @@ type AccountDoc = mongoose.Document &
     status: AccountStatus;
     balace: number;
     no: number;
+    _block: boolean;
   };
 
 type AccountModel = mongoose.Model<AccountDoc> & {
@@ -100,7 +101,10 @@ const accountSchema = new mongoose.Schema(
 
     no: Number,
 
-    _block: Boolean
+    _block: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     toJSON: {
@@ -123,30 +127,60 @@ accountSchema.pre('save', async function(next) {
   this.pin = await CryptoManager.hash(this.pin);
   this.no = generateTenDigitInt();
 
+  console.log(this._block, 'from pre save hook');
+
   this.pinConfirm = undefined;
 });
 
 accountSchema.pre('findOneAndUpdate', function(this: any, next) {
   const update = this.getUpdate();
 
-  // from Conner Ardman'
-  console.log(this._block, 'from the find one and update it self');
+  console.log(
+    update && update.status === AccountStatus.Blocked,
+    'The condition itself'
+  );
+
+  // from Conner Ardman
   this._block = update && update.status === AccountStatus.Blocked;
+
+  console.log(this._block, 'from the find one and update it self');
 
   next();
 });
 
-accountSchema.pre(/^find/, async function(this: any, next) {
+accountSchema.pre(/^find/, function(this: any, next) {
   console.log(this._block, 'from the new // find regex');
 
-  this._block === undefined && next();
-
-  this._block
+  !!this._block
     ? this.find({ status: { $ne: AccountStatus.Blocked } })
     : this.find();
 
   next();
 });
+
+// accountSchema.pre('findOneAndUpdate', function(this: any, next) {
+//   const update = this.getUpdate();
+
+//   // Set _block field in the document
+//   if (update && update.status === AccountStatus.Blocked) {
+//     this._block = true;
+//   }
+
+//   console.log(this._block, 'from the find one and update itself');
+
+//   next();
+// });
+
+// accountSchema.pre(/^find/, function(this: any, next) {
+//   console.log(this._block, 'from the new find regex');
+
+//   // Filter out blocked users based on _block field
+//   if (this._block === undefined || this._block === false) {
+//     this.where({ status: { $ne: AccountStatus.Blocked } });
+//   }
+
+//   next();
+// });
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
   'Account',
