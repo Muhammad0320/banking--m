@@ -135,17 +135,11 @@ accountSchema.pre('findOneAndUpdate', function(this: any, next) {
 });
 
 accountSchema.pre(/^find/, async function(this: any, next) {
+  console.log(this._block, 'from the new // find regex');
+
   this._block
     ? this.find({ status: { $ne: AccountStatus.Blocked } })
     : this.find();
-
-  next();
-});
-
-accountSchema.pre('find', function(next) {
-  console.log(this.getUpdate());
-
-  console.log(this.getQuery());
 
   next();
 });
