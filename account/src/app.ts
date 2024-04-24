@@ -1,7 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-
 import { allAccountsRouter } from './routes/all';
 import { showAccountRouter } from './routes/show';
 import { createAccountRouter } from './routes/new';
