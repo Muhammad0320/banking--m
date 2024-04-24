@@ -125,19 +125,19 @@ accountSchema.pre('save', async function(next) {
   console.log(' I can see my self invoked');
 });
 
-// @ts-ignore
-accountSchema.pre(/^find/, async function(
-  this: AccountDoc & AccountModel,
-  next
-) {
-  // if (this.getChanges().status === AccountStatus.Blocked) {
-  //   console.log('shit day');
-  //   this.find({ status: { $ne: AccountStatus.Blocked } });
-  // } else {
-  //   console.log('shit day 2');
+accountSchema.pre('findOneAndUpdate', function(this: any, next) {
+  const update = this.getUpdate();
 
-  //   this.find();
-  // }
+  // from Conner Ardman'
+  this._block = update && update.status === AccountStatus.Blocked;
+
+  next();
+});
+
+accountSchema.pre(/^find/, async function(this: any, next) {
+  this._block
+    ? this.find({ status: { $ne: AccountStatus.Blocked } })
+    : this.find();
 
   next();
 });
