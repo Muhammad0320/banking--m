@@ -14,8 +14,8 @@ const router = express.Router();
 router.patch(
   '/unblock/:id',
   requireAuth,
-  accessibleTo(UserRole.Admin, UserRole.CustomerService),
   paramsChecker('id'),
+  accessibleTo(UserRole.Admin, UserRole.CustomerService),
   async (req: Request, res: Response) => {
     const unblockedUser = await Account.findByIdAndUpdate(
       req.params.id,
