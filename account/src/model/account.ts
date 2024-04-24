@@ -168,6 +168,8 @@ accountSchema.pre('findOneAndUpdate', function(this: any, next) {
 // });
 
 accountSchema.pre(/^findOne/, function(this: any, next) {
+  console.log(this.getQuery() as AccountDoc, 'from the new getquery it self');
+
   console.log(this._block, 'from the new // find regex');
 
   !!this._block
@@ -200,6 +202,12 @@ accountSchema.pre(/^findOne/, function(this: any, next) {
 
 //   next();
 // });
+
+accountSchema.pre('find', function(next) {
+  console.log(this.getQuery(), 'from the new pre find');
+
+  next();
+});
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
   'Account',

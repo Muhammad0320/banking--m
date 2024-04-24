@@ -1,0 +1,80 @@
+
+
+
+Day #7 🚀: Added route handler for blocking an account which can only be accessced by admin and customer services.
+NextUp: add route handler for unclocking an account 
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day #7 🚀: Added route handler for unblocking an account which can only be accessced by admin and customer services.
+NextUp: add route handler for changing users pin 
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+Day #7 🚀: Added route handler for changing user's pin.
+
+Follow for more ✨💻.
+
+NextUp ⏭: add test to check for new account creation. 
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+Day #7 🚀: Added test to assert that account is created.
+
+Follow for more ✨💻.
+
+NextUp ⏭: add test to check for account details. 
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+Day #7 🚀: Added test to assert that all accounts are listed.
+
+Follow for more ✨💻.
+
+NextUp ⏭:  add test to assert that account is created .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day #7 🚀: Added test to assert showing of user's own  a account details which contains a pretty important logic init.
+
+Follow for more ✨💻.
+
+NextUp ⏭: add test to check for pin update . 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+Day #7 🚀: Added test to assert that user's user's pin is correctly updated.
+
+Follow for more ✨💻.
+
+NextUp ⏭: add test to check for blocking of account. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+//////////////////////////////////////////////////////
+
+Day 8 🚀 :  Add test to check for blocking of a user's account
+
+Follow for more ✨💻
+
+NextUp ⏭: add test to check for unblocking of account. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 8 🚀 :  Add test to check for unblocking of a user's account
+
+Follow for more ✨💻
+
+NextUp ⏭: run all test to test for correctness. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 8 🚀 :  Testing all program test for assurance
+
+Follow for more ✨💻
+
+NextUp ⏭: Explain a knotty technical issue i fell in and unale to fix for over 6 hours, I'm serious.
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
