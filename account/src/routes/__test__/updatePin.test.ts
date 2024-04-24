@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
-import { AccountTier } from '../../enums/AccountTier';
 import { UserRole } from '@m0banking/common';
+import { AccountTier } from '../../enums/AccountTier';
+import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
 
 it('returns 404 for invalid path', async () => {
   await request(app)
