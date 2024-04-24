@@ -29,11 +29,8 @@ router.patch(
     );
 
     if (!existingAccount) {
-      console.log(!!existingAccount);
       throw new NotFound('Account with such id not found');
     }
-
-    console.log(existingAccount, 'from the update pin');
 
     const isSamePin = await CryptoManager.compare(
       existingAccount.pin,
