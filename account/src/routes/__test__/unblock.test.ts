@@ -67,7 +67,7 @@ it('returns a 200, when everything is valid', async () => {
   const {
     body: { data: data2 }
   } = await request(app)
-    .patch('/api/v1/account/unclock/' + data.id)
+    .patch('/api/v1/account/unblock/' + data.id)
     .set(
       'Cookie',
       await global.signin(

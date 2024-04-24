@@ -17,8 +17,6 @@ router.patch(
   paramsChecker('id'),
   accessibleTo(UserRole.Admin, UserRole.CustomerService),
   async (req: Request, res: Response) => {
-    console.log('lets party');
-
     const updatedAccount = await Account.findByIdAndUpdate(
       req.params.id,
       { status: AccountStatus.Blocked },
