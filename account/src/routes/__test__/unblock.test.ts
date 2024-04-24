@@ -8,7 +8,7 @@ import { AccountStatus } from '../../enums/AccountStatusEnum';
 
 it('returns a 400  for invalid mongoose  id', async () => {
   await request(app)
-    .post('/api/v1/account/unblock/' + 'shitid')
+    .patch('/api/v1/account/unblock/' + 'shitid')
     .set('Cookie', await global.signin())
     .send()
     .expect(400);
@@ -16,7 +16,7 @@ it('returns a 400  for invalid mongoose  id', async () => {
 
 it('returns a 401, for unauthorized user', async () => {
   await request(app)
-    .post(
+    .patch(
       '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
     )
 
@@ -26,7 +26,7 @@ it('returns a 401, for unauthorized user', async () => {
 
 it('returns a 403, if a user tries to unblock', async () => {
   await request(app)
-    .post(
+    .patch(
       '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
     )
     .set('Cookie', await global.signin())
@@ -36,7 +36,7 @@ it('returns a 403, if a user tries to unblock', async () => {
 
 it('returns a 404, on invalid id', async () => {
   await request(app)
-    .post(
+    .patch(
       '/api/v1/account/unblock/' + new mongoose.Types.ObjectId().toHexString()
     )
     .set(
@@ -67,7 +67,7 @@ it('returns a 200, when everything is valid', async () => {
   const {
     body: { data: data2 }
   } = await request(app)
-    .post('/api/v1/account/unclock/' + data.id)
+    .patch('/api/v1/account/unclock/' + data.id)
     .set(
       'Cookie',
       await global.signin(
