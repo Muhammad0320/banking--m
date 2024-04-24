@@ -135,20 +135,39 @@ accountSchema.pre('save', async function(next) {
 accountSchema.pre('findOneAndUpdate', function(this: any, next) {
   const update = this.getUpdate();
 
-  console.log(
-    update && update.status === AccountStatus.Blocked,
-    'The condition itself'
-  );
-
   // from Conner Ardman
+
   this._block = update && update.status === AccountStatus.Blocked;
+
+  // if (update && update.status === AccountStatus.Blocked) {
+  //   this._block = true;
+
+  //   this.set({ _block: true });
+  // }
 
   console.log(this._block, 'from the find one and update it self');
 
   next();
 });
 
-accountSchema.pre(/^find/, function(this: any, next) {
+// accountSchema.pre<AccountDoc>('findOneAndUpdate', async function(next) {
+//   // @ts-ignore
+//   const update = this.getUpdate();
+
+//   // from Conner Ardman
+//   if (update && update.status === AccountStatus.Blocked) {
+//     this._block = true;
+//     // @ts-ignore
+//     this.set({ _block: true })
+//     await this.save();
+//   }
+
+//   console.log(this._block, 'from the find one and update it self');
+
+//   next();
+// });
+
+accountSchema.pre(/^findOne/, function(this: any, next) {
   console.log(this._block, 'from the new // find regex');
 
   !!this._block
