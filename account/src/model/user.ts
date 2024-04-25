@@ -9,6 +9,24 @@ type UserAttrs = {
 
 export type UserDoc = mongoose.Document & UserAttrs & { version: number };
 
-type USerModel = mongoose.Model<UserDoc> & {
+type UserModel = mongoose.Model<UserDoc> & {
   buildUser(attrs: UserAttrs): Promise<UserDoc>;
 };
+
+const userSchema = new mongoose.Schema<UserDoc, UserModel>({
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  name: {
+    type: String,
+    required: true
+  },
+
+  role: {
+    typw: String,
+    enum: Object.values(UserRole)
+  }
+});
