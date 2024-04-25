@@ -14,7 +14,7 @@ type AccountAttrs = {
 
   //  dob: string;
 
-  userId: string;
+  user: string;
 
   tier: AccountTier;
 
@@ -88,9 +88,9 @@ const accountSchema = new mongoose.Schema(
       enum: Object.values(AccountCurrency)
     },
 
-    userId: {
-      type: String,
-      required: true
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
 
     createdAt: {
@@ -154,6 +154,15 @@ accountSchema.pre(/^findOne/, function(this: any, next) {
   !!this._block
     ? this.find({ status: { $ne: AccountStatus.Blocked } })
     : this.find();
+
+  next();
+});
+
+accountSchema.pre(/^find/, function(this: any, next) {
+  console.log(
+    this.getQuery(),
+    'from the new getquery it self wild card irself '
+  );
 
   next();
 });
