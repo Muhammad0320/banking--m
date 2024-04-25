@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { AccountStatus } from '../enums/AccountStatusEnum';
 import { AccountType } from '../enums/AccountTypeEnum';
 import { AccountTier } from '../enums/AccountTier';
@@ -117,6 +117,9 @@ const accountSchema = new mongoose.Schema(
   }
 );
 
+accountSchema.set('versionKey', 'version');
+accountSchema.plugin(updateIfCurrentPlugin);
+
 accountSchema.statics.buildAccount = async (attrs: AccountAttrs) => {
   return await Account.create(attrs);
 };
@@ -136,16 +139,21 @@ accountSchema.pre('findOneAndUpdate', function(this: any, next) {
   const update = this.getUpdate();
 
   // from Conner Ardman
-
   this._block = update && update.status === AccountStatus.Blocked;
 
-  // if (update && update.status === AccountStatus.Blocked) {
-  //   this._block = true;
-
-  //   this.set({ _block: true });
-  // }
-
   console.log(this._block, 'from the find one and update it self');
+
+  next();
+});
+
+accountSchema.pre(/^findOne/, function(this: any, next) {
+  console.log(this.getQuery(), 'from the new getquery it self');
+
+  console.log(this._block, 'from the new // find regex');
+
+  !!this._block
+    ? this.find({ status: { $ne: AccountStatus.Blocked } })
+    : this.find();
 
   next();
 });
@@ -166,18 +174,6 @@ accountSchema.pre('findOneAndUpdate', function(this: any, next) {
 
 //   next();
 // });
-
-accountSchema.pre(/^findOne/, function(this: any, next) {
-  console.log(this.getQuery() as AccountDoc, 'from the new getquery it self');
-
-  console.log(this._block, 'from the new // find regex');
-
-  !!this._block
-    ? this.find({ status: { $ne: AccountStatus.Blocked } })
-    : this.find();
-
-  next();
-});
 
 // accountSchema.pre('findOneAndUpdate', function(this: any, next) {
 //   const update = this.getUpdate();
