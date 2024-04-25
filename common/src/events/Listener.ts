@@ -25,4 +25,28 @@ export abstract class Listener<T extends Event> {
       .setDeliverAllAvailable()
       .setDurableName(this.queueGrouoName);
   }
+
+  parseMessage(msg: Message): string {
+    const messgage = msg.getData() as string;
+
+    return messgage;
+  }
+
+  listen() {
+    const subscription = this.client.subscribe(
+      this.subject,
+      this.queueGrouoName,
+      this.subscriptionOption()
+    );
+
+    subscription.on("message", (msg: Message) => {
+      console.log(
+        `Event received #${msg.getSequence}, ${this.subject} / ${this.queueGrouoName}`
+      );
+
+      const data = this.parseMessage(msg);
+
+      this.onMessage(data, msg);
+    });
+  }
 }
