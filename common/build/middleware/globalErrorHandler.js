@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.globalErrorHandler = void 0;
 const CustomError_1 = require("../error/CustomError");
 const globalErrorHandler = (err, req, res, next) => {
+    console.log(err);
     if (err instanceof CustomError_1.CustomError) {
         return res
             .status(err.statusCode)
