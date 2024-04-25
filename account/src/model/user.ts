@@ -40,7 +40,15 @@ const userSchema = new mongoose.Schema(
       enum: Object.values(UserRole)
     }
   },
-  {}
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+
+        delete ret._id;
+      }
+    }
+  }
 );
 
 userSchema.set('versionKey', 'version');
