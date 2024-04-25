@@ -1,14 +1,19 @@
 import Account from '../model/account';
 import express, { Request, Response } from 'express';
 import { AccountType } from '../enums/AccountTypeEnum';
-import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
+import {
+  BadRequest,
+  NotFound,
+  requestValidator,
+  requireAuth
+} from '@m0banking/common';
 import {
   currencyValidator,
   pinConfirmValidator,
   pinValidator,
-  tierValidator,
-  userIdValidator
+  tierValidator
 } from '../services/validators';
+import { User } from '../model/user';
 
 const router = express.Router();
 
@@ -21,10 +26,14 @@ router.post(
   async (req: Request, res: Response) => {
     const { currency, tier, pin, pinConfirm } = req.body;
 
+    const user = await User.findById(req.currentUser.id);
+
+    if (!user) throw new NotFound('user nor found');
+
     // does account existswtith same userID exists , then throw an error.
 
     const existingAccount = await Account.findOne({
-      userId: req.currentUser.id
+      user: user.id
     });
 
     if (existingAccount) {
@@ -36,7 +45,7 @@ router.post(
     const newAccount = await Account.buildAccount({
       currency,
       tier,
-      userId: req.currentUser.id,
+      user,
       pin: `${pin}`,
       pinConfirm: `${pinConfirm}`,
       type: AccountType.Savings

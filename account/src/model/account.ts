@@ -6,6 +6,7 @@ import { AccountTier } from '../enums/AccountTier';
 import { CryptoManager } from '@m0banking/common';
 import { AccountCurrency } from '../enums/AccountCurrencyEnum';
 import { generateTenDigitInt } from '../services/generateAccountNumber';
+import { UserDoc } from './user';
 
 type AccountAttrs = {
   pin: string;
@@ -14,7 +15,7 @@ type AccountAttrs = {
 
   //  dob: string;
 
-  user: string;
+  user: UserDoc;
 
   tier: AccountTier;
 
