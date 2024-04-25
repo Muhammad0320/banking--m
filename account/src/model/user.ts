@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 type UserAttrs = {
   email: string;
   name: string;
+  password: string;
   role: UserRole;
 };
 
@@ -20,13 +21,27 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>({
     unique: true
   },
 
+  password: {
+    type: String,
+    select: false,
+    required: true
+  },
+
   name: {
     type: String,
     required: true
   },
 
   role: {
-    typw: String,
+    type: String,
     enum: Object.values(UserRole)
   }
 });
+
+userSchema.statics.buildUser = async function(attrs: UserAttrs) {
+  return await User.create(attrs);
+};
+
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+
+export { User };
