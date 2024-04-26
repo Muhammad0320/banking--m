@@ -1,0 +1,98 @@
+
+
+
+Day 9 🚀 :  Begins with some Nats service deplyment file with nats container . 
+
+School is seroiusly sabotaging my productivity but it's alright.
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a base publisher class w/ relies heavily on ts. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Added A base publisher class which all other publisher build upon. 
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a base listener class w/ relies heavily on ts. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Added a base listenner class which all other publisher build upon. 
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a  subject enum: for all or channels as called with nats .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Added subject enum: for all or channel to minimize nasty error. 
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a AccountCreatedEvent: which as name implies is the event triggered when an account is created .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 9 🚀 :  Added add a AccountCreatedEvent: which is set into action when an account is created.
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a AccountBlockedEvent: which as name implies, is the event triggered when an account is blocked .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 9 🚀 :  Added add a AccountBlockedEvent: which is set into action when an account is blocked.
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a AccountUnblockedEvent: which as name implies, is the event triggered when an account is unblocked .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Added add a AccountUnblockedEvent: which is set into action when an account is unblocked.
+
+Follow for more ✨💻
+
+NextUp ⏭: Inspiration on changing updating a vital part of the account service.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 9 🚀 :  Epiphany just came that the user be able to communicate w/ the account; crucial update !.
+
+Follow for more ✨💻
+
+NextUp ⏭: To add a Link the Account with the user model.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Linked the Account with the user mode sucessfully.
+
+Follow for more ✨💻
+
+NextUp ⏭: To update the program to create new account.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 9 🚀 :  Updated the code to create new account.
+
+Follow for more ✨💻
+
+NextUp ⏭: Work solely on eventing: Publishing of and listening to events from one service to another, you wont want to missout .  
+
+Good night 🌃.
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
