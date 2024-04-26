@@ -1,4 +1,4 @@
-import { Subjects } from '@m0banking/common';
+import { Subjects } from "./Subjects";
 
 export interface AccountBlockedEvent {
   subject: Subjects.AccountBlocked;
