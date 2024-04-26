@@ -3,6 +3,7 @@ import { User } from '../../../model/user';
 import { natsWrapper } from '../../../natswrapper';
 import { UserUpdatedListener } from '../UserUpdatedListener';
 import { UserRole, UserUpdatedEvent } from '@m0banking/common';
+import { Message } from 'node-nats-streaming';
 
 const setup = async () => {
   // create a listener
@@ -30,4 +31,12 @@ const setup = async () => {
   };
 
   // create msg object
+
+  // @ts-ignore
+
+  const msg: Message = {
+    ack: jest.fn()
+  };
+
+  return { listener, data, msg };
 };
