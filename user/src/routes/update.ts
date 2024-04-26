@@ -1,6 +1,4 @@
 import User from '../model/user';
-import express, { Request, Response } from 'express';
-import { emailValidator, nameValidator } from '../services/validators';
 
 import {
   BadRequest,
@@ -11,8 +9,10 @@ import {
   requireAuth,
   UserRole
 } from '@m0banking/common';
-import { USerUpdatedPublisher } from '../events/publisher/UserUpdatedPublisher';
 import { natsWrapper } from '../natswrapper';
+import express, { Request, Response } from 'express';
+import { emailValidator, nameValidator } from '../services/validators';
+import { USerUpdatedPublisher } from '../events/publisher/UserUpdatedPublisher';
 
 const router = express.Router();
 
