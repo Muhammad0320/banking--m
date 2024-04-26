@@ -1,3 +1,4 @@
+import { UserRole } from "../enums/UserRoles";
 import { Subjects } from "./Subjects";
 
 export interface USerCreatedEvent {
@@ -8,5 +9,6 @@ export interface USerCreatedEvent {
     name: string;
     password: string;
     id: string;
+    role: UserRole;
   };
 }

@@ -9,9 +9,9 @@ interface Event {
 export abstract class Listener<T extends Event> {
   abstract subject: T["subject"];
 
-  abstract onMessage(data: T["data"], msg: Message): void;
+  abstract onMessage(data: T["data"], msg: Message): Promise<void>;
 
-  abstract queueGrouoName: string;
+  abstract queueGroupName: string;
 
   protected ackWait: number = 5 * 1000;
 
@@ -23,7 +23,7 @@ export abstract class Listener<T extends Event> {
       .setManualAckMode(true)
       .setAckWait(this.ackWait)
       .setDeliverAllAvailable()
-      .setDurableName(this.queueGrouoName);
+      .setDurableName(this.queueGroupName);
   }
 
   parseMessage(msg: Message): string {
@@ -35,13 +35,13 @@ export abstract class Listener<T extends Event> {
   listen() {
     const subscription = this.client.subscribe(
       this.subject,
-      this.queueGrouoName,
+      this.queueGroupName,
       this.subscriptionOption()
     );
 
     subscription.on("message", (msg: Message) => {
       console.log(
-        `Event received #${msg.getSequence}, ${this.subject} / ${this.queueGrouoName}`
+        `Event received #${msg.getSequence}, ${this.subject} / ${this.queueGroupName}`
       );
 
       const data = this.parseMessage(msg);
