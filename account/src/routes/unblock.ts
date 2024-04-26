@@ -7,7 +7,7 @@ import {
 } from '@m0banking/common';
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
-import { AccountStatus } from '../enums/AccountStatusEnum';
+import { AccountStatus } from '@m0banking/common';
 
 const router = express.Router();
 

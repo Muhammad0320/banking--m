@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { AccountStatus } from '../enums/AccountStatusEnum';
+import { AccountStatus } from '@m0banking/common';
 import { AccountType } from '../enums/AccountTypeEnum';
 import { AccountTier } from '../enums/AccountTier';
 import { CryptoManager } from '@m0banking/common';
-import { AccountCurrency } from '../enums/AccountCurrencyEnum';
+import { AccountCurrency } from '@m0banking/common';
 import { generateTenDigitInt } from '../services/generateAccountNumber';
 import { UserDoc } from './user';
 

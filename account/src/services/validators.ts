@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 import { AccountTier } from '../enums/AccountTier';
-import { AccountCurrency } from '../enums/AccountCurrencyEnum';
+import { AccountCurrency } from '@m0banking/common';
 import mongoose from 'mongoose';
 
 export const pinValidator = (field?: string) =>
