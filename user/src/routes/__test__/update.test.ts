@@ -98,5 +98,9 @@ it('returns a 200 in invalid name', async () => {
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 
+  console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+
+  console.log();
+
   expect(notUpdatedUser!.email).toBe('mehdi Usul');
 });
