@@ -18,6 +18,12 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
 
     if (!user) throw new NotFound('There is no user w/ such id and version');
 
+    const updatedUser = await User.findByIdAndUpdate(user.id, data, {
+      new: true
+    });
+
+    console.log(updatedUser, 'The updated User');
+
     msg.ack();
   }
 }
