@@ -52,3 +52,11 @@ it('updates and saves a ticket', async () => {
 
   expect(updatedUser).toBeDefined();
 });
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});
