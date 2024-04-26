@@ -1,13 +1,15 @@
-import User from '../model/user';
 import jwt from 'jsonwebtoken';
-import express, { Request, Response } from 'express';
+import User from '../model/user';
 import {
   emailValidator,
   nameValidator,
   passwordConfirmationValidator,
   passwordValidator
 } from '../services/validators';
+import { natsWrapper } from '../natswrapper';
+import express, { Request, Response } from 'express';
 import { BadRequest, requestValidator } from '@m0banking/common';
+import { UserCreatedPublisher } from '../events/publisher/UserCreatedPublisher';
 
 const router = express.Router();
 
@@ -43,6 +45,14 @@ router.post(
     req.session = {
       jwt: token
     };
+
+    await new UserCreatedPublisher(natsWrapper.client).publish({
+      email: user.email,
+      name: user.name,
+      password: user.password,
+
+      id: user.id
+    });
 
     return res.status(201).json({ status: 'success', data: user });
   }
