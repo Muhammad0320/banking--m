@@ -6,5 +6,6 @@ export interface UserUpdatedEvent {
         name: string;
         password: string;
         id: string;
+        version: number;
     };
 }
