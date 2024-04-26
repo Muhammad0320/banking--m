@@ -11,6 +11,8 @@ import {
   requireAuth,
   UserRole
 } from '@m0banking/common';
+import { USerUpdatedPublisher } from '../events/publisher/UserUpdatedPublisher';
+import { natsWrapper } from '../natswrapper';
 
 const router = express.Router();
 
@@ -31,7 +33,7 @@ router.patch(
 
     const user = await User.findByIdAndUpdate(req.params.id, inputs, {
       new: true
-    });
+    }).select('+password');
 
     if (!user) {
       throw new BadRequest('Invalid  inputs');
@@ -42,6 +44,13 @@ router.patch(
     //     "You are not allowed to update another user's  profile"
     //   );
     // }
+
+    await new USerUpdatedPublisher(natsWrapper.client).publish({
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      id: user.id
+    });
 
     res.status(200).json({ status: 'success', data: user });
   }
