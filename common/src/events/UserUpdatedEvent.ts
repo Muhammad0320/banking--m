@@ -1,7 +1,7 @@
 import { Subjects } from "./Subjects";
 
 export interface UserUpdatedEvent {
-  subject: Subjects;
+  subject: Subjects.UserUpdated;
 
   data: {
     email: string;
