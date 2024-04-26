@@ -8,6 +8,6 @@ export declare abstract class Publisher<T extends Event> {
     protected client: Stan;
     abstract subject: T["subject"];
     constructor(client: Stan);
-    publish(data: Event["data"]): Promise<void>;
+    publish(data: T["data"]): Promise<void>;
 }
 export {};
