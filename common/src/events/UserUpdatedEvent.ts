@@ -1,4 +1,5 @@
 import { Subjects } from "./Subjects";
+
 // evemt
 export interface UserUpdatedEvent {
   subject: Subjects.UserUpdated;
