@@ -1,6 +1,6 @@
 import { Subjects } from "./Subjects";
-import { AccountStatus } from "./types/AccountStatusEnum";
 import { AccountCurrency } from "./types/AccountCurrencyEnum";
+import { AccountStatus } from "./types/AccountStatusEnum";
 
 export interface AccountCreatedEvent {
   subject: Subjects.AccountCreated;
