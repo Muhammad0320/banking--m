@@ -7,7 +7,7 @@ import { User } from '../../model/user';
 export class UserCreatedLitener extends Listener<USerCreatedEvent> {
   readonly subject = Subjects.UserCreated;
 
-  queueGrouoName = queueGroupName;
+  queueGroupName = queueGroupName;
 
   async onMessage(data: USerCreatedEvent['data'], msg: Message) {
     await User.buildUser({
