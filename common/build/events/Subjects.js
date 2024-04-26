@@ -7,4 +7,7 @@ var Subjects;
     Subjects["AccountBlocked"] = "account:blocked";
     Subjects["AccountUpdated"] = "account:updated";
     Subjects["AccountUnblocked"] = "account:unblocked";
+    //
+    Subjects["UserCreated"] = "user:created";
+    Subjects["UserUpdated"] = "user:updated";
 })(Subjects || (exports.Subjects = Subjects = {}));
