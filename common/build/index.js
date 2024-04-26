@@ -36,3 +36,8 @@ __exportStar(require("./service/Crypto"), exports);
 __exportStar(require("./events/Listener"), exports);
 __exportStar(require("./events/Subjects"), exports);
 __exportStar(require("./events/Publisher"), exports);
+__exportStar(require("./events/AccountCreatedEvent"), exports);
+__exportStar(require("./events/AccountBlockedEvent"), exports);
+__exportStar(require("./events/AccountUnblockedEvent"), exports);
+__exportStar(require("./events/types/AccountStatusEnum"), exports);
+__exportStar(require("./events/types/AccountCurrencyEnum"), exports);

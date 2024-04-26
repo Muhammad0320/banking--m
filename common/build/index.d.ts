@@ -19,3 +19,8 @@ export * from "./service/Crypto";
 export * from "./events/Listener";
 export * from "./events/Subjects";
 export * from "./events/Publisher";
+export * from "./events/AccountCreatedEvent";
+export * from "./events/AccountBlockedEvent";
+export * from "./events/AccountUnblockedEvent";
+export * from "./events/types/AccountStatusEnum";
+export * from "./events/types/AccountCurrencyEnum";
