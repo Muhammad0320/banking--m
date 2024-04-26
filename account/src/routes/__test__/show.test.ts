@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
-import { AccountTier } from '../../enums/AccountTier';
 import { UserRole } from '@m0banking/common';
+import { AccountCurrency } from '@m0banking/common';
+import { AccountTier } from '../../enums/AccountTier';
 
 it('returns a 401 on unauthorized user access', async () => {
   const accountId = new mongoose.Types.ObjectId().toHexString();

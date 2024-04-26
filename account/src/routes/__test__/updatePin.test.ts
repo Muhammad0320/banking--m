@@ -3,8 +3,7 @@ import { app } from '../../app';
 import mongoose from 'mongoose';
 import { UserRole } from '@m0banking/common';
 import { AccountTier } from '../../enums/AccountTier';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
-
+import { AccountCurrency } from '@m0banking/common';
 it('returns 404 for invalid path', async () => {
   await request(app)
     .patch(

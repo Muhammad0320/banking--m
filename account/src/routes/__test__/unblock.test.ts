@@ -2,8 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
 import { UserRole } from '@m0banking/common';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
-import { AccountTier } from '../../enums/AccountTier';
+import {AccountCurrency} from '@m0banking/common'import { AccountTier } from '../../enums/AccountTier';
 import { AccountStatus } from '../../enums/AccountStatusEnum';
 
 it('returns a 400  for invalid mongoose  id', async () => {
