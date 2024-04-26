@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import { app } from './app';
+import mongoose from 'mongoose';
 import { natsWrapper } from './natswrapper';
 
 const start = async () => {
@@ -22,6 +22,12 @@ const start = async () => {
   if (!process.env.NATS_CLUSTER_ID) {
     throw new Error('NATS_CLUSTER_ID must be defined');
   }
+
+  await natsWrapper.connect(
+    process.env.NATS_CLUSTER_ID,
+    process.env.NATS_CLIENT_ID,
+    process.env.NATS_URL
+  );
 
   try {
     await mongoose.connect(process.env.MONGO_URI);
