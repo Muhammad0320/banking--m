@@ -50,7 +50,7 @@ router.post(
       email: user.email,
       name: user.name,
       password: user.password,
-
+      role: user.role,
       id: user.id
     });
 
