@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import { CryptoManager, UserRole, UserStatus } from '@m0banking/common';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type UserAttrs = {
   name: string;
@@ -80,6 +81,9 @@ const userSchema = new mongoose.Schema(
     }
   }
 );
+
+userSchema.set('versionKey', 'version');
+userSchema.plugin(updateIfCurrentPlugin);
 
 userSchema.statics.buildUser = async (attrs: UserAttrs) => {
   return await User.create(attrs);
