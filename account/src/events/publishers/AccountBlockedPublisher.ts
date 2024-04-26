@@ -1,3 +1,5 @@
-import { Publisher, AccountBlockedEvent } from '@m0banking/common';
+import { Publisher, AccountBlockedEvent, Subjects } from '@m0banking/common';
 
-export class AccountBlockPublisher extends Publisher<AccountBlockedEvent> {}
+export class AccountBlockPublisher extends Publisher<AccountBlockedEvent> {
+  readonly subject = Subjects.AccountBlocked;
+}
