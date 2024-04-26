@@ -12,16 +12,16 @@ class Listener {
             .setManualAckMode(true)
             .setAckWait(this.ackWait)
             .setDeliverAllAvailable()
-            .setDurableName(this.queueGrouoName);
+            .setDurableName(this.queueGroupName);
     }
     parseMessage(msg) {
         const messgage = msg.getData();
         return messgage;
     }
     listen() {
-        const subscription = this.client.subscribe(this.subject, this.queueGrouoName, this.subscriptionOption());
+        const subscription = this.client.subscribe(this.subject, this.queueGroupName, this.subscriptionOption());
         subscription.on("message", (msg) => {
-            console.log(`Event received #${msg.getSequence}, ${this.subject} / ${this.queueGrouoName}`);
+            console.log(`Event received #${msg.getSequence}, ${this.subject} / ${this.queueGroupName}`);
             const data = this.parseMessage(msg);
             this.onMessage(data, msg);
         });

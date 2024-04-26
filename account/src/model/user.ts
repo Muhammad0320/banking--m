@@ -1,6 +1,6 @@
-import { UserRole } from '@m0banking/common';
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { UserRole } from '@m0banking/common';
 
 type UserAttrs = {
   id: string;
@@ -55,7 +55,7 @@ userSchema.set('versionKey', 'version');
 userSchema.plugin(updateIfCurrentPlugin);
 
 userSchema.statics.buildUser = async function(attrs: UserAttrs) {
-  return await User.create(attrs);
+  return await User.create({ ...attrs, _id: attrs.id });
 };
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);

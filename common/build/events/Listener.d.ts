@@ -7,8 +7,8 @@ interface Event {
 export declare abstract class Listener<T extends Event> {
     protected client: Stan;
     abstract subject: T["subject"];
-    abstract onMessage(data: T["data"], msg: Message): void;
-    abstract queueGrouoName: string;
+    abstract onMessage(data: T["data"], msg: Message): Promise<void>;
+    abstract queueGroupName: string;
     protected ackWait: number;
     constructor(client: Stan);
     subscriptionOption(): SubscriptionOptions;
