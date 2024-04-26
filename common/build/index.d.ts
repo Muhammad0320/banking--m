@@ -19,6 +19,8 @@ export * from "./service/Crypto";
 export * from "./events/Listener";
 export * from "./events/Subjects";
 export * from "./events/Publisher";
+export * from "./events/UserUpdatedEvent";
+export * from "./events/UserCreatedEvent";
 export * from "./events/AccountCreatedEvent";
 export * from "./events/AccountBlockedEvent";
 export * from "./events/AccountUnblockedEvent";
