@@ -44,3 +44,11 @@ it('creates and saved the user', async () => {
   expect(user?.name).toEqual(data.name);
   expect(user?.email).toEqual(data.email);
 });
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});
