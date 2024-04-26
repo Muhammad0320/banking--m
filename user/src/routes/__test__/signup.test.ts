@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import User from '../../model/user';
+import { natsWrapper } from '../../natswrapper';
 
 it('returns a status other than 404, to assert the route is valid', async () => {
   const { statusCode } = await request(app)
@@ -115,6 +116,10 @@ it('adds a cookie to the header on valid inputs', async () => {
     .expect(201);
 
   expect(response.get('Set-Cookie')).toBeDefined();
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
 
   expect(response.body.data.name).toEqual('shit man');
   expect(response.body.data.email).toEqual('shitman@gmail.com');

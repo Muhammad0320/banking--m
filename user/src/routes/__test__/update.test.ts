@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 import request from 'supertest';
 import User from '../../model/user';
+import { natsWrapper } from '../../natswrapper';
 
 it('returns error order that 400, if route exists', async () => {
   const response = await request(app)
@@ -94,6 +95,8 @@ it('returns a 200 in invalid name', async () => {
     .expect(200);
 
   const notUpdatedUser = await User.findById(signupData.id);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 
   expect(notUpdatedUser!.email).toBe('mehdi Usul');
 });
