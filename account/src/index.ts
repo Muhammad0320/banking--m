@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app';
+import { natsWrapper } from './natswrapper';
 
 const start = async () => {
   const port = 3000;
