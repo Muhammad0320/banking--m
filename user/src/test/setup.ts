@@ -2,12 +2,15 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import { isJsxText } from 'typescript';
 
 let mongo: any;
 
 declare global {
   var signin: (id?: string) => Promise<string[]>;
 }
+
+jest.mock('../natswrapper.ts');
 
 beforeAll(async () => {
   process.env.JWT_KEY = 'my-super-long-and-ultra-secured-jwt-secret-key';
