@@ -1,6 +1,6 @@
-import { Subjects } from '@m0banking/common';
-import { AccountStatus } from '../enums/AccountStatusEnum';
-import { AccountCurrency } from '../enums/AccountCurrencyEnum';
+import { Subjects } from "./Subjects";
+import { AccountStatus } from "./types/AccountStatusEnum";
+import { AccountCurrency } from "./types/AccountCurrencyEnum";
 
 export interface AccountCreatedEvent {
   subject: Subjects.AccountCreated;
