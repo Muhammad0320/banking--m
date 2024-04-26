@@ -8,9 +8,10 @@ type UserAttrs = {
   name: string;
   password: string;
   role: UserRole;
+  version: number;
 };
 
-export type UserDoc = mongoose.Document & UserAttrs & { version: number };
+export type UserDoc = mongoose.Document & UserAttrs;
 
 type UserModel = mongoose.Model<UserDoc> & {
   buildUser(attrs: UserAttrs): Promise<UserDoc>;
@@ -53,6 +54,15 @@ const userSchema = new mongoose.Schema(
 
 userSchema.set('versionKey', 'version');
 userSchema.plugin(updateIfCurrentPlugin);
+
+userSchema.statics.findByLastVersionNumberAndId = async function(
+  id: string,
+  version: number
+) {
+  const __v = version - 1;
+
+  return await User.findOne({ _id: id, version: __v });
+};
 
 userSchema.statics.buildUser = async function(attrs: UserAttrs) {
   return await User.create({ ...attrs, _id: attrs.id });
