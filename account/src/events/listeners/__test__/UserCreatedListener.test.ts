@@ -3,6 +3,7 @@ import { natsWrapper } from '../../../natswrapper';
 import { UserCreatedLitener } from '../UserCreatedListener';
 import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
+import { User } from '../../../model/user';
 
 const setup = async () => {
   // create a listener
@@ -30,3 +31,16 @@ const setup = async () => {
 
   return { listener, data, msg };
 };
+
+it('creates and saved the user', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const user = await User.findById(data.id);
+
+  expect(user).toBeDefined();
+
+  expect(user?.name).toEqual(data.name);
+  expect(user?.email).toEqual(data.email);
+});
