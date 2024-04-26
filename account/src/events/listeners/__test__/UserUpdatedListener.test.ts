@@ -40,3 +40,15 @@ const setup = async () => {
 
   return { listener, data, msg };
 };
+
+it('updates and saves a ticket', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedUser = await User.findById(data.id);
+
+  console.log(updatedUser, 'from test');
+
+  expect(updatedUser).toBeDefined();
+});
