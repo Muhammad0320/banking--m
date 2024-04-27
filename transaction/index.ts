@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './natswrapper';
-import { UserCreatedLitener } from './events/listeners/UserCreatedListener';
-import { UserUpdatedListener } from './events/listeners/UserUpdatedListener';
 
 const start = async () => {
   const port = 3000;
@@ -39,9 +37,6 @@ const start = async () => {
 
     process.on('SIGTERM', () => natsWrapper.client.close());
     process.on('SIGINT', () => natsWrapper.client.close());
-
-    new UserCreatedLitener(natsWrapper.client).listen();
-    new UserUpdatedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI);
 
