@@ -15,7 +15,7 @@ type AccountAttrs = {
   _block: boolean;
 };
 
-type AccountDoc = mongoose.Document & AccountAttrs;
+export type AccountDoc = mongoose.Document & AccountAttrs;
 
 type AccountModel = mongoose.Model<AccountDoc> & {
   buildAccount(attrs: AccountAttrs): Promise<AccountDoc>;
