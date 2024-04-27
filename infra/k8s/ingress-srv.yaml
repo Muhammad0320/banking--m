@@ -25,3 +25,11 @@ spec:
                 name: account-srv
                 port:
                   number: 3000
+
+          - path: /api/v1/transaction/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: transaction-srv
+                port:
+                  number: 3000
