@@ -69,3 +69,14 @@ const accountSchema = new mongoose.Schema(
 
 accountSchema.set('versionKey', 'version');
 accountSchema.plugin(updateIfCurrentPlugin);
+
+// accountSchema.statics.buildUser = function(attrs: AccountAttrs) {
+
+// }
+
+const Account = mongoose.model<AccountDoc, AccountModel>(
+  'Account',
+  accountSchema
+);
+
+export { Account };
