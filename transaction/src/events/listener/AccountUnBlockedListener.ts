@@ -8,7 +8,7 @@ import { queueGroupName } from './queueGroupName';
 import { Message } from 'node-nats-streaming';
 import { Account } from '../../model/account';
 
-export class AccountUnblocked extends Listener<AccountUnBlockedEvent> {
+export class AccountUnblockedListener extends Listener<AccountUnBlockedEvent> {
   readonly subject = Subjects.AccountUnblocked;
 
   queueGroupName = queueGroupName;
