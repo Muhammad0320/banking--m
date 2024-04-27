@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-mongo
+  template:
+    metadata:
+      labels:
+        app: transaction-mongo
+    spec:
+      containers:
+        - name: transaction-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-mongo-srv
+spec:
+  selector:
+    app: transaction-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
