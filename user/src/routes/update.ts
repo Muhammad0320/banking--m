@@ -49,7 +49,8 @@ router.patch(
       email: user.email,
       name: user.name,
       password: user.password,
-      id: user.id
+      id: user.id,
+      version: user.version + 1
     });
 
     res.status(200).json({ status: 'success', data: user });

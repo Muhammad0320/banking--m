@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { AccountStatus } from '@m0banking/common';
-import { AccountType } from '../enums/AccountTypeEnum';
-import { AccountTier } from '../enums/AccountTier';
-import { CryptoManager } from '@m0banking/common';
-import { AccountCurrency } from '@m0banking/common';
-import { generateTenDigitInt } from '../services/generateAccountNumber';
 import { UserDoc } from './user';
+import { AccountTier } from '../enums/AccountTier';
+import { AccountType } from '../enums/AccountTypeEnum';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { generateTenDigitInt } from '../services/generateAccountNumber';
+import {
+  AccountStatus,
+  CryptoManager,
+  AccountCurrency
+} from '@m0banking/common';
 
 type AccountAttrs = {
   pin: string;
