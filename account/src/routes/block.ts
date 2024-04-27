@@ -8,6 +8,8 @@ import {
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
 import { AccountStatus } from '@m0banking/common';
+import { natsWrapper } from '../natswrapper';
+import { AccountBlockPublisher } from '../events/publishers/AccountBlockedPublisher';
 
 const router = express.Router();
 
@@ -26,6 +28,14 @@ router.patch(
     if (!updatedAccount) {
       throw new NotFound('User not found');
     }
+
+    await new AccountBlockPublisher(natsWrapper.client).publish({
+      id: updatedAccount.id,
+      version: updatedAccount.version,
+      user: {
+        id: updatedAccount.user.id
+      }
+    });
 
     res.status(204).json({ status: 'success', data: updatedAccount });
   }
