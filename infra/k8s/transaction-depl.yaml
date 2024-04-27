@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction
+  template:
+    metadata:
+      labels:
+        app: transaction
+    spec:
+      containers:
+        - name: transaction
+          image: muhammad0320/transaction
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_CLUSTER_ID
+              value: banking
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: MONGO_URI
+              value: "mongodb://transaction-mongo-srv:27017/transaction"
+            - name: JWT_EXPIRES_IN
+              value: "24"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-srv
+spec:
+  selector:
+    app: transaction
+  ports:
+    - name: transaction
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
