@@ -15,7 +15,10 @@ export type UserDoc = mongoose.Document & UserAttrs;
 
 type UserModel = mongoose.Model<UserDoc> & {
   buildUser(attrs: UserAttrs): Promise<UserDoc>;
-  findByLastVersionNumberAndId(id: string, version: number): Promise<UserDoc>;
+  findByLastVersionNumberAndId(
+    id: string,
+    version: number
+  ): Promise<UserDoc | null>;
 };
 
 const userSchema = new mongoose.Schema(
