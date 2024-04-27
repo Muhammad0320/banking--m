@@ -8,14 +8,14 @@ type TxnAttrs = {
   id: string;
   account: AccountDoc;
   amount: number;
+  status: TxnStatusEnum;
+  type: TxnTypeEnum;
 };
 
 type TxnDoc = mongoose.Document &
   TxnAttrs & {
     version: number;
     createdAt: Date;
-    status: TxnStatusEnum;
-    type: TxnTypeEnum;
   };
 
 type TxnModel = mongoose.Model<TxnDoc> & {
@@ -30,6 +30,18 @@ const txnSchema = new mongoose.Schema<TxnDoc, TxnModel>({
 
   amount: {
     type: Number,
+    required: true
+  },
+
+  status: {
+    type: String,
+    enum: Object.values(TxnStatusEnum),
+    required: true
+  },
+
+  type: {
+    type: String,
+    enum: Object.values(TxnTypeEnum),
     required: true
   },
 
