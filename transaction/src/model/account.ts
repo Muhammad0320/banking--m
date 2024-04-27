@@ -70,9 +70,9 @@ const accountSchema = new mongoose.Schema(
 accountSchema.set('versionKey', 'version');
 accountSchema.plugin(updateIfCurrentPlugin);
 
-// accountSchema.statics.buildUser = function(attrs: AccountAttrs) {
-
-// }
+accountSchema.statics.buildUser = async function(attrs: AccountAttrs) {
+  return await Account.create({ ...attrs, _id: attrs.id });
+};
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
   'Account',
