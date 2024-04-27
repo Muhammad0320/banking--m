@@ -12,5 +12,7 @@ export class AccountCreatedListener extends Listener<AccountCreatedEvent> {
     const pin = '1967';
 
     await Account.buildAccount({ ...data, pin });
+
+    msg.ack();
   }
 }
