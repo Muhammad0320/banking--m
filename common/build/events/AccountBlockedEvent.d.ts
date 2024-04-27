@@ -3,7 +3,7 @@ export interface AccountBlockedEvent {
     subject: Subjects.AccountBlocked;
     data: {
         id: string;
-        version: string;
+        version: number;
         user: {
             id: string;
         };

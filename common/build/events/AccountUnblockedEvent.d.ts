@@ -3,7 +3,7 @@ export interface AccountUnBlockedEvent {
     subject: Subjects.AccountUnblocked;
     data: {
         id: string;
-        version: string;
+        version: number;
         user: {
             id: string;
         };
