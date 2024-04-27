@@ -24,3 +24,12 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+
+    - image: muhammad0320/transaction
+      context: transaction
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
