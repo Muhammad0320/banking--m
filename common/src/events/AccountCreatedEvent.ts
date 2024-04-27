@@ -8,6 +8,7 @@ export interface AccountCreatedEvent {
   data: {
     id: string;
     version: number;
+    pin: string;
     balance: number;
     status: AccountStatus;
     currency: AccountCurrency;

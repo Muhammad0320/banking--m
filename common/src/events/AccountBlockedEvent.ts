@@ -5,7 +5,7 @@ export interface AccountBlockedEvent {
 
   data: {
     id: string;
-    version: string;
+    version: number;
     user: {
       id: string;
     };

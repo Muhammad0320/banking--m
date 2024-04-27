@@ -5,7 +5,7 @@ export interface AccountUnBlockedEvent {
 
   data: {
     id: string;
-    version: string;
+    version: number;
     user: {
       id: string;
     };
