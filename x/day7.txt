@@ -78,3 +78,12 @@ Follow for more ✨💻
 NextUp ⏭: Explain a knotty technical issue i fell in and unale to fix for over 6 hours, I'm serious.
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 8 🚀 :  This error is an elusive one which I've tried infite number of possible solutions but everything was futile; I just want a mongoose pre 'findOneAndUpdate' to check if an account is blocked it should add a _block field w/  a value of true.
+Then on a pre /^find/ hook it should check for account that the _block is true it should remove from the query result. 
+
+And I can't just get it done.
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+

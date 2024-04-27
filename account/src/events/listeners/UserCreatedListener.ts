@@ -15,7 +15,8 @@ export class UserCreatedLitener extends Listener<USerCreatedEvent> {
       email: data.email,
       name: data.name,
       password: data.password,
-      role: data.role
+      role: data.role,
+      version: 0
     });
 
     msg.ack();
