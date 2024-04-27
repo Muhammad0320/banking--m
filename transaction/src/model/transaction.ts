@@ -54,3 +54,11 @@ const txnSchema = new mongoose.Schema({
 
 txnSchema.set('versionKey', 'version');
 txnSchema.plugin(updateIfCurrentPlugin);
+
+txnSchema.statics.buildTxn = async function(attrs: TxnAttrs) {
+  return await Txn.create(attrs);
+};
+
+const Txn = mongoose.model<TxnDoc, TxnModel>('Txn', txnSchema);
+
+export { Txn };
