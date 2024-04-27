@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import Account from '../../model/account';
 import { AccountTier } from '../../enums/AccountTier';
-import { AccountCurrency } from '../../enums/AccountCurrencyEnum';
+import { AccountCurrency } from '@m0banking/common';
 
 it('returns a error other that 404 if the route exists', async () => {
   const response = await request(app)

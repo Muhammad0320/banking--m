@@ -89,10 +89,10 @@ NextUp ⏭: To update the program to create new account.
 
 Day 9 🚀 :  Updated the code to create new account.
 
-Follow for more ✨💻
 
 NextUp ⏭: Work solely on eventing: Publishing of and listening to events from one service to another, you wont want to missout .  
 
 Good night 🌃.
 
+Follow for more ✨💻 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic
