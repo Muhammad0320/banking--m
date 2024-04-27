@@ -5,11 +5,11 @@ import {
   requireAuth,
   UserRole
 } from '@m0banking/common';
-import express, { Request, Response } from 'express';
 import Account from '../model/account';
-import { AccountStatus } from '@m0banking/common';
-import { AccountBlockPublisher } from '../events/publishers/AccountBlockedPublisher';
 import { natsWrapper } from '../natswrapper';
+import { AccountStatus } from '@m0banking/common';
+import express, { Request, Response } from 'express';
+import { AccountUnblockedPublisher } from '../events/publishers/AccountUnblockedPublisher';
 
 const router = express.Router();
 
@@ -31,7 +31,7 @@ router.patch(
       throw new NotFound('Account not found');
     }
 
-    await new AccountBlockPublisher(natsWrapper.client).publish({
+    await new AccountUnblockedPublisher(natsWrapper.client).publish({
       id: unblockedAccount.id,
       version: unblockedAccount.version,
       user: {
