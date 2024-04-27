@@ -42,7 +42,7 @@ router.patch(
     }
 
     if (
-      existingAccount.userId !== req.currentUser.id &&
+      existingAccount.user.id !== req.currentUser.id &&
       req.currentUser.role === UserRole.User
     ) {
       throw new Forbidden(

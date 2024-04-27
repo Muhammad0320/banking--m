@@ -8,6 +8,8 @@ import {
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
 import { AccountStatus } from '@m0banking/common';
+import { AccountBlockPublisher } from '../events/publishers/AccountBlockedPublisher';
+import { natsWrapper } from '../natswrapper';
 
 const router = express.Router();
 
@@ -17,7 +19,7 @@ router.patch(
   paramsChecker('id'),
   accessibleTo(UserRole.Admin, UserRole.CustomerService),
   async (req: Request, res: Response) => {
-    const unblockedUser = await Account.findByIdAndUpdate(
+    const unblockedAccount = await Account.findByIdAndUpdate(
       req.params.id,
       {
         status: AccountStatus.Active
@@ -25,11 +27,19 @@ router.patch(
       { new: true }
     );
 
-    if (!unblockedUser) {
+    if (!unblockedAccount) {
       throw new NotFound('Account not found');
     }
 
-    res.status(200).json({ status: 'success', data: unblockedUser });
+    await new AccountBlockPublisher(natsWrapper.client).publish({
+      id: unblockedAccount.id,
+      version: unblockedAccount.version,
+      user: {
+        id: unblockedAccount.user.id
+      }
+    });
+
+    res.status(200).json({ status: 'success', data: unblockedAccount });
   }
 );
 
