@@ -14,6 +14,8 @@ import {
   tierValidator
 } from '../services/validators';
 import { User } from '../model/user';
+import { AccountCreatedPublisher } from '../events/publishers/AccountCreatedPublisher';
+import { natsWrapper } from '../natswrapper';
 
 const router = express.Router();
 
@@ -49,6 +51,18 @@ router.post(
       pin: `${pin}`,
       pinConfirm: `${pinConfirm}`,
       type: AccountType.Savings
+    });
+
+    await new AccountCreatedPublisher(natsWrapper.client).publish({
+      id: newAccount.id,
+      version: 0,
+      pin: newAccount.pin,
+      balance: newAccount.balace,
+      status: newAccount.status,
+      currency: newAccount.currency,
+      userId: newAccount.user.id,
+      no: newAccount.no,
+      _block: newAccount._block
     });
 
     res.status(201).json({ status: 'success', data: newAccount });

@@ -23,7 +23,7 @@ router.get(
     }
 
     if (
-      account.userId !== req.currentUser.id &&
+      account.user.id !== req.currentUser.id &&
       req.currentUser.role === UserRole.User
     ) {
       throw new Forbidden(
