@@ -3,6 +3,7 @@ import { AccountDoc } from './account';
 
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type TxnAttrs = {
   id: string;
@@ -22,7 +23,7 @@ type TxnModel = mongoose.Model<TxnDoc> & {
   buildTxn(attrs: TxnAttrs): TxnDoc;
 };
 
-const txnSchema = new mongoose.Schema<TxnDoc, TxnModel>({
+const txnSchema = new mongoose.Schema({
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
@@ -50,3 +51,6 @@ const txnSchema = new mongoose.Schema<TxnDoc, TxnModel>({
     default: new Date()
   }
 });
+
+txnSchema.set('versionKey', 'version');
+txnSchema.plugin(updateIfCurrentPlugin);
