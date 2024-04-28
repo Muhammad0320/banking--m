@@ -234,8 +234,7 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
       pin: 1234,
-      pinConfirm: 1234,
-      user
+      pinConfirm: 1234
     })
     .expect(201);
 
@@ -243,7 +242,7 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
 
   await request(app)
     .patch(path)
-    .set('Cookie', await global.signin(data.user.id))
+    .set('Cookie', await global.signin(user.id))
     .send({
       oldPin: 1234,
       pin: 2345,
