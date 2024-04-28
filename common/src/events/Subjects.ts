@@ -6,4 +6,9 @@ export enum Subjects {
   //
   UserCreated = "user:created",
   UserUpdated = "user:updated",
+
+  //
+  TxnDepositCreated = "txnDeposit:created",
+  TxnWithdrawalCreated = "txnWithdrawal:created",
+  TxnTransferCreated = "txnTransfer:created",
 }
