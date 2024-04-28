@@ -30,7 +30,7 @@ router.post(
 
     const user = await User.findById(req.currentUser.id);
 
-    if (!user) throw new NotFound('user nor found');
+    // if (!user) throw new NotFound('user not found');
 
     // does account existswtith same userID exists , then throw an error.
 
