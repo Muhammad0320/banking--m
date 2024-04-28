@@ -36,7 +36,7 @@ export const validateRequest = (type?: string) => async (
       throw new NotFound('Benebeneficiary Account not found');
 
     if (beneficiaryAccount.status === AccountStatus.Blocked)
-      throw new Forbidden('This account is blocked');
+      throw new Forbidden('Beneficiary is blocked');
   }
 
   next();
