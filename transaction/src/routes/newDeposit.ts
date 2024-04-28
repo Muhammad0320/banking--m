@@ -20,14 +20,13 @@ router.post(
   '/deposit',
   requireAuth,
   [
-    body('amount').isFloat({ gt: 0 }),
+    body('amount')
+      .isFloat({ gt: 0 })
+      .withMessage('Please enter a valid amount!'),
     body('accountId')
       .isString()
-      .custom((input: string) => mongoose.Types.ObjectId.isValid(input)),
-
-    body('beneficiaryId')
-      .isString()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+      .withMessage('Please provide a valid accountId')
   ],
 
   requestValidator,
