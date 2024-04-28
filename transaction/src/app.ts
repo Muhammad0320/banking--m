@@ -3,7 +3,7 @@ import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
-import { createTxnRouter } from './src/routes/newDeposit';
+import { createTxnRouter } from './routes/newDeposit';
 
 const app = express();
 

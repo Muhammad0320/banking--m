@@ -1,4 +1,4 @@
-import { app } from './app';
+import { app } from './src/app';
 import mongoose from 'mongoose';
 import { natsWrapper } from './natswrapper';
 import { AccountCreatedListener } from './src/events/listener/AccountCreatedListener';
