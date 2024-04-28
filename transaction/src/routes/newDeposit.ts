@@ -40,7 +40,7 @@ router.post(
       balance: account.balance + amount
     });
 
-    await Txn.buildTxn({
+    const newTransaction = await Txn.buildTxn({
       amount,
       status: TxnStatusEnum.Success,
 
@@ -48,7 +48,7 @@ router.post(
       type: TxnTypeEnum.Deposit
     });
 
-    res.status(201).json({ status: 'success', data: updatedAccount });
+    res.status(201).json({ status: 'success', data: newTransaction });
   }
 );
 
