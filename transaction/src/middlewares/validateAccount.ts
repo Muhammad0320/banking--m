@@ -18,6 +18,9 @@ export const validateAccount = (type?: string) => async (
 
   if (!account) throw new NotFound('Account not found');
 
+  account.userId !== req.currentUser.id &&
+    new Forbidden('You are not allowed to perform this transaction');
+
   if (account.status === AccountStatus.Blocked)
     throw new Forbidden('This account is blocked');
 
