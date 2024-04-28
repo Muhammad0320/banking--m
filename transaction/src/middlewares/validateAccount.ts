@@ -31,12 +31,19 @@ export const validateAccount = (type?: string) => async (
   }
 
   if (type === 'transfer') {
+    const { beneficiaryId } = req.body;
+
     account.balance >= amount && new BadRequest('Insufficient fund');
 
-    const beneficiaryAccount = await Account.findById(req.body.beneficiaryId);
+    const beneficiaryAccount = await Account.findById(beneficiaryId);
 
     if (!beneficiaryAccount)
       throw new NotFound('Benebeneficiary Account not found');
+
+    if (accountId === beneficiaryId)
+      throw new BadRequest(
+        'You are not allowed to make a transaction to your account 😒'
+      );
 
     if (beneficiaryAccount.status === AccountStatus.Blocked)
       throw new Forbidden('Beneficiary is blocked');
