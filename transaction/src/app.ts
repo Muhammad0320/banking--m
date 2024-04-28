@@ -4,6 +4,7 @@ import cookieSession from 'cookie-session';
 
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 import { createTxnRouter } from './routes/newDeposit';
+import { createTransferRouter } from './routes/newTransfer';
 
 const app = express();
 
@@ -28,6 +29,7 @@ const rootUrl = '/api/v1/txn';
 app.use(currentUser);
 
 app.use(rootUrl, createTxnRouter);
+app.use(rootUrl, createTransferRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');

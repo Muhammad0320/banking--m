@@ -50,4 +50,4 @@ router.get(
   }
 );
 
-export { router as crreateWithdrawalRouter };
+export { router as createTransferRouter };
