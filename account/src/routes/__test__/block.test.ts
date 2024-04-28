@@ -1,10 +1,10 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
+import { User } from '../../model/user';
 import Account from '../../model/account';
 import { AccountTier } from '../../enums/AccountTier';
 import { AccountCurrency, UserRole } from '@m0banking/common';
-import { User } from '../../model/user';
 
 it('returns a 400  for invalid mongoose  id', async () => {
   await request(app)
