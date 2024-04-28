@@ -38,7 +38,7 @@ export const validateAccount = (type?: string) => async (
     const beneficiaryAccount = await Account.findById(beneficiaryId);
 
     if (!beneficiaryAccount)
-      throw new NotFound('Benebeneficiary Account not found');
+      throw new NotFound('Beneficiary Account not found');
 
     if (accountId === beneficiaryId)
       throw new BadRequest(
