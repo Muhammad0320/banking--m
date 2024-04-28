@@ -14,14 +14,18 @@ router.get(
   '/transfer',
   requireAuth,
   [
-    body('amount').isFloat({ gt: 0 }),
+    body('amount')
+      .isFloat({ gt: 0 })
+      .withMessage('Please enter a valid amount!'),
     body('accountId')
       .isString()
-      .custom((input: string) => mongoose.Types.ObjectId.isValid(input)),
+      .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+      .withMessage('Please provide a valid accountId'),
 
     body('beneficiaryId')
       .isString()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+      .withMessage('Please provide a valid beneficiaryId')
   ],
   requestValidator,
   validateAccount('transfer'),
