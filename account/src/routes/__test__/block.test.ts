@@ -5,6 +5,7 @@ import { User } from '../../model/user';
 import Account from '../../model/account';
 import { AccountTier } from '../../enums/AccountTier';
 import { AccountCurrency, UserRole } from '@m0banking/common';
+import { natsWrapper } from '../../natswrapper';
 
 it('returns a 400  for invalid mongoose  id', async () => {
   await request(app)
@@ -84,6 +85,44 @@ it('returns a 204, when everything is valid', async () => {
     )
     .send()
     .expect(204);
+});
+
+it('publishes an AccountBlockPublisher ', async () => {
+  const user = await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/account')
+    .set('Cookie', await global.signin(user.id))
+    .send({
+      currency: AccountCurrency.NGN,
+      tier: AccountTier.Basic,
+      pin: 1234,
+      pinConfirm: 1234
+    })
+    .expect(201);
+
+  await request(app)
+    .patch('/api/v1/account/block/' + data.id)
+    .set(
+      'Cookie',
+      await global.signin(
+        new mongoose.Types.ObjectId().toHexString(),
+        UserRole.CustomerService
+      )
+    )
+    .send()
+    .expect(204);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
 
 it('returns a 404, if this user tries to find a blocked account ', async () => {
