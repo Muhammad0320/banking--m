@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { UserRole } from '@m0banking/common';
 import { AccountTier } from '../../enums/AccountTier';
 import { AccountCurrency } from '@m0banking/common';
+import { User } from '../../model/user';
 it('returns 404 for invalid path', async () => {
   await request(app)
     .patch(
@@ -194,13 +195,20 @@ it(' returns a 200, if admin tried to updatePin ', async () => {
 });
 
 it(' returns a 200, if the account ownser tries to updatePin ', async () => {
-  const userId = new mongoose.Types.ObjectId().toHexString();
+  const user = await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
 
   const {
     body: { data }
   } = await request(app)
     .post('/api/v1/account')
-    .set('Cookie', await global.signin(userId))
+    .set('Cookie', await global.signin(user.id))
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
@@ -215,7 +223,7 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
 
   await request(app)
     .patch(path)
-    .set('Cookie', await global.signin(userId))
+    .set('Cookie', await global.signin(user.id))
     .send({
       oldPin: 1234,
       pin: 2345,
