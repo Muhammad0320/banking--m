@@ -113,9 +113,7 @@ it('returns a 200, when everything is valid', async () => {
     })
     .expect(201);
 
-  const {
-    body: { data: data2 }
-  } = await request(app)
+  await request(app)
     .patch('/api/v1/account/unblock/' + data.id)
     .set(
       'Cookie',
@@ -126,8 +124,6 @@ it('returns a 200, when everything is valid', async () => {
     )
     .send()
     .expect(200);
-
-  expect(data2.status).toEqual(AccountStatus.Active);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

@@ -2,7 +2,9 @@ import request from 'supertest';
 import { app } from '../../app';
 import Account from '../../model/account';
 import { AccountTier } from '../../enums/AccountTier';
-import { AccountCurrency } from '@m0banking/common';
+import { AccountCurrency, UserRole } from '@m0banking/common';
+import { User } from '../../model/user';
+import mongoose from 'mongoose';
 
 it('returns a error other that 404 if the route exists', async () => {
   const response = await request(app)
@@ -65,13 +67,22 @@ it('returns a 401, for unautheticated user', async () => {
 });
 
 it('returns a 201, for valid inputs', async () => {
+  const user = await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
+
   const responseBody1 = await Account.find();
 
   expect(responseBody1.length).toEqual(0);
 
   await request(app)
     .post('/api/v1/account')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(user.id))
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
