@@ -24,26 +24,20 @@ router.post(
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
   ],
   async (req: Request, res: Response) => {
-    const { amount, accountId, beneficiaryId } = req.body;
+    const { amount, accountId } = req.body;
 
     const account = await Account.findById(accountId);
 
-    if (!account) {
-      throw new NotFound('Account not found');
-    }
+    if (!account) throw new NotFound('Account not found');
 
-    const beneficiaryAccount = await Account.findById(beneficiaryId);
-
-    if (!beneficiaryAccount)
-      throw new NotFound(" Beneficiary's account not found");
-
-    console.log(account.status === AccountStatus.Blocked);
-
-    if (
-      account.status === AccountStatus.Blocked ||
-      beneficiaryAccount.status === AccountStatus.Blocked
-    )
+    if (account.status === AccountStatus.Blocked)
       throw new Forbidden('This account is blocked');
+
+    const updatedAccount = await account.updateOne({
+      balance: account.balance + amount
+    });
+
+    res.status(201).json({ status: 'success', data: updatedAccount });
   }
 );
 
