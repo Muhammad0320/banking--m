@@ -7,7 +7,7 @@ import {
   NotFound
 } from '@m0banking/common';
 
-export const validateRequest = (type?: string) => async (
+export const validateAccount = (type?: string) => async (
   req: Request,
   res: Response,
   next: NextFunction

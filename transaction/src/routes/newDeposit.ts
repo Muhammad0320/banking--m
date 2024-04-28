@@ -4,13 +4,14 @@ import mongoose from 'mongoose';
 import { Account } from '../model/account';
 import {
   AccountStatus,
-  BadRequest,
   Forbidden,
-  NotFound
+  NotFound,
+  requestValidator
 } from '@m0banking/common';
 import { Txn } from '../model/transaction';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
+import { validateAccount } from '../middlewares/validateAccount';
 
 const router = express.Router();
 
@@ -26,18 +27,16 @@ router.post(
       .isString()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
   ],
+
+  requestValidator,
+  validateAccount,
   async (req: Request, res: Response) => {
     const { amount, accountId } = req.body;
 
     const account = await Account.findById(accountId);
 
-    if (!account) throw new NotFound('Account not found');
-
-    if (account.status === AccountStatus.Blocked)
-      throw new Forbidden('This account is blocked');
-
-    const updatedAccount = await account.updateOne({
-      balance: account.balance + amount
+    const updatedAccount = await account!.updateOne({
+      balance: account!.balance + amount
     });
 
     const newTransaction = await Txn.buildTxn({
