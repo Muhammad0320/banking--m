@@ -1,6 +1,6 @@
 import { Subjects } from "./Subjects";
 
-export interface TxnDepositCreatedEvent {
+export interface TxnWithdrawalCreatedEvent {
   subject: Subjects.TxnWithdrawalCreated;
 
   data: {
