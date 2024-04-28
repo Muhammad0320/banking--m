@@ -4,5 +4,8 @@ export declare enum Subjects {
     AccountUpdated = "account:updated",
     AccountUnblocked = "account:unblocked",
     UserCreated = "user:created",
-    UserUpdated = "user:updated"
+    UserUpdated = "user:updated",
+    TxnDepositCreated = "txnDeposit:created",
+    TxnWithdrawalCreated = "txnWithdrawal:created",
+    TxnTransferCreated = "txnTransfer:created"
 }

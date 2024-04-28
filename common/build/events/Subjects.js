@@ -10,4 +10,8 @@ var Subjects;
     //
     Subjects["UserCreated"] = "user:created";
     Subjects["UserUpdated"] = "user:updated";
+    //
+    Subjects["TxnDepositCreated"] = "txnDeposit:created";
+    Subjects["TxnWithdrawalCreated"] = "txnWithdrawal:created";
+    Subjects["TxnTransferCreated"] = "txnTransfer:created";
 })(Subjects || (exports.Subjects = Subjects = {}));

@@ -24,5 +24,8 @@ export * from "./events/UserCreatedEvent";
 export * from "./events/AccountCreatedEvent";
 export * from "./events/AccountBlockedEvent";
 export * from "./events/AccountUnblockedEvent";
+export * from "./events/TxnDepositCreatedEvent";
 export * from "./events/types/AccountStatusEnum";
+export * from "./events/TxnTransferCreatedEvent";
+export * from "./events/TxnWithdrawalCreatedEvent";
 export * from "./events/types/AccountCurrencyEnum";

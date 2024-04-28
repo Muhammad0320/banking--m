@@ -41,5 +41,8 @@ __exportStar(require("./events/UserCreatedEvent"), exports);
 __exportStar(require("./events/AccountCreatedEvent"), exports);
 __exportStar(require("./events/AccountBlockedEvent"), exports);
 __exportStar(require("./events/AccountUnblockedEvent"), exports);
+__exportStar(require("./events/TxnDepositCreatedEvent"), exports);
 __exportStar(require("./events/types/AccountStatusEnum"), exports);
+__exportStar(require("./events/TxnTransferCreatedEvent"), exports);
+__exportStar(require("./events/TxnWithdrawalCreatedEvent"), exports);
 __exportStar(require("./events/types/AccountCurrencyEnum"), exports);
