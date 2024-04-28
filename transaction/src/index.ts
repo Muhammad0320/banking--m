@@ -1,9 +1,9 @@
-import { app } from './src/app';
+import { app } from './app';
 import mongoose from 'mongoose';
-import { natsWrapper } from './natswrapper';
-import { AccountCreatedListener } from './src/events/listener/AccountCreatedListener';
-import { AccountBlockedListener } from './src/events/listener/AccountBlockedListener';
-import { AccountUnblockedListener } from './src/events/listener/AccountUnBlockedListener';
+import { natsWrapper } from '../natswrapper';
+import { AccountCreatedListener } from './events/listener/AccountCreatedListener';
+import { AccountBlockedListener } from './events/listener/AccountBlockedListener';
+import { AccountUnblockedListener } from './events/listener/AccountUnBlockedListener';
 
 const start = async () => {
   const port = 3000;

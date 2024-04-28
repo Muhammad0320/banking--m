@@ -14,7 +14,9 @@ export class AccountBlockedListener extends Listener<AccountBlockedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: AccountBlockedEvent['data'], msg: Message) {
-    const account = await Account.findByLastVersionAndId(data.id, data.version);
+    const { id, version } = data;
+
+    const account = await Account.findByLastVersionAndId(id, version);
 
     if (!account) {
       throw new Error('Account not found');
