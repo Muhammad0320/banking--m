@@ -44,4 +44,4 @@ router.post(
   }
 );
 
-export { router as newWithdrawalRouter };
+export { router as createWithdrawalRouter };
