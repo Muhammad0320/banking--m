@@ -41,6 +41,11 @@ router.patch(
       throw new BadRequest('invalid pin');
     }
 
+    console.log(
+      existingAccount.user.id === req.currentUser.id,
+      'for the update pin'
+    );
+
     if (
       existingAccount.user.id !== req.currentUser.id &&
       req.currentUser.role === UserRole.User

@@ -234,17 +234,16 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
       pin: 1234,
-      pinConfirm: 1234
+      pinConfirm: 1234,
+      user
     })
     .expect(201);
 
   const path = '/api/v1/account/updatePin/' + data.id;
 
-  console.log(path);
-
   await request(app)
     .patch(path)
-    .set('Cookie', await global.signin(user.id))
+    .set('Cookie', await global.signin(data.user.id))
     .send({
       oldPin: 1234,
       pin: 2345,
