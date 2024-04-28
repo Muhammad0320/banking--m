@@ -8,6 +8,9 @@ import {
   Forbidden,
   NotFound
 } from '@m0banking/common';
+import { Txn } from '../model/transaction';
+import { TxnStatusEnum } from '../enums/TxnStatusEnum';
+import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 
 const router = express.Router();
 
@@ -35,6 +38,14 @@ router.post(
 
     const updatedAccount = await account.updateOne({
       balance: account.balance + amount
+    });
+
+    await Txn.buildTxn({
+      amount,
+      status: TxnStatusEnum.Success,
+
+      account: updatedAccount,
+      type: TxnTypeEnum.Deposit
     });
 
     res.status(201).json({ status: 'success', data: updatedAccount });

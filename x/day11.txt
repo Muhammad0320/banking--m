@@ -1,0 +1,98 @@
+
+
+
+
+Day 11 🚀 :  Listened for the UserCreatedEvent, to make the copy of user model in the account service up tp date. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Listened for the UserUpdatedEvent.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 11 🚀 :  Listened for the UserUpdatedEvent, to make sure user documents are updated. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Create an AccountCreatedPublisher.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+
+
+Day 11 🚀 :  Create an AccountCreatedPublisher, for the route responsible for creating new account (do that later). 
+
+Follow for more ✨💻
+
+NextUp ⏭: Create an AccountBlockedPublisher.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+
+Day 11 🚀 :  Create an AccountBlockedublisher, this is incredibly useful for the transaction service (do that later). 
+
+Follow for more ✨💻
+
+NextUp ⏭: Create an AccountUnblockedPublisher.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic
+
+
+Day 11 🚀 :  Create an AccountUnblockedPublisher, this is incredibly useful for the transaction service also (do that later). 
+
+
+Follow for more ✨💻
+
+NextUp ⏭: Almost forgot; Add tests for the userCreatedListener  .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 11 🚀 :  Added tests for the userCreatedListener, to make sure we're still alright. 
+
+Follow for more ✨💻
+
+NextUp ⏭:  Add tests for the userUpdatedListener  .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+
+Day 11 🚀 :  Added tests for the userUpdatedListener, to make sure we're still on track. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Publish an account created event in the route necessary for that.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 11 🚀 : Publish an AccountCreatedEvent from the route that creates new account. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Publish an account blocked event in the route necessary for that.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 11 🚀 : Publish an AccountBlockedEvent from the route that block accounts. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Publish an AccountUnblockedEvent in the route necessary for that.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 11 🚀 : Publish an AccountUnblockedEvent from the route that block accounts. 
+
+NextUp ⏭: We'll move to the most important service: Transaction service in sha Allah, Don't miss out. 
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 

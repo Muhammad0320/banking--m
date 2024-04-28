@@ -6,7 +6,6 @@ import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type TxnAttrs = {
-  id: string;
   account: AccountDoc;
   amount: number;
   status: TxnStatusEnum;
@@ -20,7 +19,7 @@ type TxnDoc = mongoose.Document &
   };
 
 type TxnModel = mongoose.Model<TxnDoc> & {
-  buildTxn(attrs: TxnAttrs): TxnDoc;
+  buildTxn(attrs: TxnAttrs): Promise<TxnDoc>;
 };
 
 const txnSchema = new mongoose.Schema({
