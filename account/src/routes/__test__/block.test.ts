@@ -122,6 +122,8 @@ it('publishes an AccountBlockPublisher ', async () => {
     .send()
     .expect(204);
 
+  console.log((natsWrapper.client.publish as jest.Mock).mock.calls);
+
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
 
