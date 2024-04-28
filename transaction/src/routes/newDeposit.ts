@@ -6,7 +6,8 @@ import {
   AccountStatus,
   Forbidden,
   NotFound,
-  requestValidator
+  requestValidator,
+  requireAuth
 } from '@m0banking/common';
 import { Txn } from '../model/transaction';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.post(
   '/deposit',
+  requireAuth,
   [
     body('amount').isFloat({ gt: 0 }),
     body('accountId')
