@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { UserRole } from '@m0banking/common';
 import { AccountCurrency } from '@m0banking/common';
 import { AccountTier } from '../../enums/AccountTier';
+import { User } from '../../model/user';
 
 it('returns a 401 on unauthorized user access', async () => {
   const accountId = new mongoose.Types.ObjectId().toHexString();
@@ -91,13 +92,20 @@ it('returns a 200, if user is an admin', async () => {
 });
 
 it('returns a 200, if a user checks his/her own account', async () => {
-  const userId = new mongoose.Types.ObjectId().toHexString();
+  const user = await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
 
   const {
     body: { data }
   } = await request(app)
     .post('/api/v1/account')
-    .set('Cookie', await global.signin(userId))
+    .set('Cookie', await global.signin(user.id))
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
@@ -108,7 +116,7 @@ it('returns a 200, if a user checks his/her own account', async () => {
 
   await request(app)
     .get('/api/v1/account/' + data.id)
-    .set('Cookie', await global.signin(userId))
+    .set('Cookie', await global.signin(user.id))
     .send()
     .expect(200);
 });
