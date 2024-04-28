@@ -10,6 +10,7 @@ type TxnAttrs = {
   amount: number;
   status: TxnStatusEnum;
   type: TxnTypeEnum;
+  beneficiary?: AccountDoc;
 };
 
 type TxnDoc = mongoose.Document &
@@ -24,6 +25,12 @@ type TxnModel = mongoose.Model<TxnDoc> & {
 
 const txnSchema = new mongoose.Schema({
   account: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
+    required: true
+  },
+
+  beneficiary: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
   },
