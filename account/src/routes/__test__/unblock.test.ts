@@ -3,6 +3,7 @@ import { app } from '../../app';
 import mongoose from 'mongoose';
 import { AccountTier } from '../../enums/AccountTier';
 import { UserRole, AccountCurrency, AccountStatus } from '@m0banking/common';
+import { User } from '../../model/user';
 
 it('returns a 400  for invalid mongoose  id', async () => {
   await request(app)
@@ -49,11 +50,20 @@ it('returns a 404, on invalid id', async () => {
 });
 
 it('returns a 200, when everything is valid', async () => {
+  const user = await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
+
   const {
     body: { data }
   } = await request(app)
     .post('/api/v1/account')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(user.id))
     .send({
       currency: AccountCurrency.NGN,
       tier: AccountTier.Basic,
