@@ -7,6 +7,8 @@ import { Account } from '../model/account';
 import { Txn } from '../model/transaction';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
+import { TxnWithdrawalPublisher } from '../events/publisher/TxnWithdrawalPublishert';
+import { natsWrapper } from '../../natswrapper';
 
 const router = express.Router();
 
@@ -36,13 +38,26 @@ router.post(
 
     if (!account) return;
 
-    await account.updateOne({ balance: account.balance - +amount });
+    await account.updateOne(
+      { balance: account.balance - +amount },
+      { new: true }
+    );
 
     const withdrawal = await Txn.buildTxn({
       account,
       amount,
       status: TxnStatusEnum.Success,
       type: TxnTypeEnum.Withdrawal
+    });
+
+    await new TxnWithdrawalPublisher(natsWrapper.client).publish({
+      id: withdrawal.id,
+      version: withdrawal.version,
+      account: {
+        id: account.id,
+        version: account.version,
+        balance: account.balance
+      }
     });
 
     res.status(201).json({ status: 'success', data: withdrawal });
