@@ -31,13 +31,13 @@ it('returns a 401 for unauthitcated user ', async () => {
 it('returns a 400 for invalid  for invalid amount', async () => {
   const account = await accountBuilder();
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ amount: 0, accountId: account.id, pin: account.pin })
     .expect(400);
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ accountId: account.id, pin: account.pin })
@@ -47,13 +47,13 @@ it('returns a 400 for invalid  for invalid amount', async () => {
 it('returns a 400 for invalid pin', async () => {
   const account = await accountBuilder();
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ amount: 100, accountId: account.id })
     .expect(400);
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ amount: 240, accountId: account.id, pin: 2212 })
@@ -63,13 +63,13 @@ it('returns a 400 for invalid pin', async () => {
 it('returns a 400, for invalid accountId', async () => {
   const account = await accountBuilder();
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ amount: 0, accountId: 'shit id', pin: account.pin })
     .expect(400);
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({ amount: 0, pin: 2212 })
@@ -79,7 +79,7 @@ it('returns a 400, for invalid accountId', async () => {
 it('returns a 404, for valid but incorrect accountId', async () => {
   const account = await accountBuilder();
 
-  request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin(account.userId))
     .send({
@@ -88,4 +88,20 @@ it('returns a 404, for valid but incorrect accountId', async () => {
       pin: account.pin
     })
     .expect(404);
+});
+
+it('returns returns a 201 when everything is valid ', async () => {
+  const account = await accountBuilder();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin(account.userId))
+    .send({
+      amount: 1000,
+      accountId: account.id,
+      pin: account.pin
+    })
+    .expect(201);
 });
