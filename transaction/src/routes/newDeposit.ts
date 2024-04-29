@@ -43,9 +43,12 @@ router.post(
 
     const account = await Account.findById(accountId);
 
-    const updatedAccount = await account!.updateOne({
-      balance: account!.balance + amount
-    });
+    const updatedAccount = await account!.updateOne(
+      {
+        balance: account!.balance + amount
+      },
+      { new: true }
+    );
 
     const newTransaction = await Txn.buildTxn({
       amount,
