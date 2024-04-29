@@ -39,7 +39,6 @@ router.post(
 
   requestValidator,
   validateAccount,
-  invalidAttemptTracker,
   async (req: Request, res: Response) => {
     const { amount, accountId } = req.body;
 

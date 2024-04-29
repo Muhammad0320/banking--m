@@ -37,7 +37,6 @@ router.get(
   ],
   requestValidator,
   validateAccount('transfer'),
-  invalidAttemptTracker,
 
   async (req: Request, res: Response) => {
     const { amount, accountId, beneficiaryId } = req.body;

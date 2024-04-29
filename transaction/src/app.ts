@@ -6,6 +6,7 @@ import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 import { createTxnRouter } from './routes/newDeposit';
 import { createTransferRouter } from './routes/newTransfer';
 import { createWithdrawalRouter } from './routes/newWithdrawal';
+import { invalidAttemptTracker } from './middlewares/invalidAttemptTracker';
 
 const app = express();
 
@@ -29,6 +30,7 @@ const rootUrl = '/api/v1/txn';
 
 app.use(currentUser);
 
+app.use(invalidAttemptTracker);
 app.use(rootUrl, createTxnRouter);
 app.use(rootUrl, createTransferRouter);
 app.use(rootUrl, createWithdrawalRouter);
