@@ -21,6 +21,14 @@ const accountBuilder = async () =>
     _block: false
   });
 
+it('returns a 401, for unautheticated user', async () => {
+  await request(app)
+    .post('/api/v1/txn/deposit')
+
+    .send({})
+    .expect(401);
+});
+
 it('returns a  400 for invalid amount', async () => {
   const account = await accountBuilder();
 
