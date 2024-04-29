@@ -18,7 +18,7 @@ const accountBuilder = async () =>
     id: new mongoose.Types.ObjectId().toHexString(),
     balance: 0,
     version: 0,
-    no: 83923939393,
+    no: Math.floor(83923939393 * Math.random() * 1.5),
     _block: false
   });
 
