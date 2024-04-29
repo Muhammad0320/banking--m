@@ -50,12 +50,28 @@ it('returns a 400 for invalid pin', async () => {
   request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 0, accountId: account.id })
+    .send({ amount: 100, accountId: account.id })
     .expect(400);
 
   request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 0, accountId: account.id, pin: 2212 })
+    .send({ amount: 240, accountId: account.id, pin: 2212 })
+    .expect(400);
+});
+
+it('returns a 400, for invalid accountId', async () => {
+  const account = await accountBuilder();
+
+  request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({ amount: 0, accountId: 'shit id', pin: account.pin })
+    .expect(400);
+
+  request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({ amount: 0, pin: 2212 })
     .expect(400);
 });
