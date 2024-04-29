@@ -104,4 +104,7 @@ it('returns returns a 201 when everything is valid ', async () => {
       pin: account.pin
     })
     .expect(201);
+
+  expect(data.amount).toEqual(1000);
+  expect(account.balance).toEqual(1000);
 });
