@@ -25,7 +25,12 @@ router.get(
     body('beneficiaryId')
       .isString()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
-      .withMessage('Please provide a valid beneficiaryId')
+      .withMessage('Please provide a valid beneficiaryId'),
+
+    body('pin')
+      .isInt()
+      .isLength({ min: 4, max: 4 })
+      .withMessage('Please provide a valid pin')
   ],
   requestValidator,
   validateAccount('transfer'),
