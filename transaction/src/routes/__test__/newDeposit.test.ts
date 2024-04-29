@@ -27,3 +27,13 @@ it('returns a 401 for unauthitcated user ', async () => {
     .send()
     .expect(401);
 });
+
+it('returns a 400 for invalid  for invalid amount', async () => {
+  const account = await accountBuilder();
+
+  request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({ amount: 0, accountId: account.id, pin: account.pin })
+    .expect(401);
+});
