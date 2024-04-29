@@ -13,6 +13,8 @@ import { Txn } from '../model/transaction';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { validateAccount } from '../middlewares/validateAccount';
+import { TxnDepositCreatedPublisher } from '../events/publisher/TxnDepositCreatedPublisher';
+import { natsWrapper } from '../../natswrapper';
 
 const router = express.Router();
 
@@ -51,6 +53,16 @@ router.post(
 
       account: updatedAccount,
       type: TxnTypeEnum.Deposit
+    });
+
+    await new TxnDepositCreatedPublisher(natsWrapper.client).publish({
+      id: newTransaction.id,
+      version: newTransaction.version,
+      account: {
+        id: updatedAccount.id,
+        balance: updatedAccount.balance,
+        version: updatedAccount.version
+      }
     });
 
     res.status(201).json({ status: 'success', data: newTransaction });
