@@ -3,7 +3,7 @@ import { app } from '../../app';
 import { Account } from '../../model/account';
 import mongoose from 'mongoose';
 import { AccountCurrency, AccountStatus } from '@m0banking/common';
-import { natsWrapper } from '../../../natswrapper';
+import { natsWrapper } from '../../natswrapper';
 
 const accountBuilder = async () =>
   await Account.buildAccount({

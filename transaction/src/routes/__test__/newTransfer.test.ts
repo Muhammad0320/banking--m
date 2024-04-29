@@ -31,6 +31,33 @@ it('returns a  400 for invalid amount', async () => {
     .set('Cookie', await global.signin())
     .send({
       amount: 0,
+      accountId: account.id,
+      pin: account.pin,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: account.id,
+      pin: account.pin,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+});
+
+it('returns a 400 for invalid ids: account & beneficiary', async () => {
+  const account = await accountBuilder();
+
+  const beneficiaryAccount = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({
+      amount: 100,
       accountId: 'shit id',
       pin: account.pin,
       beneficiaryId: beneficiaryAccount.id
@@ -41,9 +68,10 @@ it('returns a  400 for invalid amount', async () => {
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({
-      accountId: 'shit id',
+      amount: 100,
+      accountId: account.id,
       pin: account.pin,
-      beneficiaryId: beneficiaryAccount.id
+      beneficiaryId: 'shit id'
     })
     .expect(400);
 });

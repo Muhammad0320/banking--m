@@ -8,7 +8,7 @@ import { Txn } from '../model/transaction';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { TxnTransferPublisher } from '../events/publisher/TxnTransferPublisher';
-import { natsWrapper } from '../../natswrapper';
+import { natsWrapper } from '../natswrapper';
 import { invalidAttemptTracker } from '../middlewares/invalidAttemptTracker';
 
 const router = express.Router();

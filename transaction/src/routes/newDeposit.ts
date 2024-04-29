@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { body } from 'express-validator';
 import { Account } from '../model/account';
 import { Txn } from '../model/transaction';
-import { natsWrapper } from '../../natswrapper';
+import { natsWrapper } from '../natswrapper';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import express, { Request, Response } from 'express';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
@@ -37,7 +37,9 @@ router.post(
 
     const account = await Account.findById(accountId);
 
-    const updatedAccount = await account!.updateOne(
+    if (!account) return;
+
+    const updatedAccount = await account.updateOne(
       {
         balance: account!.balance + amount
       },
