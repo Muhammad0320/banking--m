@@ -3,6 +3,7 @@ import { Account } from '../model/account';
 import {
   AccountStatus,
   BadRequest,
+  CryptoManager,
   Forbidden,
   NotFound
 } from '@m0banking/common';
@@ -12,7 +13,7 @@ export const validateAccount = (type?: string) => async (
   res: Response,
   next: NextFunction
 ) => {
-  const { amount, accountId } = req.body;
+  const { amount, accountId, pin } = req.body;
 
   const account = await Account.findById(accountId);
 
@@ -20,6 +21,9 @@ export const validateAccount = (type?: string) => async (
 
   account.userId !== req.currentUser.id &&
     new Forbidden('You are not allowed to perform this transaction');
+
+  if (!(await CryptoManager.compare(account.pin, `${pin}`)))
+    throw new BadRequest('Invalid pin');
 
   if (account.status === AccountStatus.Blocked)
     throw new Forbidden('This account is blocked');
