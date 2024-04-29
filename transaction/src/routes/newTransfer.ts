@@ -7,6 +7,8 @@ import { Account } from '../model/account';
 import { Txn } from '../model/transaction';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
+import { TxnTransferPublisher } from '../events/publisher/TxnTransferPublisher';
+import { natsWrapper } from '../../natswrapper';
 
 const router = express.Router();
 
@@ -59,6 +61,18 @@ router.get(
       account,
       status: TxnStatusEnum.Success,
       type: TxnTypeEnum.Transfer
+    });
+
+    await new TxnTransferPublisher(natsWrapper.client).publish({
+      id: newTransfer.id,
+      version: newTransfer.version,
+      account: {
+        id: account.id,
+        balance: account.balance,
+        version: account.version
+      }
+
+      // add also for the beneficiary account
     });
 
     res.status(201).json({ status: 'success', data: newTransfer });
