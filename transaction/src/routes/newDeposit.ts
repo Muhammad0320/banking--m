@@ -15,6 +15,7 @@ import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { validateAccount } from '../middlewares/validateAccount';
 import { TxnDepositCreatedPublisher } from '../events/publisher/TxnDepositCreatedPublisher';
 import { natsWrapper } from '../../natswrapper';
+import { invalidAttemptTracker } from '../middlewares/invalidAttemptTracker';
 
 const router = express.Router();
 
@@ -38,6 +39,7 @@ router.post(
 
   requestValidator,
   validateAccount,
+  invalidAttemptTracker,
   async (req: Request, res: Response) => {
     const { amount, accountId } = req.body;
 
