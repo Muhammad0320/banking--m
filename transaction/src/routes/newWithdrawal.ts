@@ -20,7 +20,12 @@ router.post(
     body('accountId')
       .isString()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
-      .withMessage('Please provide a valid accountId')
+      .withMessage('Please provide a valid accountId'),
+
+    body('pin')
+      .isInt()
+      .isLength({ min: 4, max: 4 })
+      .withMessage('Please provide a valid pin')
   ],
   requestValidator,
   validateAccount('withdrawal'),
