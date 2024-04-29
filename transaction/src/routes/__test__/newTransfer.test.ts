@@ -1,6 +1,8 @@
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
-import { Account } from '../../model/account';
+import request from 'supertest';
 import mongoose from 'mongoose';
+import { app } from '../../app';
+import { Account } from '../../model/account';
+import { AccountCurrency, AccountStatus } from '@m0banking/common';
 
 const accountBuilder = async () =>
   await Account.buildAccount({
@@ -18,3 +20,30 @@ const accountBuilder = async () =>
     no: 83923939393,
     _block: false
   });
+
+it('returns a  400 for invalid amount', async () => {
+  const account = await accountBuilder();
+
+  const beneficiaryAccount = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({
+      amount: 0,
+      accountId: 'shit id',
+      pin: account.pin,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: 'shit id',
+      pin: account.pin,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+});
