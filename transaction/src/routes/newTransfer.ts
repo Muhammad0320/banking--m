@@ -13,7 +13,7 @@ import { invalidAttemptTracker } from '../middlewares/invalidAttemptTracker';
 
 const router = express.Router();
 
-router.get(
+router.post(
   '/transfer',
   requireAuth,
   [
@@ -45,7 +45,11 @@ router.get(
 
     const beneficiary = await Account.findById(beneficiaryId);
 
+    console.log('Its from here');
+
     if (!account || !beneficiary) throw new NotFound('');
+
+    console.log('Its from here now !!!!');
 
     await account!.updateOne(
       { balance: account!.balance - amount },

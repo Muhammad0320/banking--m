@@ -7,7 +7,7 @@ import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import express, { Request, Response } from 'express';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { validateAccount } from '../middlewares/validateAccount';
-import { requestValidator, requireAuth } from '@m0banking/common';
+import { NotFound, requestValidator, requireAuth } from '@m0banking/common';
 import { TxnDepositCreatedPublisher } from '../events/publisher/TxnDepositCreatedPublisher';
 
 const router = express.Router();
@@ -31,13 +31,13 @@ router.post(
   ],
 
   requestValidator,
-  validateAccount,
+  validateAccount('deposit'),
   async (req: Request, res: Response) => {
     const { amount, accountId } = req.body;
 
     const account = await Account.findById(accountId);
 
-    if (!account) return;
+    if (!account) throw new NotFound('');
 
     const updatedAccount = await account.updateOne(
       {

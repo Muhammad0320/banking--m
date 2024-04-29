@@ -1,4 +1,8 @@
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
+import {
+  AccountCurrency,
+  AccountStatus,
+  CryptoManager
+} from '@m0banking/common';
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
@@ -31,6 +35,11 @@ const accountSchema = new mongoose.Schema(
     no: {
       type: Number,
       unique: true
+    },
+
+    pin: {
+      type: String,
+      required: true
     },
 
     userId: {
@@ -74,6 +83,13 @@ const accountSchema = new mongoose.Schema(
 
 accountSchema.set('versionKey', 'version');
 accountSchema.plugin(updateIfCurrentPlugin);
+
+accountSchema.pre('save', async function(next) {
+  if (!this.isNew) return next();
+
+  this.pin = await CryptoManager.hash(this.pin);
+  console.log(this._block, 'from pre save hook');
+});
 
 accountSchema.statics.buildAccount = async function(attrs: AccountAttrs) {
   return await Account.create({ ...attrs, _id: attrs.id });

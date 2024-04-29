@@ -23,8 +23,7 @@ const accountBuilder = async () =>
 
 it('returns a 401, for unautheticated user', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
-
+    .post('/api/v1/txn/transfer')
     .send({})
     .expect(401);
 });
@@ -35,7 +34,7 @@ it('returns a  400 for invalid amount', async () => {
   const beneficiaryAccount = await accountBuilder();
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/transfer')
     .set('Cookie', await global.signin())
     .send({
       amount: 0,
@@ -46,7 +45,7 @@ it('returns a  400 for invalid amount', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/transfer')
     .set('Cookie', await global.signin())
     .send({
       accountId: account.id,
@@ -62,7 +61,7 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
   const beneficiaryAccount = await accountBuilder();
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/transfer')
     .set('Cookie', await global.signin())
     .send({
       amount: 100,
@@ -73,13 +72,30 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/transfer')
     .set('Cookie', await global.signin())
     .send({
       amount: 100,
       accountId: account.id,
       pin: account.pin,
       beneficiaryId: 'shit id'
+    })
+    .expect(400);
+});
+
+it('returns a  400 for invalid pin', async () => {
+  const account = await accountBuilder();
+
+  const beneficiaryAccount = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/transfer')
+    .set('Cookie', await global.signin())
+    .send({
+      amount: 100,
+      accountId: account.id,
+      pin: 1234,
+      beneficiaryId: beneficiaryAccount.id
     })
     .expect(400);
 });
