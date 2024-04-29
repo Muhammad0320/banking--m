@@ -43,9 +43,15 @@ router.get(
 
     if (!account || !beneficiary) throw new NotFound('');
 
-    await account!.updateOne({ balance: account!.balance - amount });
+    await account!.updateOne(
+      { balance: account!.balance - amount },
+      { new: true }
+    );
 
-    await beneficiary!.updateOne({ balance: beneficiary!.balance + +amount });
+    await beneficiary!.updateOne(
+      { balance: beneficiary!.balance + +amount },
+      { new: true }
+    );
 
     const newTransfer = await Txn.buildTxn({
       amount,
