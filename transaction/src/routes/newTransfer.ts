@@ -9,6 +9,7 @@ import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { TxnTransferPublisher } from '../events/publisher/TxnTransferPublisher';
 import { natsWrapper } from '../../natswrapper';
+import { invalidAttemptTracker } from '../middlewares/invalidAttemptTracker';
 
 const router = express.Router();
 
@@ -36,6 +37,8 @@ router.get(
   ],
   requestValidator,
   validateAccount('transfer'),
+  invalidAttemptTracker,
+
   async (req: Request, res: Response) => {
     const { amount, accountId, beneficiaryId } = req.body;
 
