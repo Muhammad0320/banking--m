@@ -39,13 +39,13 @@ it('returns a 400 for invalid  for invalid amount', async () => {
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 0, accountId: account.id, pin: account.pin })
+    .send({ amount: 0, accountId: account.id, pin: 1234 })
     .expect(400);
 
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ accountId: account.id, pin: account.pin })
+    .send({ accountId: account.id, pin: 1234 })
     .expect(400);
 });
 
@@ -71,7 +71,7 @@ it('returns a 400, for invalid accountId', async () => {
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 100, accountId: 'shit id', pin: account.pin })
+    .send({ amount: 100, accountId: 'shit id', pin: 1234 })
     .expect(400);
 
   await request(app)
@@ -90,7 +90,7 @@ it('returns a 404, for valid but incorrect accountId', async () => {
     .send({
       amount: 100,
       accountId: new mongoose.Types.ObjectId().toHexString(),
-      pin: account.pin
+      pin: 1234
     })
     .expect(404);
 });
@@ -104,7 +104,7 @@ it('returns a 403, if other user tried to transact with another account', async 
     .send({
       amount: 0,
       accountId: account.id,
-      pin: account.pin
+      pin: 1234
     })
     .expect(403);
 });
@@ -120,7 +120,7 @@ it('returns returns a 201 when everything is valid ', async () => {
     .send({
       amount: 1000,
       accountId: account.id,
-      pin: account.pin
+      pin: 1234
     })
     .expect(201);
 
@@ -139,7 +139,7 @@ it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', as
     .send({
       amount: 1000,
       accountId: account.id,
-      pin: account.pin
+      pin: 1234
     })
     .expect(201);
 
