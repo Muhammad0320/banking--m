@@ -2,14 +2,18 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Account } from '../../model/account';
 import mongoose from 'mongoose';
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
+import {
+  AccountCurrency,
+  AccountStatus,
+  CryptoManager
+} from '@m0banking/common';
 import { natsWrapper } from '../../natswrapper';
 
 const accountBuilder = async () =>
   await Account.buildAccount({
     currency: AccountCurrency.NGN,
 
-    pin: '1234',
+    pin: await CryptoManager.hash('1234'),
 
     userId: new mongoose.Types.ObjectId().toHexString(),
 
@@ -91,6 +95,20 @@ it('returns a 404, for valid but incorrect accountId', async () => {
     .expect(404);
 });
 
+it('returns a 403, if other user tried to transact with another account', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .set('Cookie', await global.signin())
+    .send({
+      amount: 0,
+      accountId: account.id,
+      pin: account.pin
+    })
+    .expect(404);
+});
+
 it('returns returns a 201 when everything is valid ', async () => {
   const account = await accountBuilder();
 
@@ -113,9 +131,7 @@ it('returns returns a 201 when everything is valid ', async () => {
 it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', async () => {
   const account = await accountBuilder();
 
-  const {
-    body: { data }
-  } = await request(app)
+  await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin(account.userId))
     .send({
