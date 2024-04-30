@@ -3,6 +3,9 @@ import { app } from './app';
 import { natsWrapper } from './natswrapper';
 import { UserCreatedLitener } from './events/listeners/UserCreatedListener';
 import { UserUpdatedListener } from './events/listeners/UserUpdatedListener';
+import { TxnDepositedListener } from './events/listeners/TxnDepositCretaedListener';
+import { TxnWithdrawalCreatedListener } from './events/listeners/TxnWithdrawalCreatedListener';
+import { TxnTransferCreatedListener } from './events/listeners/TxnTransferCreatedListener';
 
 const start = async () => {
   const port = 3000;
@@ -42,6 +45,10 @@ const start = async () => {
 
     new UserCreatedLitener(natsWrapper.client).listen();
     new UserUpdatedListener(natsWrapper.client).listen();
+
+    new TxnDepositedListener(natsWrapper.client).listen();
+    new TxnTransferCreatedListener(natsWrapper.client).listen();
+    new TxnWithdrawalCreatedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI);
 
