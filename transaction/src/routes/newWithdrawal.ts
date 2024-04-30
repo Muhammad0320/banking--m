@@ -44,7 +44,7 @@ router.post(
     );
 
     const withdrawal = await Txn.buildTxn({
-      account,
+      account: account.id,
       amount,
       status: TxnStatusEnum.Success,
       type: TxnTypeEnum.Withdrawal

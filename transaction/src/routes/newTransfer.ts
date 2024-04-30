@@ -63,8 +63,8 @@ router.post(
 
     const newTransfer = await Txn.buildTxn({
       amount,
-      beneficiary,
-      account,
+      beneficiary: beneficiary.id,
+      account: account.id,
       status: TxnStatusEnum.Success,
       type: TxnTypeEnum.Transfer
     });
