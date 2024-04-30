@@ -69,9 +69,11 @@ it('returns a 400 for invalid pin', async () => {
 });
 
 it('returns a 400, for invalid accountId', async () => {
+  const account = await accountBuilder();
+
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.userId))
     .send({ amount: 100, accountId: 'shit id', pin: 1234 })
     .expect(400);
 
