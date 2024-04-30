@@ -2,13 +2,17 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../../app';
 import { Account } from '../../model/account';
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
+import {
+  AccountCurrency,
+  AccountStatus,
+  CryptoManager
+} from '@m0banking/common';
 
 const accountBuilder = async () =>
   await Account.buildAccount({
     currency: AccountCurrency.NGN,
 
-    pin: '1234',
+    pin: await CryptoManager.hash('1234'),
 
     userId: new mongoose.Types.ObjectId().toHexString(),
 
@@ -39,7 +43,7 @@ it('returns a  400 for invalid amount', async () => {
     .send({
       amount: 0,
       accountId: account.id,
-      pin: account.pin,
+      pin: 1234,
       beneficiaryId: beneficiaryAccount.id
     })
     .expect(400);
@@ -49,7 +53,7 @@ it('returns a  400 for invalid amount', async () => {
     .set('Cookie', await global.signin())
     .send({
       accountId: account.id,
-      pin: account.pin,
+      pin: 1234,
       beneficiaryId: beneficiaryAccount.id
     })
     .expect(400);
@@ -66,7 +70,7 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
     .send({
       amount: 100,
       accountId: 'shit id',
-      pin: account.pin,
+      pin: 1234,
       beneficiaryId: beneficiaryAccount.id
     })
     .expect(400);
@@ -77,7 +81,7 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
     .send({
       amount: 100,
       accountId: account.id,
-      pin: account.pin,
+      pin: 1234,
       beneficiaryId: 'shit id'
     })
     .expect(400);

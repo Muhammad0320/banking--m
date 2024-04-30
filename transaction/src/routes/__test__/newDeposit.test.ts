@@ -71,13 +71,13 @@ it('returns a 400, for invalid accountId', async () => {
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 0, accountId: 'shit id', pin: account.pin })
+    .send({ amount: 100, accountId: 'shit id', pin: account.pin })
     .expect(400);
 
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
-    .send({ amount: 0, pin: 2212 })
+    .send({ amount: 100, pin: 2212 })
     .expect(400);
 });
 
@@ -88,7 +88,7 @@ it('returns a 404, for valid but incorrect accountId', async () => {
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin(account.userId))
     .send({
-      amount: 0,
+      amount: 100,
       accountId: new mongoose.Types.ObjectId().toHexString(),
       pin: account.pin
     })
@@ -106,7 +106,7 @@ it('returns a 403, if other user tried to transact with another account', async 
       accountId: account.id,
       pin: account.pin
     })
-    .expect(404);
+    .expect(403);
 });
 
 it('returns returns a 201 when everything is valid ', async () => {
