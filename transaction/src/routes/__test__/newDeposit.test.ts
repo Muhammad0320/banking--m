@@ -57,13 +57,13 @@ it('returns a 400 for invalid pin', async () => {
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.userId))
     .send({ amount: 100, accountId: account.id })
     .expect(400);
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.userId))
     .send({ amount: 240, accountId: account.id, pin: 2212 })
     .expect(400);
 });

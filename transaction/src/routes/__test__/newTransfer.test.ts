@@ -94,7 +94,7 @@ it('returns a  400 for invalid pin', async () => {
 
   await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.userId))
     .send({
       amount: 100,
       accountId: account.id,
