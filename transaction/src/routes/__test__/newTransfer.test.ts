@@ -131,23 +131,6 @@ it('returns a  400 for invalid pin', async () => {
     .expect(400);
 });
 
-it('returns a 400 for a transaction higher than balance ', async () => {
-  const account = await accountBuilder(50);
-
-  const beneficiaryAccount = await benAccountBuilder();
-
-  await request(app)
-    .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
-    .send({
-      amount: 100,
-      accountId: account.id,
-      pin: 1234,
-      beneficiaryId: beneficiaryAccount.id
-    })
-    .expect(400);
-});
-
 it('returns  a 400, if beneficiary the ids are the same', async () => {
   const account = await accountBuilder();
 
@@ -176,6 +159,23 @@ it('returns a 404, if the beneficiary account is not found', async () => {
       beneficiaryId: new mongoose.Types.ObjectId().toHexString()
     })
     .expect(404);
+});
+
+it('returns a 400 for a transaction higher than balance ', async () => {
+  const account = await accountBuilder(50);
+
+  const beneficiaryAccount = await benAccountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/transfer')
+    .set('Cookie', await global.signin(account.userId))
+    .send({
+      amount: 100,
+      accountId: account.id,
+      pin: 1234,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
 });
 
 it('returns an 201 when everything is valid', async () => {
