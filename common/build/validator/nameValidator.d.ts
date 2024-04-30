@@ -1,1 +1,1 @@
-export declare const nameValidator: () => import("express-validator").ValidationChain;
+cexport declare const nameValidator: () => import("express-validator").ValidationChain;

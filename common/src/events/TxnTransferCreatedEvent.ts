@@ -17,6 +17,6 @@ export interface TxnTransferCreatedEvent {
       version: number;
       balance: number;
     };
-    reason: string;
+    reason?: string;
   };
 }
