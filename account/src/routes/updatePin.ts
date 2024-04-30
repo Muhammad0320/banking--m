@@ -11,6 +11,8 @@ import {
 import express, { Request, Response } from 'express';
 import Account from '../model/account';
 import { pinConfirmValidator, pinValidator } from '../services/validators';
+import { AccountPinUpdatedPublisher } from '../events/publishers/AccountPinUpdatedPublisher';
+import { natsWrapper } from '../natswrapper';
 
 const router = express.Router();
 
@@ -60,6 +62,13 @@ router.patch(
     existingAccount.set({ pin: hasedPin });
 
     await existingAccount.save();
+
+    await new AccountPinUpdatedPublisher(natsWrapper.client).publish({
+      id: existingAccount.id,
+      version: existingAccount.version,
+      pin: existingAccount.pin,
+      user: { id: existingAccount.user.id }
+    });
 
     res.status(200).json({ status: 'success', data: existingAccount });
   }
