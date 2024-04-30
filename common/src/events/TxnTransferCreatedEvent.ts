@@ -11,5 +11,11 @@ export interface TxnTransferCreatedEvent {
       version: number;
       balance: number;
     };
+
+    beneficiary: {
+      id: string;
+      version: number;
+      balance: number;
+    };
   };
 }
