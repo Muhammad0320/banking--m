@@ -142,3 +142,18 @@ it('returns  a 400, if beneficiary the ids are the same', async () => {
     })
     .expect(400);
 });
+
+it('returns a 404, if the beneficiary account is not found', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/transfer')
+    .set('Cookie', await global.signin(account.userId))
+    .send({
+      amount: 100,
+      accountId: account.id,
+      pin: 1234,
+      beneficiaryId: new mongoose.Types.ObjectId().toHexString()
+    })
+    .expect(404);
+});
