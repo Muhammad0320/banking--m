@@ -97,6 +97,8 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
 it('returns a  400 for invalid pin', async () => {
   const account = await accountBuilder();
 
+  const beneficiaryAccount = await accountBuilder(true);
+
   await request(app)
     .post('/api/v1/txn/transfer')
     .set('Cookie', await global.signin(account.userId))
@@ -109,8 +111,10 @@ it('returns a  400 for invalid pin', async () => {
     .expect(400);
 });
 
-it('returns a 201 when everything is valid', async () => {
+it('returns a 400 for a transaction higher than balance ', async () => {
   const account = await accountBuilder();
+
+  const beneficiaryAccount = await accountBuilder(true);
 
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -120,6 +124,21 @@ it('returns a 201 when everything is valid', async () => {
       accountId: account.id,
       pin: 1234,
       beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+});
+
+it('returns  a 400, if beneficiary the ids are the same', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/txn/transfer')
+    .set('Cookie', await global.signin(account.userId))
+    .send({
+      amount: 100,
+      accountId: account.id,
+      pin: 1234,
+      beneficiaryId: account.id
     })
     .expect(400);
 });
