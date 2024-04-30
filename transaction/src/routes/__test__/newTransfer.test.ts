@@ -8,7 +8,7 @@ import {
   CryptoManager
 } from '@m0banking/common';
 
-const accountBuilder = async (ben?: boolean) => {
+const accountBuilder = async (ben?: boolean, bal?: number) => {
   const accountSender = new mongoose.Types.ObjectId().toHexString();
   const accountBen = new mongoose.Types.ObjectId().toHexString();
 
@@ -156,4 +156,31 @@ it('returns a 404, if the beneficiary account is not found', async () => {
       beneficiaryId: new mongoose.Types.ObjectId().toHexString()
     })
     .expect(404);
+});
+
+it('returns an 201 when everything is valid', async () => {
+  const account = await accountBuilder(false, 5000);
+
+  const beneficiaryAccount = await accountBuilder(true);
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/txn/transfer')
+    .set('Cookie', await global.signin(account.userId))
+    .send({
+      amount: 100,
+      accountId: account.id,
+      pin: 1234,
+      beneficiaryId: beneficiaryAccount.id
+    })
+    .expect(400);
+
+  expect(data.amount).toEqual(100);
+
+  const updatedAccount = await Account.findById(account.id);
+  const updatedBen = await Account.findById(beneficiaryAccount.id);
+
+  expect(updatedAccount!.balance).toEqual(4900);
+  expect(updatedBen!.balance).toEqual(100);
 });
