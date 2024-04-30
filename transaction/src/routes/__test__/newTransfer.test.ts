@@ -132,7 +132,7 @@ it('returns a  400 for invalid pin', async () => {
 });
 
 it('returns a 400 for a transaction higher than balance ', async () => {
-  const account = await accountBuilder();
+  const account = await accountBuilder(50);
 
   const beneficiaryAccount = await benAccountBuilder();
 
