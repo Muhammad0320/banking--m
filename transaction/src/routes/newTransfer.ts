@@ -53,12 +53,12 @@ router.post(
 
     console.log('its transfer 2');
 
-    await account.updateOne(
+    const updatedAccount = await account.updateOne(
       { balance: account.balance - amount },
       { new: true }
     );
 
-    await beneficiary.updateOne(
+    const updatedBeneficiary = await beneficiary.updateOne(
       { balance: beneficiary.balance + +amount },
       { new: true }
     );
@@ -75,9 +75,15 @@ router.post(
       id: newTransfer.id,
       version: newTransfer.version,
       account: {
-        id: account.id,
-        balance: account.balance,
-        version: account.version
+        id: updatedAccount.id,
+        balance: updatedAccount.balance,
+        version: updatedAccount.version
+      },
+
+      beneficiary: {
+        id: updatedBeneficiary.id,
+        balance: updatedBeneficiary.balance,
+        version: updatedBeneficiary.version
       }
 
       // add also for the beneficiary account
