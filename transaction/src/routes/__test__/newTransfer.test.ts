@@ -25,6 +25,23 @@ const accountBuilder = async () =>
     _block: false
   });
 
+const benAccountBuilder = async () =>
+  await Account.buildAccount({
+    currency: AccountCurrency.NGN,
+
+    pin: await CryptoManager.hash('1234'),
+
+    userId: new mongoose.Types.ObjectId().toHexString(),
+
+    status: AccountStatus.Active,
+
+    id: new mongoose.Types.ObjectId().toHexString(),
+    balance: 0,
+    version: 0,
+    no: Math.floor(83923939390 * Math.random() * 1.5),
+    _block: false
+  });
+
 it('returns a 401, for unautheticated user', async () => {
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -90,7 +107,7 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
 it('returns a  400 for invalid pin', async () => {
   const account = await accountBuilder();
 
-  const beneficiaryAccount = await accountBuilder();
+  const beneficiaryAccount = await benAccountBuilder();
 
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -98,7 +115,7 @@ it('returns a  400 for invalid pin', async () => {
     .send({
       amount: 100,
       accountId: account.id,
-      pin: 1234,
+      pin: 1237,
       beneficiaryId: beneficiaryAccount.id
     })
     .expect(400);
