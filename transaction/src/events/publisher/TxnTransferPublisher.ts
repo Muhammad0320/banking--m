@@ -7,5 +7,3 @@ import {
 export class TxnTransferPublisher extends Publisher<TxnTransferCreatedEvent> {
   readonly subject = Subjects.TxnTransferCreated;
 }
-
-

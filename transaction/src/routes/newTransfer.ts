@@ -48,7 +48,7 @@ router.post(
     console.log('its transfer');
 
     if (!account || !beneficiary) throw new NotFound('They are shit');
-    
+
     console.log(beneficiary);
 
     console.log('its transfer 2');
@@ -78,9 +78,7 @@ router.post(
         id: account.id,
         balance: account.balance,
         version: account.version
-      },
-
-      
+      }
 
       // add also for the beneficiary account
     });
