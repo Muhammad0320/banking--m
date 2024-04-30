@@ -56,7 +56,7 @@ it('returns a 201, on successful withdrawal', async () => {
 
   await request(app)
     .post('/api/v1/txn/withdrawal')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.userId))
     .send({ amount: 100, accountId: account.id, pin: 1234 })
     .expect(201);
 });

@@ -31,12 +31,12 @@ export const validateAccount = (type?: string) => async (
   if (type === 'withdrawal') {
     if (account.balance < amount) throw new BadRequest('Insufficient fund');
 
-    next();
+    // next();
   }
 
   if (type === 'transfer') {
     const { beneficiaryId } = req.body;
-    
+
     const beneficiaryAccount = await Account.findById(beneficiaryId);
 
     if (!beneficiaryAccount)
@@ -51,8 +51,6 @@ export const validateAccount = (type?: string) => async (
 
     if (beneficiaryAccount.status === AccountStatus.Blocked)
       throw new Forbidden('Beneficiary is blocked');
-
-    next();
   }
 
   next();

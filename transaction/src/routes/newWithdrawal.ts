@@ -13,7 +13,7 @@ import { natsWrapper } from '../natswrapper';
 const router = express.Router();
 
 router.post(
-  '/withdrwal',
+  '/withdrawal',
   requireAuth,
   [
     body('amount')
