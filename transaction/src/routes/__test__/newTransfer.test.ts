@@ -8,23 +8,43 @@ import {
   CryptoManager
 } from '@m0banking/common';
 
-const accountBuilder = async (ben?: boolean, bal?: number) => {
+const accountBuilder = async (bal?: number) => {
   const accountSender = new mongoose.Types.ObjectId().toHexString();
-  const accountBen = new mongoose.Types.ObjectId().toHexString();
 
   const userSender = new mongoose.Types.ObjectId().toHexString();
-  const userBen = new mongoose.Types.ObjectId().toHexString();
 
   return await Account.buildAccount({
     currency: AccountCurrency.NGN,
 
     pin: await CryptoManager.hash('1234'),
 
-    userId: ben ? userBen : userSender,
+    userId: userSender,
 
     status: AccountStatus.Active,
 
-    id: ben ? accountBen : accountSender,
+    id: accountSender,
+    balance: 0,
+    version: 0,
+    no: Math.floor(83923939393 * Math.random() * 1.5),
+    _block: false
+  });
+};
+
+const benAccountBuilder = async () => {
+  const accountSender = new mongoose.Types.ObjectId().toHexString();
+
+  const userSender = new mongoose.Types.ObjectId().toHexString();
+
+  return await Account.buildAccount({
+    currency: AccountCurrency.NGN,
+
+    pin: await CryptoManager.hash('1234'),
+
+    userId: userSender,
+
+    status: AccountStatus.Active,
+
+    id: accountSender,
     balance: 0,
     version: 0,
     no: Math.floor(83923939393 * Math.random() * 1.5),
@@ -97,7 +117,7 @@ it('returns a 400 for invalid ids: account & beneficiary', async () => {
 it('returns a  400 for invalid pin', async () => {
   const account = await accountBuilder();
 
-  const beneficiaryAccount = await accountBuilder(true);
+  const beneficiaryAccount = await benAccountBuilder();
 
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -114,7 +134,7 @@ it('returns a  400 for invalid pin', async () => {
 it('returns a 400 for a transaction higher than balance ', async () => {
   const account = await accountBuilder();
 
-  const beneficiaryAccount = await accountBuilder(true);
+  const beneficiaryAccount = await benAccountBuilder();
 
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -159,9 +179,9 @@ it('returns a 404, if the beneficiary account is not found', async () => {
 });
 
 it('returns an 201 when everything is valid', async () => {
-  const account = await accountBuilder(false, 5000);
+  const account = await accountBuilder(5000);
 
-  const beneficiaryAccount = await accountBuilder(true);
+  const beneficiaryAccount = await benAccountBuilder();
 
   const {
     body: { data }
