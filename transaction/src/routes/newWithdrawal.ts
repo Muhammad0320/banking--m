@@ -38,7 +38,7 @@ router.post(
 
     if (!account) return;
 
-    await account.updateOne(
+    const updatedAccount = await account.updateOne(
       { balance: account.balance - +amount },
       { new: true }
     );
@@ -54,9 +54,9 @@ router.post(
       id: withdrawal.id,
       version: withdrawal.version,
       account: {
-        id: account.id,
-        version: account.version,
-        balance: account.balance
+        id: updatedAccount.id,
+        version: updatedAccount.version,
+        balance: updatedAccount.balance
       }
     });
 
