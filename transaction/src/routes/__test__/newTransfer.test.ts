@@ -31,20 +31,16 @@ const accountBuilder = async (bal?: number) => {
 };
 
 const benAccountBuilder = async () => {
-  const accountSender = new mongoose.Types.ObjectId().toHexString();
-
-  const userSender = new mongoose.Types.ObjectId().toHexString();
-
   return await Account.buildAccount({
     currency: AccountCurrency.NGN,
 
     pin: await CryptoManager.hash('1234'),
 
-    userId: userSender,
+    userId: new mongoose.Types.ObjectId().toHexString(),
 
     status: AccountStatus.Active,
 
-    id: accountSender,
+    id: new mongoose.Types.ObjectId().toHexString(),
     balance: 0,
     version: 0,
     no: Math.floor(83923939393 * Math.random() * 1.5),

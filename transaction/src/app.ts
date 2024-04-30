@@ -32,8 +32,8 @@ app.use(currentUser);
 
 app.use(invalidAttemptTracker);
 app.use(rootUrl, createTxnRouter);
-app.use(rootUrl, createTransferRouter);
 app.use(rootUrl, createWithdrawalRouter);
+app.use(rootUrl, createTransferRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');

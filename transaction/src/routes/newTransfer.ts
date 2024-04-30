@@ -85,8 +85,6 @@ router.post(
         balance: updatedBeneficiary.balance,
         version: updatedBeneficiary.version
       }
-
-      // add also for the beneficiary account
     });
 
     res.status(201).json({ status: 'success', data: newTransfer });
