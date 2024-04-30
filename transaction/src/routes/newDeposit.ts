@@ -39,6 +39,8 @@ router.post(
 
     if (!account) throw new NotFound('');
 
+    console.log('from handler it self');
+
     const updatedAccount = await account.updateOne(
       {
         balance: account!.balance + amount

@@ -17,9 +17,9 @@ export const validateAccount = (type?: string) => async (
 
   const account = await Account.findById(accountId);
 
-  console.log(accountId, 'from validator');
-
   if (!account) throw new NotFound('Account not found');
+
+  console.log(account, 'from validator');
 
   account.userId !== req.currentUser.id &&
     new Forbidden('You are not allowed to perform this transaction');

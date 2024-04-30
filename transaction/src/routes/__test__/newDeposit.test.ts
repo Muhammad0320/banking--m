@@ -134,7 +134,7 @@ it('returns returns a 201 when everything is valid ', async () => {
 it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', async () => {
   const account = await accountBuilder();
 
-  console.log(account.id, 'from test');
+  console.log(account, 'from test');
 
   await request(app)
     .post('/api/v1/txn/deposit')

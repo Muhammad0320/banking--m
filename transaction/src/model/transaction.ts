@@ -6,11 +6,11 @@ import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type TxnAttrs = {
-  account: AccountDoc;
+  account: string;
   amount: number;
   status: TxnStatusEnum;
   type: TxnTypeEnum;
-  beneficiary?: AccountDoc;
+  beneficiary?: string;
 };
 
 type TxnDoc = mongoose.Document &
