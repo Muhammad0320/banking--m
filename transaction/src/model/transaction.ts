@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
@@ -11,6 +10,7 @@ type TxnAttrs = {
   status: TxnStatusEnum;
   type: TxnTypeEnum;
   beneficiary?: string;
+  reason?: string;
 };
 
 type TxnDoc = mongoose.Document &
@@ -33,6 +33,10 @@ const txnSchema = new mongoose.Schema({
   beneficiary: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account'
+  },
+
+  reason: {
+    type: String
   },
 
   amount: {

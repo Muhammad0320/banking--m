@@ -33,25 +33,24 @@ router.post(
     body('pin')
       .isInt()
       .isLength({ min: 4, max: 4 })
-      .withMessage('Please provide a valid pin')
+      .withMessage('Please provide a valid pin'),
+
+    body('reason')
+      .trim()
+      .isString()
+      .optional()
   ],
   requestValidator,
   validateAccount('transfer'),
 
   async (req: Request, res: Response) => {
-    const { amount, accountId, beneficiaryId } = req.body;
+    const { amount, accountId, beneficiaryId, reason } = req.body;
 
     const account = await Account.findById(accountId);
 
     const beneficiary = await Account.findById(beneficiaryId);
 
-    console.log('its transfer');
-
     if (!account || !beneficiary) throw new NotFound('They are shit');
-
-    console.log(beneficiary);
-
-    console.log('its transfer 2');
 
     const updatedAccount = await account.updateOne(
       { balance: account.balance - amount },
@@ -68,7 +67,8 @@ router.post(
       beneficiary: beneficiary.id,
       account: account.id,
       status: TxnStatusEnum.Success,
-      type: TxnTypeEnum.Transfer
+      type: TxnTypeEnum.Transfer,
+      reason: reason || ''
     });
 
     await new TxnTransferPublisher(natsWrapper.client).publish({
