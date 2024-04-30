@@ -77,3 +77,59 @@ Follow for more ✨💻
 NextUp ⏭: Till tomorrow, In sha Allah - We shall run all transaction related tests.  
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 14 🚀 :  Created a deposit transaction test: The deeeper i get; the harder the test passes, I used a whole day on these to work.
+
+Follow for more ✨💻
+
+NextUp ⏭: create a transfer test.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 14 🚀 :  Created a money transfer transaction   test (The most difficult to test).
+
+Follow for more ✨💻
+
+NextUp ⏭: create a Withdrawal test.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 14 🚀 :  Created a withdrawal test.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add AccountUpdatePin (forgot to create an event for that).  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 14 🚀 :  Created an account updated pin event, which does exactly what is name means.
+
+Follow for more ✨💻
+
+NextUp ⏭: Create an account pin updated publisher.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 14 🚀 :  Created an account pin updated publisher .
+
+Follow for more ✨💻
+
+NextUp ⏭: pushlish the event.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 14 🚀 :  Published the event .
+
+Follow for more ✨💻
+
+NextUp ⏭: Till tomorrow will move to another service (Notification service).  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
