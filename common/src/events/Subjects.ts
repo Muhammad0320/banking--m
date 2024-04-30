@@ -3,6 +3,7 @@ export enum Subjects {
   AccountBlocked = "account:blocked",
   AccountUpdated = "account:updated",
   AccountUnblocked = "account:unblocked",
+  UpdateAccountPinned = "updateAccountPinned",
   //
   UserCreated = "user:created",
   UserUpdated = "user:updated",
