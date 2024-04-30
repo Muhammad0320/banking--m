@@ -103,7 +103,7 @@ it('returns a 403, if other user tried to transact with another account', async 
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin())
     .send({
-      amount: 0,
+      amount: 100,
       accountId: account.id,
       pin: 1234
     })
@@ -125,8 +125,10 @@ it('returns returns a 201 when everything is valid ', async () => {
     })
     .expect(201);
 
+  const updatedAccount = await Account.findById(account.id);
+
   expect(data.amount).toEqual(1000);
-  expect(account.balance).toEqual(1000);
+  expect(updatedAccount!.balance).toEqual(1000);
 });
 
 it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', async () => {

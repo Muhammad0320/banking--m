@@ -43,7 +43,7 @@ router.post(
 
     const updatedAccount = await account.updateOne(
       {
-        balance: account!.balance + amount
+        balance: account.balance + amount
       },
       { new: true }
     );
@@ -52,7 +52,7 @@ router.post(
       amount,
       status: TxnStatusEnum.Success,
 
-      account: updatedAccount,
+      account: account.id,
       type: TxnTypeEnum.Deposit
     });
 

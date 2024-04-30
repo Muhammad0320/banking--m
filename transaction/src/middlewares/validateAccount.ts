@@ -19,10 +19,8 @@ export const validateAccount = (type?: string) => async (
 
   if (!account) throw new NotFound('Account not found');
 
-  console.log(account, 'from validator');
-
-  account.userId !== req.currentUser.id &&
-    new Forbidden('You are not allowed to perform this transaction');
+  if (account.userId !== req.currentUser.id)
+    throw new Forbidden('You are not allowed to perform this transaction');
 
   if (!(await CryptoManager.compare(account.pin, String(pin))))
     throw new BadRequest('Invalid pin');
