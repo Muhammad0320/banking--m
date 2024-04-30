@@ -131,6 +131,8 @@ it('returns returns a 201 when everything is valid ', async () => {
 it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', async () => {
   const account = await accountBuilder();
 
+  console.log(account.pin, 'from test');
+
   await request(app)
     .post('/api/v1/txn/deposit')
     .set('Cookie', await global.signin(account.userId))

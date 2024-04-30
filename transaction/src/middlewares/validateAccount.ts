@@ -22,8 +22,6 @@ export const validateAccount = (type?: string) => async (
   account.userId !== req.currentUser.id &&
     new Forbidden('You are not allowed to perform this transaction');
 
-  console.log(account.pin, 'just for a sec');
-
   if (!(await CryptoManager.compare(account.pin, `${pin}`)))
     throw new BadRequest('Invalid pin');
 
