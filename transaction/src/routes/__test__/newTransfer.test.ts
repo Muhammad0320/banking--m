@@ -23,7 +23,7 @@ const accountBuilder = async (bal?: number) => {
     status: AccountStatus.Active,
 
     id: accountSender,
-    balance: 0,
+    balance: bal || 0,
     version: 0,
     no: Math.floor(83923939393 * Math.random() * 1.5),
     _block: false
@@ -89,7 +89,7 @@ it('returns a  400 for invalid amount', async () => {
 it('returns a 400 for invalid ids: account & beneficiary', async () => {
   const account = await accountBuilder();
 
-  const beneficiaryAccount = await accountBuilder();
+  const beneficiaryAccount = await benAccountBuilder();
 
   await request(app)
     .post('/api/v1/txn/transfer')
@@ -194,7 +194,7 @@ it('returns an 201 when everything is valid', async () => {
       pin: 1234,
       beneficiaryId: beneficiaryAccount.id
     })
-    .expect(400);
+    .expect(201);
 
   expect(data.amount).toEqual(100);
 
