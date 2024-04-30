@@ -37,6 +37,11 @@ type AccountDoc = mongoose.Document &
 
 type AccountModel = mongoose.Model<AccountDoc> & {
   buildAccount(attrs: AccountAttrs): Promise<AccountDoc>;
+
+  findByLastVersionAndId(
+    id: string,
+    version: number
+  ): Promise<AccountDoc | null>;
 };
 
 const accountSchema = new mongoose.Schema(
@@ -125,6 +130,15 @@ accountSchema.plugin(updateIfCurrentPlugin);
 
 accountSchema.statics.buildAccount = async (attrs: AccountAttrs) => {
   return await Account.create(attrs);
+};
+
+accountSchema.statics.findByLastVersionAndId = async function(
+  id: string,
+  version: number
+) {
+  const __v = version - 1;
+
+  await Account.findOne({ _id: id, version: __v });
 };
 
 accountSchema.pre('save', async function(next) {
