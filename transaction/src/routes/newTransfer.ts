@@ -45,11 +45,12 @@ router.post(
 
     const beneficiary = await Account.findById(beneficiaryId);
 
-    console.log('Its from here');
+    console.log('its transfer');
 
     if (!account || !beneficiary) throw new NotFound('');
+    console.log(beneficiary);
 
-    console.log('Its from here now !!!!');
+    console.log('its transfer 2');
 
     await account!.updateOne(
       { balance: account!.balance - amount },

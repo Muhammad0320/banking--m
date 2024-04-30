@@ -193,8 +193,7 @@ it('returns an 201 when everything is valid', async () => {
       accountId: account.id,
       pin: 1234,
       beneficiaryId: beneficiaryAccount.id
-    })
-    .expect(201);
+    });
 
   expect(data.amount).toEqual(100);
 

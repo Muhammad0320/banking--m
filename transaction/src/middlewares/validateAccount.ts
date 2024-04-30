@@ -37,12 +37,12 @@ export const validateAccount = (type?: string) => async (
   if (type === 'transfer') {
     const { beneficiaryId } = req.body;
 
-    if (account.balance < amount) throw new BadRequest('Insufficient fund');
-
     const beneficiaryAccount = await Account.findById(beneficiaryId);
 
     if (!beneficiaryAccount)
       throw new NotFound('Beneficiary Account not found');
+
+    if (account.balance < amount) throw new BadRequest('Insufficient fund');
 
     if (accountId === beneficiaryId)
       throw new BadRequest(
