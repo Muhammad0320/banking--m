@@ -7,7 +7,7 @@ var Subjects;
     Subjects["AccountBlocked"] = "account:blocked";
     Subjects["AccountUpdated"] = "account:updated";
     Subjects["AccountUnblocked"] = "account:unblocked";
-    Subjects["UpdateAccountPinned"] = "updateAccountPinned";
+    Subjects["AccountPinUpdated"] = "account:pin:updated";
     //
     Subjects["UserCreated"] = "user:created";
     Subjects["UserUpdated"] = "user:updated";
@@ -15,4 +15,5 @@ var Subjects;
     Subjects["TxnDepositCreated"] = "txnDeposit:created";
     Subjects["TxnWithdrawalCreated"] = "txnWithdrawal:created";
     Subjects["TxnTransferCreated"] = "txnTransfer:created";
+    //
 })(Subjects || (exports.Subjects = Subjects = {}));

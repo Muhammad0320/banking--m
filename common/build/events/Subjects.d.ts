@@ -3,7 +3,7 @@ export declare enum Subjects {
     AccountBlocked = "account:blocked",
     AccountUpdated = "account:updated",
     AccountUnblocked = "account:unblocked",
-    UpdateAccountPinned = "updateAccountPinned",
+    AccountPinUpdated = "account:pin:updated",
     UserCreated = "user:created",
     UserUpdated = "user:updated",
     TxnDepositCreated = "txnDeposit:created",
