@@ -9,11 +9,13 @@ import {
 } from '@m0banking/common';
 import { natsWrapper } from '../../natswrapper';
 
-const accountBuilder = async () =>
-  await Account.buildAccount({
+const accountBuilder = async () => {
+  const pin = await CryptoManager.hash('1234');
+
+  return await Account.buildAccount({
     currency: AccountCurrency.NGN,
 
-    pin: await CryptoManager.hash('1234'),
+    pin,
 
     userId: new mongoose.Types.ObjectId().toHexString(),
 
@@ -25,6 +27,7 @@ const accountBuilder = async () =>
     no: Math.floor(83923939393 * Math.random() * 1.5),
     _block: false
   });
+};
 
 it('returns a 401 for unauthitcated user ', async () => {
   await request(app)
@@ -131,7 +134,7 @@ it('returns returns a 201 when everything is valid ', async () => {
 it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', async () => {
   const account = await accountBuilder();
 
-  console.log(account.pin, 'from test');
+  console.log(account.id, 'from test');
 
   await request(app)
     .post('/api/v1/txn/deposit')
