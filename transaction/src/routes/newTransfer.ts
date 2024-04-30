@@ -47,18 +47,19 @@ router.post(
 
     console.log('its transfer');
 
-    if (!account || !beneficiary) throw new NotFound('');
+    if (!account || !beneficiary) throw new NotFound('They are shit');
+    
     console.log(beneficiary);
 
     console.log('its transfer 2');
 
-    await account!.updateOne(
-      { balance: account!.balance - amount },
+    await account.updateOne(
+      { balance: account.balance - amount },
       { new: true }
     );
 
-    await beneficiary!.updateOne(
-      { balance: beneficiary!.balance + +amount },
+    await beneficiary.updateOne(
+      { balance: beneficiary.balance + +amount },
       { new: true }
     );
 
@@ -77,7 +78,9 @@ router.post(
         id: account.id,
         balance: account.balance,
         version: account.version
-      }
+      },
+
+      
 
       // add also for the beneficiary account
     });

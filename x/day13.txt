@@ -1,0 +1,79 @@
+
+
+
+
+
+
+
+
+Day 12 🚀 : Created a middleware that validates the account and the account's owner which is to run before every request. 
+
+Follow for more ✨💻
+
+NextUp ⏭: Create a middleware to count invalid txn attempts.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :   Created a middleware to count invalid txn attempts and block the account when it's up to five, for security reasons.
+
+Follow for more ✨💻
+
+NextUp ⏭: create a transaction deposit route.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :  Created a transaction deposit route that behind a deposit txn.
+
+Follow for more ✨💻
+
+NextUp ⏭:  create a txn withdrawal route .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :  Created a transaction withdrawal route that behind a withdraw txn.
+
+Follow for more ✨💻
+
+NextUp ⏭: create a txn transfer route.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :  Create a transaction transfer tohat enable user to transfer a specific amount of money to a another valid account.
+
+Follow for more ✨💻
+
+NextUp ⏭: Create a transaction deposit publisher .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :  Created a transaction deposit publisher which will help to notify the account service that an account was just modified.
+
+Follow for more ✨💻
+
+NextUp ⏭: Create a transaction withdrawal publisher.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 12 🚀 :  Created a transaction widthdrawal publisher that will notify the account service that an account was just modified .
+
+Follow for more ✨💻
+
+NextUp ⏭: create a transaction transfer publisher.
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 12 🚀 :  Created a ttransaction transfer publisher that will notify the account service that something is going on btw two different accounts.
+
+Follow for more ✨💻
+
+NextUp ⏭: Till tomorrow, In sha Allah - We shall run all transaction related tests.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 

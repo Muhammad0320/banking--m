@@ -36,7 +36,7 @@ export const validateAccount = (type?: string) => async (
 
   if (type === 'transfer') {
     const { beneficiaryId } = req.body;
-
+    
     const beneficiaryAccount = await Account.findById(beneficiaryId);
 
     if (!beneficiaryAccount)

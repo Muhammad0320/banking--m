@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { AccountDoc } from './account';
+
 
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
