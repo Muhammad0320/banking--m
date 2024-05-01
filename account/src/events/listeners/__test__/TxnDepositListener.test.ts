@@ -62,3 +62,11 @@ it('updates and saved the account', async () => {
 
   expect(updatedAccount?.balace).toEqual(5000);
 });
+
+it(' acks the messge ', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});
