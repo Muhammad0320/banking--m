@@ -53,7 +53,7 @@ it('returns a 400 for invalid  for invalid amount', async () => {
 
 it('returns a 201, on successful withdrawal', async () => {
   const account = await accountBuilder(8000);
-
+   
   await request(app)
     .post('/api/v1/txn/withdrawal')
     .set('Cookie', await global.signin(account.userId))

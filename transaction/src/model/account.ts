@@ -88,6 +88,8 @@ accountSchema.statics.buildAccount = async function(attrs: AccountAttrs) {
   return await Account.create({ ...attrs, _id: attrs.id });
 };
 
+
+
 accountSchema.statics.findByLastVersionAndId = async function(
   id: string,
   version: number

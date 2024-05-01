@@ -52,6 +52,6 @@ export const validateAccount = (type?: string) => async (
     if (beneficiaryAccount.status === AccountStatus.Blocked)
       throw new Forbidden('Beneficiary is blocked');
   }
-
+  
   next();
 };
