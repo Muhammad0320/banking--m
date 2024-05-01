@@ -2,10 +2,6 @@
 
 
 
-
-
-
-
 Day 12 🚀 : Created a middleware that validates the account and the account's owner which is to run before every request. 
 
 Follow for more ✨💻
