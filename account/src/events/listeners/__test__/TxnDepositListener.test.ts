@@ -7,7 +7,7 @@ import { natsWrapper } from '../../../natswrapper';
 import { TxnDepositedListener } from '../TxnDepositCretaedListener';
 import Account from '../../../model/account';
 import { User } from '../../../model/user';
-import mongoose, { set } from 'mongoose';
+import mongoose from 'mongoose';
 import { AccountTier } from '../../../enums/AccountTier';
 import { AccountType } from '../../../enums/AccountTypeEnum';
 import { Message } from 'node-nats-streaming';
