@@ -31,9 +31,12 @@ export class TxnWithdrawalCreatedListener extends Listener<
       data.account.version
     );
 
+    console.log(account, 'from the txn withdrawal');
+
     if (!account) throw new Error('Account not found');
 
-    await account.updateOne({ balace: data.account.balance }, { new: true });
+    account.set({ balance: data.account.balance });
+    await account.save();
 
     msg.ack();
   }
