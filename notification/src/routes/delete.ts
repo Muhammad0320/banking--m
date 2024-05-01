@@ -21,4 +21,4 @@ router.delete(
   }
 );
 
-export { router as deleteAllNotification };
+export { router as deleteNotification };
