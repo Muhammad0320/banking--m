@@ -60,10 +60,10 @@ it('updates and saved the account', async () => {
 
   const updatedAccount = await Account.findById(account.id);
 
-  expect(updatedAccount?.balance).toEqual(data.account.balance);
+  expect(+updatedAccount?.balance).toEqual(data.account.balance);
 });
 
-it(' acks the messge ', async () => {
+it(' acks the message ', async () => {
   const { listener, data, msg } = await setup();
 
   await listener.onMessage(data, msg);
