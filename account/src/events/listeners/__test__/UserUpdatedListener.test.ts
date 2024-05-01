@@ -48,8 +48,6 @@ it('updates and saves a ticket', async () => {
 
   const updatedUser = await User.findById(data.id);
 
-  console.log(updatedUser, 'from test');
-
   expect(updatedUser).toBeDefined();
 });
 

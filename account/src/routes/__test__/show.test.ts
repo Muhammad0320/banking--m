@@ -53,10 +53,7 @@ it('returns a 403, if user tried to check other users account', async () => {
 
   await request(app)
     .get('/api/v1/account/' + data.id)
-    .set(
-      'Cookie',
-      await global.signin(new mongoose.Types.ObjectId().toHexString())
-    )
+    .set('Cookie', await global.signin())
     .send()
     .expect(403);
 });
@@ -113,6 +110,8 @@ it('returns a 200, if a user checks his/her own account', async () => {
       pinConfirm: 1234
     })
     .expect(201);
+
+  console.log(data);
 
   await request(app)
     .get('/api/v1/account/' + data.id)

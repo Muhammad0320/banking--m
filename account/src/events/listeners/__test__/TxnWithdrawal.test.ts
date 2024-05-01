@@ -19,7 +19,7 @@ const setup = async () => {
     id: new mongoose.Types.ObjectId().toHexString(),
     password: 'shitpassword',
 
-    email: 'shitman@gmail.com',
+    email: 'shitman@shit.com',
     name: 'Lisan al-gaib',
     role: UserRole.User,
     version: 0
@@ -34,6 +34,8 @@ const setup = async () => {
     currency: AccountCurrency.USD,
     type: AccountType.Current
   });
+
+  console.log(account);
 
   const data: TxnWithdrawalCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),

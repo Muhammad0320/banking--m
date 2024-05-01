@@ -15,6 +15,12 @@ export class TxnWithdrawalCreatedListener extends Listener<
   queueGroupName = queueGroupName;
 
   async onMessage(data: TxnWithdrawalCreatedEvent['data'], msg: Message) {
+    console.log(data);
+
+    const ckeck = await Account.findById(data.id);
+
+    console.log(ckeck, 'from the checkkkkkkkkk');
+
     const account = await Account.findByLastVersionAndId(
       data.account.id,
       data.account.version
