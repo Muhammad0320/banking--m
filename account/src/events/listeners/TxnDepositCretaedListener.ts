@@ -16,8 +16,9 @@ export class TxnDepositedListener extends Listener<TxnDepositCreatedEvent> {
 
     if (!account) throw new Error('account not found');
 
-    await account.updateOne({ balace: data.account.balance }, { new: true });
-
+    account.set({ balance: data.account.balance });
+    await account.save();
+    
     msg.ack();
   }
 }

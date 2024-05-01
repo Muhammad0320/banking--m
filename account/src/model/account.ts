@@ -30,7 +30,7 @@ type AccountDoc = mongoose.Document &
   AccountAttrs & {
     version: number;
     status: AccountStatus;
-    balace: number;
+    balance: number;
     no: number;
     _block: boolean;
   };

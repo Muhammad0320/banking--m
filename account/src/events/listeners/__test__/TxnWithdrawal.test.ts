@@ -35,7 +35,7 @@ const setup = async () => {
     type: AccountType.Current
   });
 
-  console.log(account);
+  console.log(account, 'from withdrawal test');
 
   const data: TxnWithdrawalCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
@@ -60,7 +60,9 @@ it('updates and saves the account', async () => {
 
   await listener.onMessage(data, msg);
 
-  const updatedAccount = await Account.findById(account.id);
+  const updatedAccount = await Account.findById(data.account.id);
+
+  if (!updatedAccount) throw new Error('Account not found');
 
   expect(updatedAccount?.balace).toEqual(data.account.balance);
 });
