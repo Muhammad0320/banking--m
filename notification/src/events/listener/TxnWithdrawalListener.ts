@@ -8,5 +8,17 @@ export class TxnDeositListener extends Listener<TxnDepositCreatedEvent> {
 
   queueGroupName = queueGroupName;
 
-  async onMessage(data: TxnDepositCreatedEvent['data'], msg: Message) {}
+  async onMessage(data: TxnDepositCreatedEvent['data'], msg: Message) {
+    const title = 'Debit Alert!!!';
+
+    const description = `Dear Customer, Your account has been debited with shit amout. \n Your new balace is: ${data.account.balance}`;
+
+    await Notification.buildNotification({
+      title,
+      description,
+      userId: 'shit id'
+    });
+
+    msg.ack();
+  }
 }
