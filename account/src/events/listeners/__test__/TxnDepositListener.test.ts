@@ -60,7 +60,9 @@ it('updates and saved the account', async () => {
 
   const updatedAccount = await Account.findById(account.id);
 
-  expect(+updatedAccount?.balance).toEqual(data.account.balance);
+  if (!updatedAccount) throw new Error('Account not fucking found');
+
+  expect(+updatedAccount.balance).toEqual(data.account.balance);
 });
 
 it(' acks the message ', async () => {
