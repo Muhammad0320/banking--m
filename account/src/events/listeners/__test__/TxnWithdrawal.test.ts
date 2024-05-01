@@ -56,7 +56,7 @@ const setup = async () => {
 };
 
 it('updates and saves the account', async () => {
-  const { listener, data, account, msg } = await setup();
+  const { listener, data, msg } = await setup();
 
   await listener.onMessage(data, msg);
 

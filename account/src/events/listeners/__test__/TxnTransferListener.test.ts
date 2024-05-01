@@ -65,7 +65,17 @@ const setup = async () => {
     ack: jest.fn()
   };
 
-  return { listener, data, account, msg };
+  return { listener, data, account, msg, benAccount };
 };
 
-it('updates and saves a transaction reuslt', async () => {});
+it('updates and saves sender account', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedAccount = await Account.findById(data.account.id);
+
+  if (!updatedAccount) throw new Error('Account not found');
+
+  expect(+updatedAccount.balance).toEqual(data.account.balance);
+});
