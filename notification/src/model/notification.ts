@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { NotificationStatus } from '../enum/NotificationStatusEnum';
 
 type NotificationAttrs = {
   userId: string;
@@ -8,7 +9,7 @@ type NotificationAttrs = {
 
 type NotificationDoc = mongoose.Document<NotificationAttrs> & {
   createdAt: Date;
-  status: string; // enum
+  status: NotificationStatus; // enum
 };
 
 type NotificationModel = mongoose.Model<NotificationDoc> & {
@@ -38,7 +39,8 @@ const notSchema = new mongoose.Schema(
     },
 
     status: {
-      type: String
+      type: String,
+      enum: Object.values(NotificationStatus)
     }
   },
   {
