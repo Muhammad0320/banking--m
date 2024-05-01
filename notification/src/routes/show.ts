@@ -1,11 +1,11 @@
 import { NotFound, paramsChecker, requireAuth } from '@m0banking/common';
 import express, { Request, Response } from 'express';
-import { Notification } from './notification';
+import { Notification } from '../model/notification';
 
 const router = express.Router();
 
 router.get(
-  '/',
+  '/id',
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {

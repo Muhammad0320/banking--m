@@ -5,7 +5,7 @@ import { Notification } from '../model/notification';
 const router = express.Router();
 
 router.delete(
-  '/',
+  '/id',
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {
