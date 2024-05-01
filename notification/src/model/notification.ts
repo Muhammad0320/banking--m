@@ -7,10 +7,11 @@ type NotificationAttrs = {
   description: string;
 };
 
-type NotificationDoc = mongoose.Document<NotificationAttrs> & {
-  createdAt: Date;
-  status: NotificationStatus; // enum
-};
+type NotificationDoc = mongoose.Document &
+  NotificationAttrs & {
+    createdAt: Date;
+    status: NotificationStatus; // enum
+  };
 
 type NotificationModel = mongoose.Model<NotificationDoc> & {
   buildNotification(attrs: NotificationAttrs): Promise<NotificationDoc>;
@@ -40,7 +41,8 @@ const notSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: Object.values(NotificationStatus)
+      enum: Object.values(NotificationStatus),
+      default: NotificationStatus.Unread
     }
   },
   {
