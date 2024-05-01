@@ -49,13 +49,13 @@ const setup = async () => {
     version: 0,
     account: {
       id: account.id,
-      version: account.version,
+      version: account.version + 1,
       balance: 5000
     },
 
     beneficiary: {
       id: benAccount.id,
-      version: benAccount.version,
+      version: benAccount.version + 1,
       balance: 4000
     }
   };
@@ -67,3 +67,5 @@ const setup = async () => {
 
   return { listener, data, account, msg };
 };
+
+it('updates and saves a transaction reuslt', async () => {});

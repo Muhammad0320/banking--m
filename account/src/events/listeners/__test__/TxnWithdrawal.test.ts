@@ -39,7 +39,7 @@ const setup = async () => {
     version: 0,
     account: {
       id: account.id,
-      version: account.version,
+      version: account.version + 1,
       balance: 50
     }
   };
