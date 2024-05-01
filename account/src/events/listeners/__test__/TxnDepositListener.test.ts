@@ -7,9 +7,10 @@ import { natsWrapper } from '../../../natswrapper';
 import { TxnDepositedListener } from '../TxnDepositCretaedListener';
 import Account from '../../../model/account';
 import { User } from '../../../model/user';
-import mongoose from 'mongoose';
+import mongoose, { set } from 'mongoose';
 import { AccountTier } from '../../../enums/AccountTier';
 import { AccountType } from '../../../enums/AccountTypeEnum';
+import { Message } from 'node-nats-streaming';
 
 const setup = async () => {
   const listener = new TxnDepositedListener(natsWrapper.client);
@@ -40,9 +41,24 @@ const setup = async () => {
     account: {
       id: account.id,
       version: account.version,
-      balance: account.balace
+      balance: 5000
     }
   };
 
-  return { listener, data, account };
+  // @ts-ignore
+  const msg: Message = {
+    ack: jest.fn()
+  };
+
+  return { listener, data, account, msg };
 };
+
+it('updates and saved the account', async () => {
+  const { listener, data, account, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedAccount = await Account.findById(account.id);
+
+  expect(updatedAccount?.balace).toEqual(5000);
+});
