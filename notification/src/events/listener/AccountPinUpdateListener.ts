@@ -9,6 +9,17 @@ export class AccountPinUpdateListener extends Listener<AccountPinUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: AccountPinUpdatedEvent['data'], msg: Message) {
+    const title = 'Account updates';
+
+    const description =
+      'Dear Customer, Your account pin has been updated, successfully';
+
+    await Notification.buildNotification({
+      title,
+      description,
+      userId: data.user.id
+    });
+
     msg.ack();
   }
 }
