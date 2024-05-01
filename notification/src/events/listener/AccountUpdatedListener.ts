@@ -12,7 +12,7 @@ export class AccountBlockedListener extends Listener<AccountBlockedEvent> {
     const title = 'Account Blocked!';
 
     const description =
-      'Dear Customer, Your account has been blocked due to a kind of fraud detection';
+      'Dear Customer, Your account has been blocked due to a kind of fraud detection. Please reach out to our helpdesk for possible solution: shit@shit.com ';
 
     await Notification.buildNotification({
       title,
