@@ -91,3 +91,11 @@ it('updates and saves beneficiary account', async () => {
 
   expect(+updatedBeneficiary.balance).toEqual(data.beneficiary.balance);
 });
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});
