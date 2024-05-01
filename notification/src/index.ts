@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './natswrapper';
+import { AccountBlockedListener } from './events/listener/AccountBlockedListener';
+import { AccountUnblockedListener } from './events/listener/AccountUnblockedListener';
+import { AccountPinUpdateListener } from './events/listener/AccountPinUpdateListener';
+import { AccountCreatedListener } from './events/listener/AccountCreatedListener';
+import { TxnDeositListener } from './events/listener/TxnDepositListener';
+import { TxnTransferListener } from './events/listener/TxnTransferListener';
+import { TxnwithdrawalListener } from './events/listener/TxnWithdrawalListener';
 
 const start = async () => {
   const port = 3000;
@@ -37,6 +44,14 @@ const start = async () => {
 
     process.on('SIGTERM', () => natsWrapper.client.close());
     process.on('SIGINT', () => natsWrapper.client.close());
+
+    new TxnDeositListener(natsWrapper.client).listen();
+    new TxnTransferListener(natsWrapper.client).listen();
+    new TxnwithdrawalListener(natsWrapper.client).listen();
+    new AccountBlockedListener(natsWrapper.client).listen();
+    new AccountCreatedListener(natsWrapper.client).listen();
+    new AccountUnblockedListener(natsWrapper.client).listen();
+    new AccountPinUpdateListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI);
 
