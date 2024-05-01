@@ -24,9 +24,9 @@ export class TxnTransferCreatedListener extends Listener<
     if (!account || !beneficiary)
       throw new Error('Account or beneficiary not found');
 
-    await account.updateOne({ balace: data.account.balance }, { new: true });
+    await account.updateOne({ balance: data.account.balance }, { new: true });
     await beneficiary.updateOne(
-      { balace: data.beneficiary.balance },
+      { balance: data.beneficiary.balance },
       { new: true }
     );
 

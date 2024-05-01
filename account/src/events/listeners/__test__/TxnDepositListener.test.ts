@@ -40,7 +40,7 @@ const setup = async () => {
     version: 0,
     account: {
       id: account.id,
-      version: account.version,
+      version: account.version + 1,
       balance: 5000
     }
   };
@@ -60,7 +60,7 @@ it('updates and saved the account', async () => {
 
   const updatedAccount = await Account.findById(account.id);
 
-  expect(updatedAccount?.balace).toEqual(data.account.balance);
+  expect(updatedAccount?.balance).toEqual(data.account.balance);
 });
 
 it(' acks the messge ', async () => {

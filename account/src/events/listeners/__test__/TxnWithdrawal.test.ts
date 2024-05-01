@@ -64,7 +64,7 @@ it('updates and saves the account', async () => {
 
   if (!updatedAccount) throw new Error('Account not found');
 
-  expect(updatedAccount?.balace).toEqual(data.account.balance);
+  expect(updatedAccount.balance).toEqual(data.account.balance);
 });
 
 it('acks the message', async () => {
