@@ -79,3 +79,15 @@ it('updates and saves sender account', async () => {
 
   expect(+updatedAccount.balance).toEqual(data.account.balance);
 });
+
+it('updates and saves beneficiary account', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedBeneficiary = await Account.findById(data.beneficiary.id);
+
+  if (!updatedBeneficiary) throw new Error('Benebeneficiary not found');
+
+  expect(+updatedBeneficiary.balance).toEqual(data.beneficiary.balance);
+});
