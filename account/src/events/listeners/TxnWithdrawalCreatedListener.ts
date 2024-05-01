@@ -17,9 +17,14 @@ export class TxnWithdrawalCreatedListener extends Listener<
   async onMessage(data: TxnWithdrawalCreatedEvent['data'], msg: Message) {
     const ckeck = await Account.find();
 
-    console.log(data.id, 'from the before checkkkkkk');
+    console.log(data, 'from the before checkkkkkk');
 
     console.log(ckeck, 'from the checkkkkkkkkk');
+
+    console.log(
+      await Account.findById(data.account.id),
+      'from after checkkkkkkkkkk'
+    );
 
     const account = await Account.findByLastVersionAndId(
       data.account.id,

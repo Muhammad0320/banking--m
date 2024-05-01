@@ -138,7 +138,7 @@ accountSchema.statics.findByLastVersionAndId = async function(
 ) {
   const __v = version - 1;
 
-  await Account.findOne({ _id: id, version: __v });
+  return await Account.findOne({ _id: id, version: __v });
 };
 
 accountSchema.pre('save', async function(next) {
