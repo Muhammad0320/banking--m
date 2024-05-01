@@ -57,7 +57,7 @@ router.post(
       id: newAccount.id,
       version: 0,
       pin: newAccount.pin,
-      balance: newAccount.balace,
+      balance: newAccount.balance,
       status: newAccount.status,
       currency: newAccount.currency,
       userId: newAccount.user.id,
