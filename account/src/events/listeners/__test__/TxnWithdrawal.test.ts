@@ -51,3 +51,21 @@ const setup = async () => {
 
   return { listener, data, account, msg };
 };
+
+it('updates and saves the account', async () => {
+  const { listener, data, account, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedAccount = await Account.findById(account.id);
+
+  expect(updatedAccount?.balace).toEqual(data.account.balance);
+});
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});

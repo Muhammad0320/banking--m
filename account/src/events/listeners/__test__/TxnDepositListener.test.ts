@@ -60,7 +60,7 @@ it('updates and saved the account', async () => {
 
   const updatedAccount = await Account.findById(account.id);
 
-  expect(updatedAccount?.balace).toEqual(5000);
+  expect(updatedAccount?.balace).toEqual(data.account.balance);
 });
 
 it(' acks the messge ', async () => {
