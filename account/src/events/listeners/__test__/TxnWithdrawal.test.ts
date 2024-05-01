@@ -1,15 +1,16 @@
 import mongoose from 'mongoose';
 import { User } from '../../../model/user';
+import Account from '../../../model/account';
 import { natsWrapper } from '../../../natswrapper';
+import { AccountTier } from '../../../enums/AccountTier';
+import { AccountType } from '../../../enums/AccountTypeEnum';
 import { TxnWithdrawalCreatedListener } from '../TxnWithdrawalCreatedListener';
+
 import {
   AccountCurrency,
   TxnWithdrawalCreatedEvent,
   UserRole
 } from '@m0banking/common';
-import { AccountTier } from '../../../enums/AccountTier';
-import { AccountType } from '../../../enums/AccountTypeEnum';
-import Account from '../../../model/account';
 
 const setup = async () => {
   const listener = new TxnWithdrawalCreatedListener(natsWrapper.client);
