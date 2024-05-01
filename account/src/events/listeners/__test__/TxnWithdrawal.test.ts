@@ -35,8 +35,6 @@ const setup = async () => {
     type: AccountType.Current
   });
 
-  console.log(account, 'from withdrawal test');
-
   const data: TxnWithdrawalCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,

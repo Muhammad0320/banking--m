@@ -16,9 +16,9 @@ import { TxnTransferCreatedListener } from '../TxnTransferCreatedListener';
 const userBuilder = async () =>
   await User.buildUser({
     id: new mongoose.Types.ObjectId().toHexString(),
-    password: 'shitpassword' + Math.floor(Math.random() * 2),
+    password: 'shitpassword',
 
-    email: 'shitman@gmail.com',
+    email: 'shitman@gmail.com' + Math.random(),
     name: 'Lisan al-gaib',
     role: UserRole.User,
     version: 0

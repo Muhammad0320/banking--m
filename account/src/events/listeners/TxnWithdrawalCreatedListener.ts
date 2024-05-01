@@ -15,23 +15,10 @@ export class TxnWithdrawalCreatedListener extends Listener<
   queueGroupName = queueGroupName;
 
   async onMessage(data: TxnWithdrawalCreatedEvent['data'], msg: Message) {
-    const ckeck = await Account.find();
-
-    console.log(data, 'from the before checkkkkkk');
-
-    console.log(ckeck, 'from the checkkkkkkkkk');
-
-    console.log(
-      await Account.findById(data.account.id),
-      'from after checkkkkkkkkkk'
-    );
-
     const account = await Account.findByLastVersionAndId(
       data.account.id,
       data.account.version
     );
-
-    console.log(account, 'from the txn withdrawal');
 
     if (!account) throw new Error('Account not found');
 
