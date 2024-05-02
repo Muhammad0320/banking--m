@@ -53,8 +53,10 @@ router.post(
     await new TxnWithdrawalPublisher(natsWrapper.client).publish({
       id: withdrawal.id,
       version: withdrawal.version,
+      amount: withdrawal.amount,
       account: {
         id: updatedAccount.id,
+        userId: updatedAccount.userId,
         version: updatedAccount.version,
         balance: updatedAccount.balance
       }
