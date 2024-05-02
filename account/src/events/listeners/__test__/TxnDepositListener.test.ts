@@ -38,10 +38,12 @@ const setup = async () => {
   const data: TxnDepositCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
+    userId: account.user.id,
+    amount: 500,
     account: {
       id: account.id,
       version: account.version + 1,
-      balance: 5000
+      balance: account.balance + 500
     }
   };
 
@@ -62,7 +64,7 @@ it('updates and saved the account', async () => {
 
   if (!updatedAccount) throw new Error('Account not fucking found');
 
-  expect(+updatedAccount.balance).toEqual(data.account.balance);
+  expect(+updatedAccount.balance).toEqual(account.balance + data.amount);
 });
 
 it(' acks the message ', async () => {
