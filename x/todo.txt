@@ -1,9 +1,9 @@
 
 
 // Learn about ts list format
-// Add reason to account block event 
-// Add users account userId, and amount to txn
-// Add name and type of the account to the user;
-// Add name and to account created listener user field;
-// Don't forget to check the account pin shit for txn srv
+// Add reason to account block event -- done
+// Add users account userId, and amount to txn -- done
+// Add name and type of the account to the user;  --done
+// Add name and to account created listener user field; --done
+// Don't forget to check the account pin shit for txn srv --done
 // Almost everywhere I added 'Customer' should be updated w/ name
