@@ -74,14 +74,17 @@ router.post(
     await new TxnTransferPublisher(natsWrapper.client).publish({
       id: newTransfer.id,
       version: newTransfer.version,
+      amount: newTransfer.amount,
       account: {
         id: updatedAccount.id,
+        userId: updatedAccount.userId,
         balance: updatedAccount.balance,
         version: updatedAccount.version
       },
 
       beneficiary: {
         id: updatedBeneficiary.id,
+        userId: updatedBeneficiary.userId,
         balance: updatedBeneficiary.balance,
         version: updatedBeneficiary.version
       }
