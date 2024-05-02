@@ -6,6 +6,8 @@ export interface TxnDepositCreatedEvent {
   data: {
     id: string;
     version: number;
+    amount: number;
+    userId: string;
     account: {
       id: string;
       version: number;

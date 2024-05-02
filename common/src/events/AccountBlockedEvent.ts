@@ -6,6 +6,7 @@ export interface AccountBlockedEvent {
   data: {
     id: string;
     version: number;
+    reason: string ;
     user: {
       id: string;
     };

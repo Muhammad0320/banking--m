@@ -12,7 +12,10 @@ export interface AccountCreatedEvent {
     balance: number;
     status: AccountStatus;
     currency: AccountCurrency;
-    userId: string;
+    userId: {
+      id: string;
+      name: string;
+    };
     no: number;
     _block: boolean;
   };

@@ -3,14 +3,14 @@ import {
   TxnDepositCreatedEvent,
   UserRole
 } from '@m0banking/common';
-import { natsWrapper } from '../../../natswrapper';
-import { TxnDepositedListener } from '../TxnDepositCretaedListener';
-import Account from '../../../model/account';
-import { User } from '../../../model/user';
 import mongoose from 'mongoose';
+import { User } from '../../../model/user';
+import Account from '../../../model/account';
+import { Message } from 'node-nats-streaming';
+import { natsWrapper } from '../../../natswrapper';
 import { AccountTier } from '../../../enums/AccountTier';
 import { AccountType } from '../../../enums/AccountTypeEnum';
-import { Message } from 'node-nats-streaming';
+import { TxnDepositedListener } from '../TxnDepositCretaedListener';
 
 const setup = async () => {
   const listener = new TxnDepositedListener(natsWrapper.client);
