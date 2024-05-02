@@ -28,20 +28,25 @@ const setup = async () => {
   const account = await Account.buildAccount({
     pin: '1234',
     pinConfirm: '1234',
-
+    balance: 50000,
     user,
     tier: AccountTier.Basic,
     currency: AccountCurrency.USD,
     type: AccountType.Current
   });
 
+  const amount = 500;
+
   const data: TxnWithdrawalCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
+    amount,
+
     account: {
       id: account.id,
       version: account.version + 1,
-      balance: 50
+      balance: 50,
+      userId: account.user.id
     }
   };
 
