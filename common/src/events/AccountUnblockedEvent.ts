@@ -8,6 +8,7 @@ export interface AccountUnBlockedEvent {
     version: number;
     user: {
       id: string;
+      name: string;
     };
   };
 }
