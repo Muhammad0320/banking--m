@@ -24,7 +24,7 @@ const userBuilder = async () =>
     version: 0
   });
 
-const accountBuilder = async (user: UserDoc) =>
+const accountBuilder = async (user: UserDoc, balance?: number) =>
   await Account.buildAccount({
     pin: '1234',
     pinConfirm: '1234',
@@ -32,31 +32,37 @@ const accountBuilder = async (user: UserDoc) =>
     user,
     tier: AccountTier.Basic,
     currency: AccountCurrency.USD,
-    type: AccountType.Current
+    type: AccountType.Current,
+    balance
   });
 
 const setup = async () => {
   const listener = new TxnTransferCreatedListener(natsWrapper.client);
 
   const user = await userBuilder();
-  const account = await accountBuilder(user);
+  const account = await accountBuilder(user, 50000);
 
   const userBen = await userBuilder();
   const benAccount = await accountBuilder(userBen);
 
+  const amount = 500;
+
   const data: TxnTransferCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
+    amount,
     account: {
       id: account.id,
+      userId: account.user.id,
       version: account.version + 1,
-      balance: 5000
+      balance: account.balance - amount
     },
 
     beneficiary: {
+      userId: benAccount.user.id,
       id: benAccount.id,
       version: benAccount.version + 1,
-      balance: 4000
+      balance: benAccount.balance + amount
     }
   };
 
