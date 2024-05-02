@@ -39,8 +39,6 @@ router.post(
 
     if (!account) throw new NotFound('');
 
-    console.log('from handler it self');
-
     const updatedAccount = await account.updateOne(
       {
         balance: account.balance + amount
@@ -59,6 +57,8 @@ router.post(
     await new TxnDepositCreatedPublisher(natsWrapper.client).publish({
       id: newTransaction.id,
       version: newTransaction.version,
+      amount: newTransaction.amount,
+      userId: account.userId,
       account: {
         id: updatedAccount.id,
         balance: updatedAccount.balance,
