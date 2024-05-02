@@ -17,6 +17,8 @@ type AccountAttrs = {
 
   //  dob: string;
 
+  balance?: number;
+
   user: UserDoc;
 
   tier: AccountTier;
@@ -47,7 +49,7 @@ type AccountModel = mongoose.Model<AccountDoc> & {
 const accountSchema = new mongoose.Schema(
   {
     balance: {
-      type: String,
+      type: Number,
 
       default: 0
     },

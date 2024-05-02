@@ -25,6 +25,8 @@ const setup = async () => {
     version: 0
   });
 
+  const amount = 500;
+
   const account = await Account.buildAccount({
     pin: '1234',
     pinConfirm: '1234',
@@ -39,11 +41,11 @@ const setup = async () => {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
     userId: account.user.id,
-    amount: 500,
+    amount,
     account: {
       id: account.id,
       version: account.version + 1,
-      balance: account.balance + 500
+      balance: account.balance + amount
     }
   };
 
