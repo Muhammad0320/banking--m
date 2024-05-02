@@ -60,7 +60,14 @@ router.post(
       balance: newAccount.balance,
       status: newAccount.status,
       currency: newAccount.currency,
-      userId: newAccount.user.id,
+
+      type: newAccount.type,
+      tier: newAccount.tier,
+
+      user: {
+        id: newAccount.user.id,
+        name: newAccount.user.name
+      },
       no: newAccount.no,
       _block: newAccount._block
     });
