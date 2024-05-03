@@ -11,7 +11,7 @@ export class TxnTransferListener extends Listener<TxnTransferCreatedEvent> {
   async onMessage(data: TxnTransferCreatedEvent['data'], msg: Message) {
     const title = 'Debit Alert!!!';
 
-    const description = `Dear Customer, Your account successfully transferred {{shit}} to {{shit}}  .\n Your new balace is: ${data.account.balance}`;
+    const description = `Dear Customer, Your account successfully transferred {{shit}} to {{shit}}  .\n Your new balance is: ${data.account.balance}`;
 
     await Notification.buildNotification({
       title,

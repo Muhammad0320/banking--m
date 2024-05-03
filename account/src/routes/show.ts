@@ -1,5 +1,4 @@
 import {
-  BadRequest,
   Forbidden,
   NotFound,
   paramsChecker,

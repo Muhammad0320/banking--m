@@ -15,7 +15,7 @@ export class TxnwithdrawalListener extends Listener<TxnWithdrawalCreatedEvent> {
   async onMessage(data: TxnWithdrawalCreatedEvent['data'], msg: Message) {
     const title = 'Debit Alert!!!';
 
-    const description = `Dear Customer, Your account has been debited with shit amout. \n Your new balace is: ${data.account.balance}`;
+    const description = `Dear Customer, Your account has been debited with shit amout. \n Your new balance is: ${data.account.balance}`;
 
     await Notification.buildNotification({
       title,
