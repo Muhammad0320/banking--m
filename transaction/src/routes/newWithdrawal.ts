@@ -1,14 +1,14 @@
-import { requestValidator, requireAuth } from '@m0banking/common';
-import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
 import mongoose from 'mongoose';
-import { validateAccount } from '../middlewares/validateAccount';
+import { body } from 'express-validator';
 import { Account } from '../model/account';
 import { Txn } from '../model/transaction';
-import { TxnStatusEnum } from '../enums/TxnStatusEnum';
-import { TxnTypeEnum } from '../enums/TxnTypeEnum';
-import { TxnWithdrawalPublisher } from '../events/publisher/TxnWithdrawalPublishert';
 import { natsWrapper } from '../natswrapper';
+import { TxnTypeEnum } from '../enums/TxnTypeEnum';
+import express, { Request, Response } from 'express';
+import { TxnStatusEnum } from '../enums/TxnStatusEnum';
+import { validateAccount } from '../middlewares/validateAccount';
+import { requestValidator, requireAuth } from '@m0banking/common';
+import { TxnWithdrawalPublisher } from '../events/publisher/TxnWithdrawalPublishert';
 
 const router = express.Router();
 
