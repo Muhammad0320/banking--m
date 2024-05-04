@@ -1,0 +1,82 @@
+
+
+
+
+Day 15 🚀 :  Today, we shall dive into the notification service .
+
+Follow for more ✨💻
+
+NextUp ⏭:  create the kubenertes deployment files.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Created the kubenertes deployment files: notification & notification mongo (I've also added it to skaffold for file sync) .
+
+Follow for more ✨💻
+
+NextUp ⏭:  To create account created listener.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Created account created listener: to send notification when new account is created.
+
+Follow for more ✨💻
+
+NextUp ⏭:  Listen for account blocked.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+Day 15 🚀 :  Listened for account blocked: to create notification when an account is successfully blocked.
+
+Follow for more ✨💻
+
+NextUp ⏭: Listen for account unblocked .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Listend for account unblocked: to send notification when user account is successfully unblocked.
+
+Follow for more ✨💻
+
+NextUp ⏭:  Listen for pinupdated .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 15 🚀 :  Listened for pinupdated: to notify user about essential account settings updated.
+
+Follow for more ✨💻
+
+NextUp ⏭:  Listens for transaction deposit .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+Day 15 🚀 :  Listened for transaction deposit event: to notify user about account's balance update.
+
+Follow for more ✨💻
+
+NextUp ⏭:  listen for transaction withdraw event.   
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Listened for transaction withdraw event: to notify user about account's balance update.
+
+Follow for more ✨💻
+
+NextUp ⏭:  listens for transaction transfer.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Listened for transaction transfer event: to notify user about account's balance update.'
+
+Follow for more ✨💻
+
+NextUp ⏭:  create all necessary handlers.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
