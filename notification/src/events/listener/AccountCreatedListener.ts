@@ -13,16 +13,16 @@ export class AccountCreatedListener extends Listener<AccountCreatedEvent> {
   async onMessage(data: AccountCreatedEvent['data'], msg: Message) {
     const title = 'New Account Created';
     const description =
-      `Hello ${data.userId}, a new account has been created for you with the following details:\n` +
+      `Hello ${data.user.name},  new account has been created for you with the following details:\n` +
       `- Account Number: ${data.no}\n` +
-      // `- Account Type: ${data}\n` +
+      `- Account Type: ${data.type}\n` +
       `- Balance: ${data.balance}\n\n` +
       'Thank you for banking with us!';
 
     await Notification.buildNotification({
       title,
       description,
-      userId: data.userId
+      userId: data.user.id
     });
 
     msg.ack();
