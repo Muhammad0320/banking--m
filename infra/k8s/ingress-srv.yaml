@@ -33,3 +33,19 @@ spec:
                 name: transaction-srv
                 port:
                   number: 3000
+
+          - path: /api/v1/notification/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: notification-srv
+                port:
+                  number: 3000
+
+          - path: /api/v1/report/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: report-srv
+                port:
+                  number: 3000
