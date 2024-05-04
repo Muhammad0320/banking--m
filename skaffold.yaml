@@ -2,4 +2,50 @@ apiVersion: skaffold/v4beta3
 kind: Config
 manifests:
   rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: muhammad0320/user
+      context: user
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 
+    - image: muhammad0320/account
+      context: account
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+
+    - image: muhammad0320/transaction
+      context: transaction
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+
+    - image: muhammad0320/notification
+      context: notification
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+
+    - image: muhammad0320/report
+      context: report
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
