@@ -25,15 +25,37 @@ router.patch(
   async (req: Request, res: Response) => {
     const inputs = req.body;
 
+    const { name, email, avatar } = inputs;
+
     const idIsMatched = await User.findById(req.params.id);
 
     if (!idIsMatched) {
       throw new NotFound('User not found');
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id, inputs, {
-      new: true
-    }).select('+password');
+    let updates = idIsMatched.updates;
+
+    // @ts-ignore
+    for (const [key, value] of Object.entries(inputs)) {
+      const old = (idIsMatched as any)[key];
+
+      updates.push({
+        updatedField: key,
+        timeStamp: new Date(),
+        new: value as string,
+        old
+      });
+    }
+
+    console.log(updates);
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { name, email, avatar },
+      {
+        new: true
+      }
+    ).select('+password');
 
     if (!user) {
       throw new BadRequest('Invalid  inputs');

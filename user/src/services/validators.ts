@@ -15,8 +15,8 @@ export const emailValidator = () =>
     .isEmail()
     .withMessage('Please provide a valid email');
 
-export const passwordValidator = () =>
-  body('password')
+export const passwordValidator = (field: string = 'password') =>
+  body(field)
     .trim()
     .notEmpty()
     .isString()

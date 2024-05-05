@@ -3,6 +3,16 @@ import mongoose from 'mongoose';
 import { CryptoManager, UserRole, UserStatus } from '@m0banking/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
+type UserUpdatesObj = {
+  timeStamp: Date;
+
+  old: string;
+
+  new: string;
+
+  updatedField: string;
+};
+
 type UserAttrs = {
   name: string;
   email: string;
@@ -12,10 +22,15 @@ type UserAttrs = {
   role: UserRole;
   avatar: string;
   createdAt: Date;
-  signinTimeStamps: Date[];
 };
 
-type UserDoc = mongoose.Document & UserAttrs & { version: number };
+type UserDoc = mongoose.Document &
+  UserAttrs & {
+    version: number;
+    signinTimeStamps: Date[];
+
+    userUpdates: UserUpdatesObj[];
+  };
 
 type UserModel = mongoose.Model<UserDoc> & {
   buildUser: (attrs: UserAttrs) => Promise<UserDoc>;
@@ -75,7 +90,27 @@ const userSchema = new mongoose.Schema(
 
     signinTimeStamps: [
       {
-        type: String
+        type: Date
+      }
+    ],
+
+    userUpdates: [
+      {
+        updatedField: {
+          type: String
+        },
+
+        old: {
+          type: String
+        },
+
+        new: {
+          type: String
+        },
+
+        timeStamp: {
+          type: Date
+        }
       }
     ]
   },
@@ -106,6 +141,14 @@ userSchema.pre('save', async function(next) {
 
   next();
 });
+
+userSchema.pre('findOneAndUpdate', async function(this: any, next) {
+  const updates = this.getUpdate();
+
+  next();
+});
+
+userSchema.pre('findOneAndUpdate', async function(next) {});
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
