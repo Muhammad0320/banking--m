@@ -12,6 +12,7 @@ type UserAttrs = {
   role: UserRole;
   avatar: string;
   createdAt: Date;
+  signinTimeStamps: Date[] 
 };
 
 type UserDoc = mongoose.Document & UserAttrs & { version: number };
@@ -57,7 +58,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      default: 'user',
+      default: UserRole.User,
       enum: Object.values(UserRole)
     },
 
@@ -68,10 +69,23 @@ const userSchema = new mongoose.Schema(
     },
 
     createdAt: {
-      type: String,
+      type: Date,
       default: new Date()
-    }
+    },
+
+
+    signinTimeStamps: [
+
+      {
+        type: String
+      }
+
+    ]
+
   },
+
+
+
   {
     toJSON: {
       transform(doc, ret) {
@@ -81,6 +95,9 @@ const userSchema = new mongoose.Schema(
     }
   }
 );
+
+
+
 
 userSchema.set('versionKey', 'version');
 userSchema.plugin(updateIfCurrentPlugin);
