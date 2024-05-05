@@ -6,10 +6,10 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 type TxnAttrs = {
   account: string;
   amount: number;
-  status: TxnStatusEnum;
+  reason?: string;
   type: TxnTypeEnum;
   beneficiary?: string;
-  reason?: string;
+  status: TxnStatusEnum;
 };
 
 type TxnDoc = mongoose.Document &

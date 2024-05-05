@@ -1,6 +1,7 @@
 import {
   AccountCurrency,
   AccountStatus,
+  AccountType,
   CryptoManager
 } from '@m0banking/common';
 import mongoose from 'mongoose';
@@ -12,7 +13,8 @@ type AccountAttrs = {
   userId: string;
   balance: number;
   pin: string;
-  // tier: string;
+  tier: string;
+  type: AccountType;
   status: AccountStatus;
   currency: AccountCurrency;
   version: number;

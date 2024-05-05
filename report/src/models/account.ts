@@ -1,5 +1,5 @@
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
 import mongoose from 'mongoose';
+import { AccountCurrency, AccountStatus } from '@m0banking/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type AccountAttrs = {

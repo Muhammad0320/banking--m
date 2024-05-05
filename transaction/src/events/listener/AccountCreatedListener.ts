@@ -9,9 +9,10 @@ export class AccountCreatedListener extends Listener<AccountCreatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: AccountCreatedEvent['data'], msg: Message) {
-    const pin = '1967';
-
-    await Account.buildAccount({ ...data, pin });
+    await Account.buildAccount({
+      ...data,
+      userId: data.user.id
+    });
 
     msg.ack();
   }
