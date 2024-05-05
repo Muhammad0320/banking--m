@@ -2,14 +2,15 @@ import { TxnStatusEnum, TxnTypeEnum } from '@m0banking/common';
 import mongoose from 'mongoose';
 
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { AccountDoc } from './account';
 
 type TxnAttrs = {
-  account: string;
+  account: AccountDoc;
   amount: number;
   reason?: string;
-  type: TxnTypeEnum;
+  // type: TxnTypeEnum;
+  // status: TxnStatusEnum;
   beneficiary?: string;
-  status: TxnStatusEnum;
 };
 
 type TxnDoc = mongoose.Document &
@@ -43,17 +44,17 @@ const txnSchema = new mongoose.Schema({
     required: true
   },
 
-  status: {
-    type: String,
-    enum: Object.values(TxnStatusEnum),
-    required: true
-  },
+  // status: {
+  //   type: String,
+  //   enum: Object.values(TxnStatusEnum),
+  //   required: true
+  // },
 
-  type: {
-    type: String,
-    enum: Object.values(TxnTypeEnum),
-    required: true
-  },
+  // type: {
+  //   type: String,
+  //   enum: Object.values(TxnTypeEnum),
+  //   required: true
+  // },
 
   createdAt: {
     type: mongoose.Schema.Types.Date,
