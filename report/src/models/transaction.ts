@@ -1,7 +1,6 @@
+import { TxnStatusEnum, TxnTypeEnum } from '@m0banking/common';
 import mongoose from 'mongoose';
 
-import { TxnTypeEnum } from '../enums/TxnTypeEnum';
-import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type TxnAttrs = {
