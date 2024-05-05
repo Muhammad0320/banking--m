@@ -1,7 +1,7 @@
 import {
   Listener,
   Subjects,
-  TxnDepositCreatedEvent,
+  TxnWithdrawalCreatedEvent,
   TxnTypeEnum
 } from '@m0banking/common';
 import { queueGroupName } from './queueGroupName';
@@ -9,12 +9,12 @@ import { Message } from 'node-nats-streaming';
 import { Txn } from '../../models/transaction';
 import { Account } from '../../models/account';
 
-export class TxnDepsitListener extends Listener<TxnDepositCreatedEvent> {
-  readonly subject = Subjects.TxnDepositCreated;
+export class TxnWithdrawalListener extends Listener<TxnWithdrawalCreatedEvent> {
+  readonly subject = Subjects.TxnWithdrawalCreated;
 
   queueGroupName = queueGroupName;
 
-  async onMessage(data: TxnDepositCreatedEvent['data'], msg: Message) {
+  async onMessage(data: TxnWithdrawalCreatedEvent['data'], msg: Message) {
     const account = await Account.findById(data.account.id);
 
     if (!account) {
@@ -24,7 +24,7 @@ export class TxnDepsitListener extends Listener<TxnDepositCreatedEvent> {
     await Txn.buildTxn({
       ...data,
       account,
-      type: TxnTypeEnum.Deposit
+      type: TxnTypeEnum.Withdrawal
     });
 
     msg.ack();

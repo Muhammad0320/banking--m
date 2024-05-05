@@ -8,7 +8,7 @@ type TxnAttrs = {
   account: AccountDoc;
   amount: number;
   reason?: string;
-  // type: TxnTypeEnum;
+  type: TxnTypeEnum;
   // status: TxnStatusEnum;
   beneficiary?: string;
 };
@@ -50,11 +50,11 @@ const txnSchema = new mongoose.Schema({
   //   required: true
   // },
 
-  // type: {
-  //   type: String,
-  //   enum: Object.values(TxnTypeEnum),
-  //   required: true
-  // },
+  type: {
+    type: String,
+    enum: Object.values(TxnTypeEnum),
+    required: true
+  },
 
   createdAt: {
     type: mongoose.Schema.Types.Date,
