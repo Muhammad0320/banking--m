@@ -20,6 +20,23 @@ NextUp ⏭:  To create account created listener.
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
 
 
+
+Day 15 🚀 :  Created a tiny message status enum.
+
+Follow for more ✨💻
+
+NextUp ⏭:  Create notification model.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Created notification model successfully.
+
+Follow for more ✨💻
+
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
 Day 15 🚀 :  Created account created listener: to send notification when new account is created.
 
 Follow for more ✨💻
@@ -78,5 +95,14 @@ Day 15 🚀 :  Listened for transaction transfer event: to notify user about acc
 Follow for more ✨💻
 
 NextUp ⏭:  create all necessary handlers.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 : All the neccessary route handlers for notification: Get all, Getone, Delete all and delete one.
+
+Follow for more ✨💻
+
+NextUp ⏭:  That's all for notification service we transition to the most fun service: REPORT service .  
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 

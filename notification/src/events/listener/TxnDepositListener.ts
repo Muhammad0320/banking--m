@@ -11,7 +11,7 @@ export class TxnDeositListener extends Listener<TxnDepositCreatedEvent> {
   async onMessage(data: TxnDepositCreatedEvent['data'], msg: Message) {
     const title = 'Credit Alert!!!';
 
-    const description = `Dear Customer, Your account has been credited with shit amout. \n Your new balance is: ${data.account.balance}`;
+    const description = `Dear Customer, Your account has been credited with ${data.amount}. \n Your new balance is: ${data.account.balance}`;
 
     await Notification.buildNotification({
       title,
