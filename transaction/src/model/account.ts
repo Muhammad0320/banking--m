@@ -1,6 +1,7 @@
 import {
   AccountCurrency,
   AccountStatus,
+  AccountTier,
   AccountType,
   CryptoManager
 } from '@m0banking/common';
@@ -13,7 +14,7 @@ type AccountAttrs = {
   userId: string;
   balance: number;
   pin: string;
-  tier: string;
+  tier: AccountTier;
   type: AccountType;
   status: AccountStatus;
   currency: AccountCurrency;
@@ -34,6 +35,16 @@ type AccountModel = mongoose.Model<AccountDoc> & {
 
 const accountSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: Object.values(AccountType)
+    },
+
+    tier: {
+      type: String,
+      enum: Object.values(AccountTier)
+    },
+
     no: {
       type: Number,
       unique: true

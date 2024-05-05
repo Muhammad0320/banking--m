@@ -6,6 +6,7 @@ import { signoutRouter } from './routes/signout';
 import { createUserRouter } from './routes/signup';
 import { currentUserRouter } from './routes/currentUser';
 import { globalErrorHandler, NotFound } from '@m0banking/common';
+import { passwordUpdateRouter } from './routes/updatesPassword';
 
 const app = express();
 
@@ -30,6 +31,7 @@ const rootUrl = '/api/v1/user';
 app.use(rootUrl, signinRouter);
 app.use(rootUrl, signoutRouter);
 app.use(rootUrl, createUserRouter);
+app.use(rootUrl, passwordUpdateRouter);
 app.use(rootUrl, currentUserRouter);
 
 app.all('*', () => {
