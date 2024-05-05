@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './natswrapper';
-import { UserCreatedLitener } from './events/listeners/UserCreatedListener';
-import { UserUpdatedListener } from './events/listeners/UserUpdatedListener';
-import { TxnDepositedListener } from './events/listeners/TxnDepositCretaedListener';
-import { TxnWithdrawalCreatedListener } from './events/listeners/TxnWithdrawalCreatedListener';
-import { TxnTransferCreatedListener } from './events/listeners/TxnTransferCreatedListener';
+import { AccountCreatedListener } from './event/listeners/AccountCreatedListener';
+import { AccountBlockedListener } from './event/listeners/AccountBlockedListener';
+import { AccountUnblockedListener } from './event/listeners/AccountUnblockedListener';
+import { TxnDepsitListener } from './event/listeners/TxnDepositedListener';
+import { TxnWithdrawalListener } from './event/listeners/TxnWithdrawalListener.';
+import { TxnTransferListener } from './event/listeners/TxnTransferListener';
 
 const start = async () => {
   const port = 3000;
@@ -43,12 +44,12 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
     process.on('SIGINT', () => natsWrapper.client.close());
 
-    new UserCreatedLitener(natsWrapper.client).listen();
-    new UserUpdatedListener(natsWrapper.client).listen();
-
-    new TxnDepositedListener(natsWrapper.client).listen();
-    new TxnTransferCreatedListener(natsWrapper.client).listen();
-    new TxnWithdrawalCreatedListener(natsWrapper.client).listen();
+    new TxnDepsitListener(natsWrapper.client).listen();
+    new TxnTransferListener(natsWrapper.client).listen();
+    new TxnWithdrawalListener(natsWrapper.client).listen();
+    new AccountCreatedListener(natsWrapper.client).listen();
+    new AccountBlockedListener(natsWrapper.client).listen();
+    new AccountUnblockedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI);
 

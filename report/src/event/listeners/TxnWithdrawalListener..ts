@@ -4,10 +4,10 @@ import {
   TxnWithdrawalCreatedEvent,
   TxnTypeEnum
 } from '@m0banking/common';
-import { queueGroupName } from './queueGroupName';
 import { Message } from 'node-nats-streaming';
 import { Txn } from '../../models/transaction';
 import { Account } from '../../models/account';
+import { queueGroupName } from './queueGroupName';
 
 export class TxnWithdrawalListener extends Listener<TxnWithdrawalCreatedEvent> {
   readonly subject = Subjects.TxnWithdrawalCreated;

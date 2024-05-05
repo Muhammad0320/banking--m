@@ -1,4 +1,9 @@
-export class AccountCreatedListener {
+import { AccountCreatedEvent, Listener, Subjects } from '@m0banking/common';
+import { queueGroupName } from './queueGroupName';
+import { Message } from 'node-nats-streaming';
+import { Account } from '../../models/account';
+
+export class AccountCreatedListener extends Listener<AccountCreatedEvent> {
   readonly subject = Subjects.AccountCreated;
 
   queueGroupName = queueGroupName;
