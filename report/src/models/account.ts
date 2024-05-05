@@ -1,13 +1,22 @@
 import mongoose from 'mongoose';
-import { AccountCurrency, AccountStatus } from '@m0banking/common';
+import {
+  AccountCurrency,
+  AccountStatus,
+  AccountTier,
+  AccountType
+} from '@m0banking/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type AccountAttrs = {
   id: string;
+  no: number;
+  pin: string;
   userId: string;
   balance: number;
   version: number;
   _block: boolean;
+  tier: AccountTier;
+  type: AccountType;
   status: AccountStatus;
   currency: AccountCurrency;
 };
@@ -25,6 +34,26 @@ type AccountModel = mongoose.Model<AccountDoc> & {
 
 const accountSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: Object.values(AccountType)
+    },
+
+    tier: {
+      type: String,
+      enum: Object.values(AccountTier)
+    },
+
+    no: {
+      type: Number,
+      unique: true
+    },
+
+    pin: {
+      type: String,
+      required: true
+    },
+
     userId: {
       type: String,
       unique: true,
@@ -63,7 +92,6 @@ const accountSchema = new mongoose.Schema(
     }
   }
 );
-
 accountSchema.set('versionKey', 'version');
 accountSchema.plugin(updateIfCurrentPlugin);
 
