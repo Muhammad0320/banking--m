@@ -3,13 +3,14 @@ import mongoose from 'mongoose';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { AccountDoc } from './account';
 
 type TxnAttrs = {
-  account: string;
+  account: AccountDoc;
   amount: number;
   status: TxnStatusEnum;
   type: TxnTypeEnum;
-  beneficiary?: string;
+  beneficiary?: AccountDoc;
   reason?: string;
 };
 

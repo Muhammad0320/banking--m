@@ -10,7 +10,7 @@ type TxnAttrs = {
   reason?: string;
   type: TxnTypeEnum;
   // status: TxnStatusEnum;
-  beneficiary?: string;
+  beneficiary?: AccountDoc;
 };
 
 type TxnDoc = mongoose.Document &
