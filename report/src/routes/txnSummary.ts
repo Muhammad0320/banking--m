@@ -9,9 +9,25 @@ router.get('/summary', requireAuth, async (req: Request, res: Response) => {
     {
       $match: {
         userId: req.currentUser.id
+      },
+
+      $group: {
+        _id: { $toUpper: '$type' },
+        avgTxnAmount: { $avg: '$amount' },
+        minTxnAmount: { $min: '$amount' },
+        maxTxnAmount: { $max: '$amount' },
+        totalTxnAmount: { $sum: '$amount' },
+        totalNoOfTxn: { $sum: 1 },
+        timeStamps: { $push: '$createdAt' }
+      },
+
+      $sort: {
+        avgTxnAmount: 1
       }
     }
   ]);
+
+  res.status(200).json({});
 });
 
 export { router as txnSummaryRouter };

@@ -29,7 +29,7 @@ type UserDoc = mongoose.Document &
     version: number;
     signinTimeStamps: Date[];
 
-    userUpdates: UserUpdatesObj[];
+    updates: UserUpdatesObj[];
   };
 
 type UserModel = mongoose.Model<UserDoc> & {
@@ -94,7 +94,7 @@ const userSchema = new mongoose.Schema(
       }
     ],
 
-    userUpdates: [
+    updates: [
       {
         updatedField: {
           type: String

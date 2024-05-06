@@ -117,14 +117,14 @@ NextUp ⏭:  Add logic to save the changes made by the user for analysis (REPORT
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
 
-Day 15 🚀 : Almost forgot to wire it up to the app. 
+Day 16 🚀 : Almost forgot to wire it up to the app. 
 
 Follow for more ✨💻
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
 
 
-Day 15 🚀 :  Added a logic to save all the changes made by the user: which is an objet w/ old, new, field and time .
+Day 16 🚀 :  Added a logic to save all the changes made by the user: which is an objet w/ old, new, field and time .
 
 Follow for more ✨💻
 
@@ -135,7 +135,7 @@ NextUp ⏭: Add logic for storing password update also.
 
 
 
-Day 15 🚀 : Added logic to store used password for analysis purpose.
+Day 16 🚀 : Added logic to store used password for analysis purpose.
 
 Follow for more ✨💻
 
@@ -144,7 +144,7 @@ NextUp ⏭: Add account model to the report srv .
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
 
 
-Day 15 🚀 : Added account srv to the report srv . 
+Day 16 🚀 : Added account srv to the report srv . 
 
 Follow for more ✨💻
 
@@ -154,7 +154,7 @@ NextUp ⏭: Add txn model to the report srv.
 
 
 
-Day 15 🚀 : Added txn model to the report srv.
+Day 16 🚀 : Added txn model to the report srv.
 
 Follow for more ✨💻
 
