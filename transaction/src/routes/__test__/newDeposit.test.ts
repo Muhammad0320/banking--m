@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import {
   AccountCurrency,
   AccountStatus,
+  AccountTier,
+  AccountType,
   CryptoManager
 } from '@m0banking/common';
 import { natsWrapper } from '../../natswrapper';
@@ -25,7 +27,9 @@ const accountBuilder = async () => {
     balance: 0,
     version: 0,
     no: Math.floor(83923939393 * Math.random() * 1.5),
-    _block: false
+    _block: false,
+    tier: AccountTier.Basic,
+    type: AccountType.Current
   });
 };
 

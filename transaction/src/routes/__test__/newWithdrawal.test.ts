@@ -5,6 +5,8 @@ import { Account } from '../../model/account';
 import {
   AccountCurrency,
   AccountStatus,
+  AccountTier,
+  AccountType,
   CryptoManager
 } from '@m0banking/common';
 
@@ -24,7 +26,9 @@ const accountBuilder = async (bal?: number) => {
     balance: bal || 0,
     version: 0,
     no: Math.floor(83923939393 * Math.random() * 1.5),
-    _block: false
+    _block: false,
+    tier: AccountTier.Basic,
+    type: AccountType.Current
   });
 };
 
@@ -53,7 +57,7 @@ it('returns a 400 for invalid  for invalid amount', async () => {
 
 it('returns a 201, on successful withdrawal', async () => {
   const account = await accountBuilder(8000);
-   
+
   await request(app)
     .post('/api/v1/txn/withdrawal')
     .set('Cookie', await global.signin(account.userId))
