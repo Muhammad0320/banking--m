@@ -27,7 +27,10 @@ router.get('/summary', requireAuth, async (req: Request, res: Response) => {
     }
   ]);
 
-  res.status(200).json({});
+  res.status(200).json({
+    status: 'success',
+    data: summary
+  });
 });
 
 export { router as txnSummaryRouter };

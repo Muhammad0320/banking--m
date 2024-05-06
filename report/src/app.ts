@@ -1,13 +1,9 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { allAccountsRouter } from './routes/all';
-import { showAccountRouter } from './routes/show';
-import { createAccountRouter } from './routes/new';
-import { blockAccountRouter } from './routes/block';
-import { updatePinRouter } from './routes/updatePin';
-import { unblockAccountRouter } from './routes/unblock';
+
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
+import { txnSummaryRouter } from './routes/txnSummary';
 
 const app = express();
 
@@ -27,16 +23,11 @@ app.use(
 
 console.log('Hi mom');
 
-const rootUrl = '/api/v1/account';
+const rootUrl = '/api/v1/report';
+
+app.use(rootUrl, txnSummaryRouter);
 
 app.use(currentUser);
-
-app.use(rootUrl, updatePinRouter);
-app.use(rootUrl, allAccountsRouter);
-app.use(rootUrl, showAccountRouter);
-app.use(rootUrl, blockAccountRouter);
-app.use(rootUrl, createAccountRouter);
-app.use(rootUrl, unblockAccountRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');
