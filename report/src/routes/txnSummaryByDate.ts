@@ -16,7 +16,8 @@ router.get(
         $match: {
           userId: req.currentUser.id,
           createdAt: {
-            $gt: `${year}-01-01`
+            $gte: `${year}-${req.params.month || '01'}-01`,
+            $lte: `${year}-${req.params.month || '12'}-31`
           }
         },
 
