@@ -31,3 +31,11 @@ it('returns a 400, if invalid year is provided', async () => {
     .set('Cookie', await global.signin())
     .expect(400);
 });
+
+it('returns a 400, if invalid month is provided', async () => {
+  await request(app)
+    .get('/api/v1/report/summaryByDate/2024/30')
+    .send()
+    .set('Cookie', await global.signin())
+    .expect(400);
+});
