@@ -11,16 +11,21 @@ router.get(
   async (req: Request, res: Response) => {
     const { year } = req.params;
 
-    if (!year || typeof +year !== 'number')
+    const month = req.params?.month;
+
+    if (!year || typeof +year !== 'number' || +month > 2024)
       throw new BadRequest('please provide a valid year');
+
+    if (month || typeof +month !== 'number' || +month > 12)
+      throw new BadRequest('please provide a valid month');
 
     const summary = await Txn.aggregate([
       {
         $match: {
           userId: req.currentUser.id,
           createdAt: {
-            $gte: `${year}-${req.params.month || '01'}-01`,
-            $lte: `${year}-${req.params.month || '12'}-31`
+            $gte: `${year}-${month || '01'}-01`,
+            $lte: `${year}-${month || '12'}-31`
           }
         },
 
