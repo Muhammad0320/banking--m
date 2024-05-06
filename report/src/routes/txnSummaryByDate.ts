@@ -5,7 +5,7 @@ import { Txn } from '../models/transaction';
 const router = express.Router();
 
 router.get(
-  '/summary/:year/:month?',
+  '/summaryByDate/:year/:month?',
   requireAuth,
 
   async (req: Request, res: Response) => {
@@ -13,10 +13,12 @@ router.get(
 
     const month = req.params?.month;
 
-    if (!year || typeof +year !== 'number' || +month > 2024)
+    const date = new Date();
+
+    if (!year || typeof +year !== 'number' || +year > date.getFullYear())
       throw new BadRequest('please provide a valid year');
 
-    if (month || typeof +month !== 'number' || +month > 12)
+    if (month || typeof +month !== 'number' || +month > date.getMonth())
       throw new BadRequest('please provide a valid month');
 
     const summary = await Txn.aggregate([
