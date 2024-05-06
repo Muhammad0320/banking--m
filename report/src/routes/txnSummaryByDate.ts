@@ -1,4 +1,4 @@
-import { paramsChecker, requireAuth } from '@m0banking/common';
+import { BadRequest, paramsChecker, requireAuth } from '@m0banking/common';
 import express, { Request, Response } from 'express';
 import { Txn } from '../models/transaction';
 
@@ -10,6 +10,9 @@ router.get(
 
   async (req: Request, res: Response) => {
     const { year } = req.params;
+
+    if (!year || typeof +year !== 'number')
+      throw new BadRequest('please provide a valid year');
 
     const summary = await Txn.aggregate([
       {
