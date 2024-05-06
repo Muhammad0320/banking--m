@@ -15,3 +15,15 @@ it('returns status other than 401, to show that routes exists', async () => {
 
   expect(statusCode).not.toEqual(404);
 });
+
+it('returns a 200 status code when for valid user', async () => {
+  const {
+    body: { data }
+  } = await request(app)
+    .get('/api/v1/summary')
+    .set('Cookie', await global.signin())
+    .send()
+    .expect(200);
+
+  expect(data).toBeDefined();
+});
