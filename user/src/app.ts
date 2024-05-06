@@ -5,8 +5,8 @@ import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { createUserRouter } from './routes/signup';
 import { currentUserRouter } from './routes/currentUser';
-import { globalErrorHandler, NotFound } from '@m0banking/common';
 import { passwordUpdateRouter } from './routes/updatesPassword';
+import { globalErrorHandler, NotFound } from '@m0banking/common';
 
 const app = express();
 
