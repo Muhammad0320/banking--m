@@ -27,6 +27,8 @@ router.get('/summary', requireAuth, async (req: Request, res: Response) => {
     }
   ]);
 
+  console.log(summary);
+
   res.status(200).json({
     status: 'success',
     data: summary

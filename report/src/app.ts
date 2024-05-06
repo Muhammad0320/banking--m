@@ -4,6 +4,7 @@ import cookieSession from 'cookie-session';
 
 import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
 import { txnSummaryRouter } from './routes/txnSummary';
+import { txnSummaryRouterByDate } from './routes/txnSummaryByDate';
 
 const app = express();
 
@@ -26,6 +27,7 @@ console.log('Hi mom');
 const rootUrl = '/api/v1/report';
 
 app.use(rootUrl, txnSummaryRouter);
+app.use(rootUrl, txnSummaryRouterByDate);
 
 app.use(currentUser);
 

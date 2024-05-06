@@ -7,7 +7,7 @@ const router = express.Router();
 router.get(
   '/summary/:year/:month?',
   requireAuth,
-  paramsChecker('year'),
+
   async (req: Request, res: Response) => {
     const { year } = req.params;
 
@@ -37,6 +37,8 @@ router.get(
       }
     ]);
 
+    console.log(summary);
+
     res.status(200).json({
       status: 'success',
       data: summary
@@ -44,4 +46,4 @@ router.get(
   }
 );
 
-export { router as txnSummaryRouter };
+export { router as txnSummaryRouterByDate };

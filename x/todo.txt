@@ -1,9 +1,16 @@
 
 
-// Learn about ts list format
+// Learn about ts list format --shit
 // Add reason to account block event -- done
 // Add users account userId, and amount to txn -- done
 // Add name and type of the account to the user;  --done
 // Add name and to account created listener user field; --done
 // Don't forget to check the account pin shit for txn srv --done
-// Almost everywhere I added 'Customer' should be updated w/ name
+// Almost everywhere I added 'Customer' should be updated w/  name -- done 
+
+
+
+/////////////////////////
+
+
+ // add year checking to params checker
