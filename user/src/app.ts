@@ -31,8 +31,8 @@ const rootUrl = '/api/v1/user';
 app.use(rootUrl, signinRouter);
 app.use(rootUrl, signoutRouter);
 app.use(rootUrl, createUserRouter);
-app.use(rootUrl, passwordUpdateRouter);
 app.use(rootUrl, currentUserRouter);
+app.use(rootUrl, passwordUpdateRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');

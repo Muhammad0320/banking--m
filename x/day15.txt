@@ -106,3 +106,58 @@ Follow for more ✨💻
 NextUp ⏭:  That's all for notification service we transition to the most fun service: REPORT service .  
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 16 🚀 : A quick reminder, forgot to add a route for when a user tried to updates password on whim.
+
+Follow for more ✨💻
+
+NextUp ⏭:  Add logic to save the changes made by the user for analysis (REPORT).  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+Day 15 🚀 : Almost forgot to wire it up to the app. 
+
+Follow for more ✨💻
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 :  Added a logic to save all the changes made by the user: which is an objet w/ old, new, field and time .
+
+Follow for more ✨💻
+
+NextUp ⏭: Add logic for storing password update also.
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+
+Day 15 🚀 : Added logic to store used password for analysis purpose.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add account model to the report srv .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 15 🚀 : Added account srv to the report srv . 
+
+Follow for more ✨💻
+
+NextUp ⏭: Add txn model to the report srv.   
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 15 🚀 : Added txn model to the report srv.
+
+Follow for more ✨💻
+
+NextUp ⏭: To add all listeners.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
