@@ -7,3 +7,11 @@ it('returns a 401, for unauthorized user', async () => {
     .send()
     .expect(401);
 });
+
+it('returns status other than 401, to show that routes exists', async () => {
+  const { statusCode } = await request(app)
+    .get('/api/v1/report/summary')
+    .send();
+
+  expect(statusCode).not.toEqual(404);
+});
