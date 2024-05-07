@@ -39,5 +39,6 @@ export * from "./events/TxnDepositCreatedEvent";
 export * from "./events/AccountPinUpdatedEvent";
 export * from "./events/types/AccountStatusEnum";
 export * from "./events/TxnTransferCreatedEvent";
+export * from "./events/UserPasswordUpdatedEvent";
 export * from "./events/TxnWithdrawalCreatedEvent";
 export * from "./events/types/AccountCurrencyEnum";
