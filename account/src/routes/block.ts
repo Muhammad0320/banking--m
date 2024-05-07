@@ -32,8 +32,10 @@ router.patch(
     await new AccountBlockPublisher(natsWrapper.client).publish({
       id: updatedAccount.id,
       version: updatedAccount.version,
+      reason: 'Breaking rules',
       user: {
-        id: updatedAccount.user.id
+        id: updatedAccount.user.id,
+        name: updatedAccount.user.name
       }
     });
 

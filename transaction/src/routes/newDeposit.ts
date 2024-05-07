@@ -58,9 +58,9 @@ router.post(
       id: newTransaction.id,
       version: newTransaction.version,
       amount: newTransaction.amount,
-      userId: account.userId,
       account: {
         id: updatedAccount.id,
+        userId: account.userId,
         balance: updatedAccount.balance,
         version: updatedAccount.version
       }
