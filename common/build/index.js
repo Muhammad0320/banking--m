@@ -49,5 +49,6 @@ __exportStar(require("./events/TxnDepositCreatedEvent"), exports);
 __exportStar(require("./events/AccountPinUpdatedEvent"), exports);
 __exportStar(require("./events/types/AccountStatusEnum"), exports);
 __exportStar(require("./events/TxnTransferCreatedEvent"), exports);
+__exportStar(require("./events/UserPasswordUpdatedEvent"), exports);
 __exportStar(require("./events/TxnWithdrawalCreatedEvent"), exports);
 __exportStar(require("./events/types/AccountCurrencyEnum"), exports);

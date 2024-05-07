@@ -2,9 +2,11 @@ import {
   BadRequest,
   CryptoManager,
   currentUser,
+  Forbidden,
   NotFound,
   requestValidator,
-  requireAuth
+  requireAuth,
+  UserRole
 } from '@m0banking/common';
 import {
   passwordConfirmationValidator,
@@ -36,14 +38,23 @@ router.patch(
       throw new BadRequest('Ivalid old pin');
     }
 
-    const updates = user.updates.push({
-      updatedField: 'password',
-      old: oldPassword,
-      new: password,
-      timeStamp: new Date()
-    });
+    if (user.id !== req.currentUser.id && user.role === UserRole.User) {
+      throw new Forbidden("Not allowed to chnage other people's password");
+    }
 
-    user.set({ password, updates });
+    const newHashedPassword = await CryptoManager.hash(password);
+
+    const updates = [
+      ...user.updates,
+      {
+        updatedField: 'password',
+        old: user.password,
+        new: newHashedPassword,
+        timeStamp: new Date()
+      }
+    ];
+
+    user.set({ password: newHashedPassword, updates });
 
     await user.save();
 

@@ -18,6 +18,10 @@ beforeAll(async () => {
 
   const mongoUri = await mongo.getUri();
 
+  if (!mongoUri) {
+    throw new Error('no mongo uri found');
+  }
+
   await mongoose.connect(mongoUri);
 });
 
