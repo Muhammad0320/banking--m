@@ -5,7 +5,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
-  # hostNetwork: true
   ingressClassName: nginx
   rules:
     - host: banking.dev

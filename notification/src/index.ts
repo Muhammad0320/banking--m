@@ -31,6 +31,7 @@ const start = async () => {
   }
 
   try {
+    await mongoose.connect(process.env.MONGO_URI);
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
@@ -52,8 +53,6 @@ const start = async () => {
     new AccountCreatedListener(natsWrapper.client).listen();
     new AccountUnblockedListener(natsWrapper.client).listen();
     new AccountPinUpdateListener(natsWrapper.client).listen();
-
-    await mongoose.connect(process.env.MONGO_URI);
 
     console.log('connected to mongoDB');
   } catch (error) {
