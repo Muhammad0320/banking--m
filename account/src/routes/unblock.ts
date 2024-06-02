@@ -35,7 +35,8 @@ router.patch(
       id: unblockedAccount.id,
       version: unblockedAccount.version,
       user: {
-        id: unblockedAccount.user.id
+        id: unblockedAccount.user.id,
+        name: unblockedAccount.user.name
       }
     });
 

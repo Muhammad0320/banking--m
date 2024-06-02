@@ -79,5 +79,7 @@ it('returns a 200 status code when for valid user', async () => {
     .send()
     .expect(200);
 
+  console.log(data);
+
   expect(data).toBeDefined();
 });
