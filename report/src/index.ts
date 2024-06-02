@@ -3,10 +3,10 @@ import { app } from './app';
 import { natsWrapper } from './natswrapper';
 import { AccountCreatedListener } from './event/listeners/AccountCreatedListener';
 import { AccountBlockedListener } from './event/listeners/AccountBlockedListener';
-import { AccountUnblockedListener } from './event/listeners/AccountUnblockedListener';
 import { TxnDepsitListener } from './event/listeners/TxnDepositedListener';
 import { TxnWithdrawalListener } from './event/listeners/TxnWithdrawalListener.';
 import { TxnTransferListener } from './event/listeners/TxnTransferListener';
+import { AccountUnblockedListener } from './event/listeners/AccountUnblockedListener';
 
 const start = async () => {
   const port = 3000;
