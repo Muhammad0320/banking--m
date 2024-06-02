@@ -18,6 +18,8 @@ beforeAll(async () => {
 
   const mongoUri = await mongo.getUri();
 
+  console.log('Lets see from setup ts');
+
   if (!mongoUri) {
     throw new Error('no mongo uri found');
   }

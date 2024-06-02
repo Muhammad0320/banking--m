@@ -14,7 +14,8 @@
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
     ],
-    "testTimeout": 600000
+    "testTimeout": 600000,
+    "maxWorkers": 2
   },
   "keywords": [],
   "author": "",
