@@ -46,19 +46,19 @@ const txnBuilder = async (
   });
 };
 
-it('returns a 401, for unauthorized user', async () => {
-  await request(app)
-    .get('/api/v1/report/summary')
-    .send()
-    .expect(401);
-});
-
-it('returns status other than 401, to show that routes exists', async () => {
+it('returns status other than 404, to show that routes exists', async () => {
   const { statusCode } = await request(app)
     .get('/api/v1/report/summary')
     .send();
 
   expect(statusCode).not.toEqual(404);
+});
+
+it('returns a 401, for unauthorized user', async () => {
+  await request(app)
+    .get('/api/v1/report/summary')
+    .send()
+    .expect(401);
 });
 
 it('returns a 200 status code when for valid user', async () => {
