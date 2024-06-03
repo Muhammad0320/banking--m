@@ -18,14 +18,7 @@ beforeAll(async () => {
 
   const mongoUri = await mongo.getUri();
 
-  console.log(mongoUri, 'from mongoUri');
-
-  if (!mongoUri) {
-    throw new Error('no mongo uri found');
-  }
-
   await mongoose.connect(mongoUri);
-  console.log('Connected to mongoDB Jest ');
 });
 
 afterEach(async () => {
