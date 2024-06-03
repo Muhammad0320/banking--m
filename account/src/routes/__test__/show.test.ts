@@ -51,6 +51,8 @@ it('returns a 403, if user tried to check other users account', async () => {
     })
     .expect(201);
 
+  console.log(data, 'from the test');
+
   await request(app)
     .get('/api/v1/account/' + data.id)
     .set('Cookie', await global.signin())

@@ -15,7 +15,7 @@ router.get(
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {
-    console.log(req.params.id);
+    console.log(req.params.id, 'from route handler');
 
     const account = await Account.findById(req.params.id);
 
