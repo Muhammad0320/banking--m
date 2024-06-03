@@ -15,9 +15,11 @@ router.get(
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {
+    console.log(req.params.id);
+
     const account = await Account.findById(req.params.id);
 
-    if (!account) {
+    if (!!!account) {
       throw new NotFound('Account not found');
     }
 

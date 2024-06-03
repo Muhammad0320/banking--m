@@ -18,7 +18,7 @@ export class TxnDepositedListener extends Listener<TxnDepositCreatedEvent> {
 
     account.set({ balance: data.account.balance });
     await account.save();
-    
+
     msg.ack();
   }
 }

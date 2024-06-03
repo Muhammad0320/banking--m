@@ -161,3 +161,73 @@ Follow for more ✨💻
 NextUp ⏭: To add all listeners.  
 
 #100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+///////////////////////
+Day 16 🚀 : Added account created listeners to register newly created accounts for report.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add account blocked listener.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 16 🚀 : Added account blocked listener to update account status.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add account unblocked listener.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 16 🚀 : Added Txn deposit listener to register all deposits transactions made.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add txn withdrawal listener .   
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 16 🚀 : Added txn withdrawal listener to save all withdraw transactions made by the account.
+
+Follow for more ✨💻
+
+NextUp ⏭: Add txn transfer listener .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 16 🚀 : Add txn transfer listener to save all transfer transactions made by the account.
+
+Follow for more ✨💻
+
+NextUp ⏭: Addd account summary route .  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+Day 16 🚀 : Add account summary route w/ mongodb aggregation pipeline (not tested yet) I've been facing issue accesscing services from my pod.
+Please help
+Follow for more ✨💻
+
+NextUp ⏭: Show the error I've been mulling over and over to fix.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
+
+Day 16 🚀 : people please help me fix this bug, I have no idea why this is happening, I'm unable to connect to no service.
+
+Follow for more ✨💻
+
+NextUp ⏭: I'm already forgetting some parts of frontend so i have to relearn it, to consolidate the frontend look.  
+
+#100DaysOfCode #CodeNewbie #programming #buildinpublic 
+
+
