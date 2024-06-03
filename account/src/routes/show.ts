@@ -19,6 +19,8 @@ router.get(
 
     const account = await Account.findById(req.params.id);
 
+    console.log(account, 'from the route handler');
+
     if (!!!account) {
       throw new NotFound('Account not found');
     }
