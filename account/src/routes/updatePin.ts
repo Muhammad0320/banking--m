@@ -43,6 +43,10 @@ router.patch(
       throw new BadRequest('invalid pin');
     }
 
+    console.log(existingAccount.user.populate, 'from route handler');
+
+    // console.log(existingAccount.user);
+
     if (
       existingAccount.user.id !== req.currentUser.id &&
       req.currentUser.role === UserRole.User

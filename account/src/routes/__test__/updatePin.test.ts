@@ -215,7 +215,7 @@ it(' returns a 200, if admin tried to updatePin ', async () => {
     .expect(200);
 });
 
-it(' returns a 200, if the account ownser tries to updatePin ', async () => {
+it(' returns a 200, if the account owner tries to updatePin ', async () => {
   const user = await User.buildUser({
     id: new mongoose.Types.ObjectId().toHexString(),
     email: 'lisanalgaib@gmail.com',
@@ -239,6 +239,8 @@ it(' returns a 200, if the account ownser tries to updatePin ', async () => {
     .expect(201);
 
   const path = '/api/v1/account/updatePin/' + data.id;
+
+  console.log(user.id, 'from test');
 
   await request(app)
     .patch(path)

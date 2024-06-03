@@ -148,42 +148,40 @@ accountSchema.pre('save', async function(next) {
   this.pin = await CryptoManager.hash(this.pin);
   this.no = generateTenDigitInt();
 
-  console.log(this._block, 'from pre save hook');
-
   this.pinConfirm = undefined;
 });
 
-accountSchema.pre('findOneAndUpdate', function(this: any, next) {
-  const update = this.getUpdate();
+// accountSchema.pre('findOneAndUpdate', function(this: any, next) {
+//   const update = this.getUpdate();
 
-  // from Conner Ardman
-  this._block = update && update.status === AccountStatus.Blocked;
+//   // from Conner Ardman
+//   this._block = update && update.status === AccountStatus.Blocked;
 
-  console.log(this._block, 'from the find one and update it self');
+//   console.log(this._block, 'from the find one and update it self');
 
-  next();
-});
+//   next();
+// });
 
-accountSchema.pre(/^findOne/, function(this: any, next) {
-  console.log(this.getQuery(), 'from the new getquery it self');
+// accountSchema.pre(/^findOne/, function(this: any, next) {
+//   console.log(this.getQuery(), 'from the new getquery it self');
 
-  console.log(this._block, 'from the new // find regex');
+//   console.log(this._block, 'from the new // find regex');
 
-  !!this._block
-    ? this.find({ status: { $ne: AccountStatus.Blocked } })
-    : this.find();
+//   !!this._block
+//     ? this.find({ status: { $ne: AccountStatus.Blocked } })
+//     : this.find();
 
-  next();
-});
+//   next();
+// });
 
-accountSchema.pre(/^find/, function(this: any, next) {
-  console.log(
-    this.getQuery(),
-    'from the new getquery it self wild card irself '
-  );
+// accountSchema.pre(/^find/, function(this: any, next) {
+//   console.log(
+//     this.getQuery(),
+//     'from the new getquery it self wild card irself '
+//   );
 
-  next();
-});
+//   next();
+// });
 
 // accountSchema.pre<AccountDoc>('findOneAndUpdate', async function(next) {
 //   // @ts-ignore
@@ -226,11 +224,11 @@ accountSchema.pre(/^find/, function(this: any, next) {
 //   next();
 // });
 
-accountSchema.pre('find', function(next) {
-  console.log(this.getQuery(), 'from the new pre find');
+// accountSchema.pre('find', function(next) {
+//   console.log(this.getQuery(), 'from the new pre find');
 
-  next();
-});
+//   next();
+// });
 
 const Account = mongoose.model<AccountDoc, AccountModel>(
   'Account',
