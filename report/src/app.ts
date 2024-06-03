@@ -26,10 +26,10 @@ console.log('Hi mom');
 
 const rootUrl = '/api/v1/report';
 
+app.use(currentUser);
+
 app.use(rootUrl, txnSummaryRouter);
 app.use(rootUrl, txnSummaryRouterByDate);
-
-app.use(currentUser);
 
 app.all('*', () => {
   throw new NotFound('Route not found');

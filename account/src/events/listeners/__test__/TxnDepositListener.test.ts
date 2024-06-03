@@ -40,9 +40,9 @@ const setup = async () => {
   const data: TxnDepositCreatedEvent['data'] = {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
-    userId: account.user.id,
     amount,
     account: {
+      userId: account.user.id,
       id: account.id,
       version: account.version + 1,
       balance: account.balance + amount
