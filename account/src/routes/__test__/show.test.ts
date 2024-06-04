@@ -57,24 +57,6 @@ it('returns a 400, if user passes invalid mongoose id', async () => {
 });
 
 it('returns a 403, if user tried to check other users account', async () => {
-  // const {
-  //   body: { data }
-  // } = await request(app)
-  //   .post('/api/v1/account')
-  //   .set(
-  //     'Cookie',
-  //     await global.signin(new mongoose.Types.ObjectId().toHexString())
-  //   )
-  //   .send({
-  //     currency: AccountCurrency.NGN,
-  //     tier: AccountTier.Basic,
-  //     pin: 1234,
-  //     pinConfirm: 1234
-  //   })
-  //   .expect(201);
-
-  // console.log(data, 'from the test');
-
   const account = await accountBuilder();
 
   // if (!!!(await Account.findById(account.id))) throw new Error('shittt');
@@ -105,11 +87,9 @@ it('returns a 200, if user is an admin', async () => {
 it('returns a 200, if a user checks his/her own account', async () => {
   const account = await accountBuilder();
 
-  const user = await userBuilder();
-
   await request(app)
     .get('/api/v1/account/' + account.id)
-    .set('Cookie', await global.signin(user.id))
+    .set('Cookie', await global.signin(account.user.id))
     .send()
     .expect(200);
 });
