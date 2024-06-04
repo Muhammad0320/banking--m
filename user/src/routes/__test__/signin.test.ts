@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
+import { UserStatus } from '@m0banking/common';
 
 it('return status other that 404, to assert the availablility of the route', async () => {
   const response = await request(app)
@@ -39,7 +40,7 @@ it('returns a 400 on incorrect password', async () => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      status: UserStatus.Active
     })
     .expect(201);
 
@@ -69,7 +70,7 @@ it('returns a 200 on valid inputs', async () => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      status: UserStatus.Active
     })
     .expect(201);
 
@@ -92,7 +93,7 @@ it('asserts that a cookie was set to the headers', async () => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      status: UserStatus.Active
     })
     .expect(201);
 
