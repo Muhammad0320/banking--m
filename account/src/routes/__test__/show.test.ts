@@ -8,6 +8,26 @@ import { User } from '../../model/user';
 import Account from '../../model/account';
 import { AccountType } from '../../enums/AccountTypeEnum';
 
+const userBuilder = async () =>
+  await User.buildUser({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'lisanalgaib@gmail.com',
+    name: 'Shit man',
+    password: 'shit-password',
+    role: UserRole.User,
+    version: 0
+  });
+
+const accountBuilder = async () =>
+  await Account.buildAccount({
+    currency: AccountCurrency.NGN,
+    tier: AccountTier.Basic,
+    pin: '1234',
+    pinConfirm: '1234',
+    type: AccountType.Savings,
+    user: await userBuilder()
+  });
+
 it('returns a 401 on unauthorized user access', async () => {
   const accountId = new mongoose.Types.ObjectId().toHexString();
 
@@ -73,7 +93,7 @@ it('returns a 403, if user tried to check other users account', async () => {
     user
   });
 
-  if (!!!(await Account.findById(account.id))) throw new Error('shittt');
+  // if (!!!(await Account.findById(account.id))) throw new Error('shittt');
 
   await request(app)
     .get('/api/v1/account/' + account.id)
