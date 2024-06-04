@@ -85,7 +85,11 @@ it('returns a 200, if user is an admin', async () => {
 });
 
 it('returns a 200, if a user checks his/her own account', async () => {
-  const account = await accountBuilder();
+  const accountProm = await accountBuilder();
+
+  const account = await accountProm.populate('user');
+
+  console.log(account, 'from test');
 
   await request(app)
     .get('/api/v1/account/' + account.id)
