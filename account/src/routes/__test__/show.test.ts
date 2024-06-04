@@ -55,26 +55,8 @@ it('returns a 403, if user tried to check other users account', async () => {
 
   console.log(data, 'from the test');
 
-  const user = await User.buildUser({
-    id: new mongoose.Types.ObjectId().toHexString(),
-    name: 'Lisan al Gaib',
-    password: 'shitword',
-    email: 'shit@shit.com',
-    role: UserRole.User,
-    version: 0
-  });
-
-  const account = await Account.buildAccount({
-    currency: AccountCurrency.NGN,
-    tier: AccountTier.Basic,
-    pin: '1234',
-    pinConfirm: '1234',
-    type: AccountType.Savings,
-    user
-  });
-
   await request(app)
-    .get('/api/v1/account/' + account.id)
+    .get('/api/v1/account/' + data.id)
     .set('Cookie', await global.signin())
     .send()
     .expect(403);

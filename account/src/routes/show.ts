@@ -22,6 +22,8 @@ router.get(
     console.log(account, 'from the route handler');
 
     if (!!!account) {
+      console.log(!!!account, ' is this true???');
+
       throw new NotFound('Account not found');
     }
 
