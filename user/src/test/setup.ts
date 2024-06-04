@@ -1,8 +1,8 @@
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
-import { isJsxText } from 'typescript';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { UserStatus } from '@m0banking/common';
 
 let mongo: any;
 
@@ -46,7 +46,7 @@ global.signin = async () => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      status: 'shit'
+      status: UserStatus.Active
     })
     .expect(201);
 
