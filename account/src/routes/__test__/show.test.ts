@@ -75,23 +75,7 @@ it('returns a 403, if user tried to check other users account', async () => {
 
   // console.log(data, 'from the test');
 
-  const user = await User.buildUser({
-    id: new mongoose.Types.ObjectId().toHexString(),
-    name: 'Lisan al Gaib',
-    password: 'shitword',
-    email: 'shit@shit.com',
-    role: UserRole.User,
-    version: 0
-  });
-
-  const account = await Account.buildAccount({
-    currency: AccountCurrency.NGN,
-    tier: AccountTier.Basic,
-    pin: '1234',
-    pinConfirm: '1234',
-    type: AccountType.Savings,
-    user
-  });
+  const account = await accountBuilder();
 
   // if (!!!(await Account.findById(account.id))) throw new Error('shittt');
 
@@ -103,24 +87,10 @@ it('returns a 403, if user tried to check other users account', async () => {
 });
 
 it('returns a 200, if user is an admin', async () => {
-  const {
-    body: { data }
-  } = await request(app)
-    .post('/api/v1/account')
-    .set(
-      'Cookie',
-      await global.signin(new mongoose.Types.ObjectId().toHexString())
-    )
-    .send({
-      currency: AccountCurrency.NGN,
-      tier: AccountTier.Basic,
-      pin: 1234,
-      pinConfirm: 1234
-    })
-    .expect(201);
+  const account = await accountBuilder();
 
   await request(app)
-    .get('/api/v1/account/' + data.id)
+    .get('/api/v1/account/' + account.id)
     .set(
       'Cookie',
       await global.signin(
@@ -133,32 +103,12 @@ it('returns a 200, if user is an admin', async () => {
 });
 
 it('returns a 200, if a user checks his/her own account', async () => {
-  const user = await User.buildUser({
-    id: new mongoose.Types.ObjectId().toHexString(),
-    email: 'lisanalgaib@gmail.com',
-    name: 'Shit man',
-    password: 'shit-password',
-    role: UserRole.User,
-    version: 0
-  });
+  const account = await accountBuilder();
 
-  const {
-    body: { data }
-  } = await request(app)
-    .post('/api/v1/account')
-    .set('Cookie', await global.signin(user.id))
-    .send({
-      currency: AccountCurrency.NGN,
-      tier: AccountTier.Basic,
-      pin: 1234,
-      pinConfirm: 1234
-    })
-    .expect(201);
-
-  console.log(data);
+  const user = await userBuilder();
 
   await request(app)
-    .get('/api/v1/account/' + data.id)
+    .get('/api/v1/account/' + account.id)
     .set('Cookie', await global.signin(user.id))
     .send()
     .expect(200);
