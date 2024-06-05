@@ -106,6 +106,23 @@ it('asserts that a cookie was set to the headers', async () => {
     })
     .expect(200);
 
+  expect(response.get('Set-Cookie')).toBeDefined();
+});
+
+it('increments signinTimestamos field on every signins', async () => {
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'shit man',
+      email: 'shitman@gmail.com',
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr',
+      status: UserStatus.Active
+    })
+    .expect(201);
+
   await request(app)
     .post('/api/v1/user/signin')
     .send({
@@ -133,6 +150,4 @@ it('asserts that a cookie was set to the headers', async () => {
   const usersignins = (await User.findById(data.id))?.signinTimeStamps?.length;
 
   expect(usersignins).toEqual(4);
-
-  expect(response.get('Set-Cookie')).toBeDefined();
 });
