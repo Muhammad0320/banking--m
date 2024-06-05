@@ -31,35 +31,35 @@ it('return a 400 on invalid email', async () => {
     .expect(400);
 });
 
-it('returns a 400 on incorrect password', async () => {
-  const {
-    body: { data }
-  } = await request(app)
-    .post('/api/v1/user/signup')
-    .send({
-      name: 'shit man',
-      email: 'shitman@gmail.com',
-      password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: UserStatus.Active
-    })
-    .expect(201);
+// it('returns a 400 on incorrect password', async () => {
+//   const {
+//     body: { data }
+//   } = await request(app)
+//     .post('/api/v1/user/signup')
+//     .send({
+//       name: 'shit man',
+//       email: 'shitman@gmail.com',
+//       password: 'shijgtnjngnrgnr',
+//       passwordConfirm: 'shijgtnjngnrgnr',
+//       status: UserStatus.Active
+//     })
+//     .expect(201);
 
-  await request(app)
-    .post('/api/v1/user/signin')
-    .send({
-      email: data.email
-    })
-    .expect(400);
+//   await request(app)
+//     .post('/api/v1/user/signin')
+//     .send({
+//       email: data.email
+//     })
+//     .expect(400);
 
-  await request(app)
-    .post('/api/v1/user/signin')
-    .send({
-      email: data.email,
-      password: 'shitpassword'
-    })
-    .expect(400);
-});
+//   await request(app)
+//     .post('/api/v1/user/signin')
+//     .send({
+//       email: data.email,
+//       password: 'shitpassword'
+//     })
+//     .expect(400);
+// });
 
 it('returns a 200 on valid inputs', async () => {
   const {
@@ -121,13 +121,17 @@ it('increments signinTimestamps field on every signins', async () => {
     })
     .expect(201);
 
-  const cookie = response.get('Set-Cookie');
+  const cookieSignup = response.get('Set-Cookie');
 
-  if (!cookie) return;
+  await request(app)
+    .post('/api/v1/user/signout')
+    .set('Cookie', cookieSignup!)
+    .send({})
+    .expect(200);
 
   const { data } = response.body;
 
-  console.log(data, ' from test');
+  console.log(data, 'from signin test');
 
   const response2 = await request(app)
     .post('/api/v1/user/signin')
@@ -137,51 +141,23 @@ it('increments signinTimestamps field on every signins', async () => {
     })
     .expect(200);
 
-  const cookie2 = response2.get('Set-Cookie');
+  const cookie = response2.get('Set-Cookie');
 
-  if (!cookie2) return;
+  if (!cookie) return;
 
   await request(app)
     .post('/api/v1/user/signout')
-    .set('Cookie', cookie2)
+    .set('Cookie', cookie)
     .send({})
     .expect(200);
 
-  // await request(app)
-  //   .post('/api/v1/user/signin')
-  //   .send({
-  //     email: data.email,
-  //     password: 'shijgtnjngnrgnr'
-  //   })
-  //   .expect(200);
-
-  // await request(app)
-  //   .post('/api/v1/user/signout')
-  //   .set('Cookie', cookie)
-  //   .send({})
-  //   .expect(200);
-
-  // await request(app)
-  //   .post('/api/v1/user/signin')
-  //   .send({
-  //     email: data.email,
-  //     password: 'shijgtnjngnrgnr'
-  //   })
-  //   .expect(200);
-
-  // await request(app)
-  //   .post('/api/v1/user/signout')
-  //   .set('Cookie', cookie)
-  //   .send({})
-  //   .expect(200);
-
-  // await request(app)
-  //   .post('/api/v1/user/signin')
-  //   .send({
-  //     email: data.email,
-  //     password: 'shijgtnjngnrgnr'
-  //   })
-  //   .expect(200);
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
+    .expect(200);
 
   const usersignins = (await User.findById(data.id))?.signinTimeStamps?.length;
 

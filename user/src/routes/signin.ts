@@ -44,8 +44,6 @@ router.post(
       new Date()
     ];
 
-    console.log(existingUser);
-
     await existingUser.save();
 
     res.status(200).json({ status: 'success', data: existingUser });
