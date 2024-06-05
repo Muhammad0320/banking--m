@@ -41,13 +41,11 @@ router.post(
       jwt: token
     };
 
-    existingUser.signinTimeStamps = [
-      ...existingUser.signinTimeStamps,
-      new Date()
-    ];
+    await existingUser.updateOne({
+      signinTimeStamps: [...existingUser.signinTimeStamps, new Date()]
+    });
+
     console.log(existingUser, 'second one');
-    await existingUser.save();
-    console.log(existingUser, 'third one');
 
     res.status(200).json({ status: 'success', data: existingUser });
   }
