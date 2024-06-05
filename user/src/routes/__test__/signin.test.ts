@@ -127,6 +127,8 @@ it('increments signinTimestamps field on every signins', async () => {
 
   const { data } = response.body;
 
+  console.log(data, ' from test');
+
   await request(app)
     .post('/api/v1/user/signin')
     .send({
