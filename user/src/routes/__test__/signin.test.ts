@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { UserStatus } from '@m0banking/common';
+import User from '../../model/user';
 
 it('return status other that 404, to assert the availablility of the route', async () => {
   const response = await request(app)
@@ -104,6 +105,34 @@ it('asserts that a cookie was set to the headers', async () => {
       password: 'shijgtnjngnrgnr'
     })
     .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
+    .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
+    .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
+    .expect(200);
+
+  const usersignins = (await User.findById(data.id))?.signinTimeStamps?.length;
+
+  expect(usersignins).toEqual(4);
 
   expect(response.get('Set-Cookie')).toBeDefined();
 });
