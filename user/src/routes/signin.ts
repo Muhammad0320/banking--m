@@ -22,7 +22,7 @@ router.post(
       throw new BadRequest('Invalid login credentials email ');
     }
 
-    console.log(password, 'the password from the route handler');
+    console.log(existingUser, 'first one');
 
     const isCorrectPassword = await CryptoManager.compare(
       existingUser.password,
@@ -45,9 +45,9 @@ router.post(
       ...existingUser.signinTimeStamps,
       new Date()
     ];
+    console.log(existingUser, 'second one');
     await existingUser.save();
-
-    console.log(existingUser, 'from route handler');
+    console.log(existingUser, 'third one');
 
     res.status(200).json({ status: 'success', data: existingUser });
   }

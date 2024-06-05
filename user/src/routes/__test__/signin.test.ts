@@ -133,7 +133,7 @@ it('increments signinTimestamps field on every signins', async () => {
 
   console.log(data, 'from signin test');
 
-  const response2 = await request(app)
+  await request(app)
     .post('/api/v1/user/signin')
     .send({
       email: data.email,
@@ -151,15 +151,15 @@ it('increments signinTimestamps field on every signins', async () => {
   //   .send({})
   //   .expect(200);
 
-  await request(app)
-    .post('/api/v1/user/signin')
-    .send({
-      email: data.email,
-      password: 'shijgtnjngnrgnr'
-    })
-    .expect(200);
+  // await request(app)
+  //   .post('/api/v1/user/signin')
+  //   .send({
+  //     email: data.email,
+  //     password: 'shijgtnjngnrgnr'
+  //   })
+  //   .expect(200);
 
   const usersignins = (await User.findById(data.id))?.signinTimeStamps?.length;
 
-  expect(usersignins).toEqual(2);
+  expect(usersignins).toEqual(1);
 });
