@@ -110,34 +110,22 @@ it('asserts that a cookie was set to the headers', async () => {
 });
 
 it('increments signinTimestamps field on every signins', async () => {
-  const cookie = await global.signin();
-
-  const {
-    body: { data }
-  } = await request(app)
+  const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man',
-      email: 'shitman@gmail.com',
+      email: 'shitman@gmail.comm',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
       status: UserStatus.Active
     })
     .expect(201);
 
-  await request(app)
-    .post('/api/v1/user/signin')
-    .send({
-      email: data.email,
-      password: 'shijgtnjngnrgnr'
-    })
-    .expect(200);
+  const cookie = response.get('Set-Cookie');
 
-  await request(app)
-    .post('/api/v1/user/signout')
-    .set('Cookie', cookie)
-    .send({})
-    .expect(200);
+  if (!cookie) return;
+
+  const { data } = response.body;
 
   await request(app)
     .post('/api/v1/user/signin')
@@ -165,6 +153,28 @@ it('increments signinTimestamps field on every signins', async () => {
     .post('/api/v1/user/signout')
     .set('Cookie', cookie)
     .send({})
+    .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
+    .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signout')
+    .set('Cookie', cookie)
+    .send({})
+    .expect(200);
+
+  await request(app)
+    .post('/api/v1/user/signin')
+    .send({
+      email: data.email,
+      password: 'shijgtnjngnrgnr'
+    })
     .expect(200);
 
   const usersignins = (await User.findById(data.id))?.signinTimeStamps?.length;
