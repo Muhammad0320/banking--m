@@ -41,11 +41,9 @@ router.post(
       jwt: token
     };
 
-    const updatedUser = await User.findByIdAndUpdate(existingUser.id, {
+    await existingUser.updateOne({
       signinTimeStamps: [...existingUser.signinTimeStamps, new Date()]
     });
-
-    console.log(updatedUser, 'second one');
 
     res.status(200).json({ status: 'success', data: existingUser });
   }
