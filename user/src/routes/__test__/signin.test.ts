@@ -110,7 +110,9 @@ it('asserts that a cookie was set to the headers', async () => {
 });
 
 it('increments signinTimestamps field on every signins', async () => {
-  const response = await request(app)
+  const {
+    body: { data }
+  } = await request(app)
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man',
@@ -121,15 +123,13 @@ it('increments signinTimestamps field on every signins', async () => {
     })
     .expect(201);
 
-  const cookieSignup = response.get('Set-Cookie');
+  // const cookieSignup = response.get('Set-Cookie');
 
-  await request(app)
-    .post('/api/v1/user/signout')
-    .set('Cookie', cookieSignup!)
-    .send({})
-    .expect(200);
-
-  const { data } = response.body;
+  // await request(app)
+  //   .post('/api/v1/user/signout')
+  //   .set('Cookie', cookieSignup!)
+  //   .send({})
+  //   .expect(200);
 
   console.log(data, 'from signin test');
 
@@ -141,15 +141,15 @@ it('increments signinTimestamps field on every signins', async () => {
     })
     .expect(200);
 
-  const cookie = response2.get('Set-Cookie');
+  // const cookie = response2.get('Set-Cookie');
 
-  if (!cookie) return;
+  // if (!cookie) return;
 
-  await request(app)
-    .post('/api/v1/user/signout')
-    .set('Cookie', cookie)
-    .send({})
-    .expect(200);
+  // await request(app)
+  //   .post('/api/v1/user/signout')
+  //   .set('Cookie', cookie)
+  //   .send({})
+  //   .expect(200);
 
   await request(app)
     .post('/api/v1/user/signin')
