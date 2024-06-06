@@ -72,7 +72,9 @@ router.patch(
       name: user.name,
       password: user.password,
       id: user.id,
-      version: user.version + 1
+      signinTimeStamps: user.signinTimeStamps,
+      version: user.version + 1,
+      updates: user.updates
     });
 
     res.status(200).json({ status: 'success', data: user });
