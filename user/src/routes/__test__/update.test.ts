@@ -21,7 +21,7 @@ it('returns a 400 in invalid email', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man',
-      email: 'shitman@gmail.com',
+      email: 'shitman1@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
@@ -47,7 +47,7 @@ it('returns a 400 in invalid name', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man',
-      email: 'shitman@gmail.com',
+      email: 'shitman2@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
@@ -73,7 +73,7 @@ it('returns a 200 in invalid name', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man',
-      email: 'shitman@gmail.com',
+      email: 'shitman3@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })

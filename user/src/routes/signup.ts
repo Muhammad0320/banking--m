@@ -30,7 +30,9 @@ router.post(
 
     const existingUser = await User.findOne({ email });
 
-    if (!!existingUser) {
+    console.log(existingUser, 'the existing user from signup ts');
+
+    if (existingUser) {
       throw new BadRequest(
         'This email is in use, Please use another email and try again! '
       );
