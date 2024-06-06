@@ -23,7 +23,7 @@ it('returns a 400 in invalid email', async () => {
       email: 'shitman@gmail.com',
 
       password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtnjejngnrgnr'
+      passwordConfirm: 'shijgtneeewr'
     })
     .expect(201);
 
@@ -49,7 +49,7 @@ it('returns a 400 in invalid name', async () => {
       email: 'shitman@gmail.com',
 
       password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtnjejngnrgnr'
+      passwordConfirm: 'shijgtneeewr'
     })
     .expect(201);
 
@@ -75,7 +75,7 @@ it('returns a 200 in invalid name', async () => {
       email: 'shitman@gmail.com',
 
       password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtnjejngnrgnr'
+      passwordConfirm: 'shijgtneeewr'
     })
     .expect(201);
 
@@ -90,8 +90,6 @@ it('returns a 200 in invalid name', async () => {
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 
   console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
-
-  console.log();
 
   expect(notUpdatedUser!.email).toBe('mehdi Usul');
 });
