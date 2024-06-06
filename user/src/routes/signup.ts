@@ -32,7 +32,7 @@ router.post(
 
     console.log(existingUser, 'the existing user from signup ts');
 
-    if (existingUser) {
+    if (!!existingUser) {
       throw new BadRequest(
         'This email is in use, Please use another email and try again! '
       );
