@@ -13,6 +13,8 @@ it('returs a 404 on invalid id', async () => {
 });
 
 it('returns a 400 in invalid email', async () => {
+  console.log(await User.find(), '11111111111111');
+
   const {
     body: { data: signupData }
   } = await request(app)
@@ -37,6 +39,8 @@ it('returns a 400 in invalid email', async () => {
 });
 
 it('returns a 400 in invalid name', async () => {
+  console.log(await User.find(), '2222222222222222222222222');
+
   const {
     body: { data: signupData }
   } = await request(app)
@@ -61,6 +65,8 @@ it('returns a 400 in invalid name', async () => {
 });
 
 it('returns a 200 in invalid name', async () => {
+  console.log(await User.find(), '333333333333333333333333');
+
   const {
     body: { data: signupData }
   } = await request(app)

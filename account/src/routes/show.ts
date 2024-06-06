@@ -17,10 +17,6 @@ router.get(
   async (req: Request, res: Response) => {
     const account = await Account.findById(req.params.id).populate('user');
 
-    console.log(account, 'from route handler');
-
-    console.log(req.currentUser, 'from route handler');
-
     if (!!!account) {
       throw new NotFound('Account not found');
     }

@@ -8,7 +8,7 @@ import {
 } from '../services/validators';
 import { natsWrapper } from '../natswrapper';
 import express, { Request, Response } from 'express';
-import { BadRequest, requestValidator } from '@m0banking/common';
+import { BadRequest, requestValidator, UserStatus } from '@m0banking/common';
 import { UserCreatedPublisher } from '../events/publisher/UserCreatedPublisher';
 
 const router = express.Router();
