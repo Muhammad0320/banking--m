@@ -79,8 +79,10 @@ const userSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      required: [true, 'This field is required'],
-      enum: Object.values(UserStatus)
+
+      enum: Object.values(UserStatus),
+
+      default: UserStatus.Active
     },
 
     createdAt: {

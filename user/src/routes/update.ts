@@ -47,7 +47,10 @@ router.patch(
       });
     }
 
-    console.log(updates);
+    console.log(
+      updates,
+      'from route handlersssssssssssssssssss----------------'
+    );
 
     const user = await User.findByIdAndUpdate(
       req.params.id,
