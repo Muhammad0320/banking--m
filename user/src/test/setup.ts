@@ -45,8 +45,7 @@ global.signin = async () => {
       name: 'shit man',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
-      passwordConfirm: 'shijgtnjngnrgnr',
-      status: UserStatus.Active
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 

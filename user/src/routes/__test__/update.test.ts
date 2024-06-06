@@ -18,12 +18,10 @@ it('returns a 400 in invalid email', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'Lisan Al-gaib',
-
+      name: 'shit man',
       email: 'shitman@gmail.com',
-
-      password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtneeewr'
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
@@ -44,12 +42,10 @@ it('returns a 400 in invalid name', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'Lisan Al-gaib',
-
+      name: 'shit man',
       email: 'shitman@gmail.com',
-
-      password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtneeewr'
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
@@ -70,12 +66,10 @@ it('returns a 200 in invalid name', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'Lisan Al-gaib',
-
+      name: 'shit man',
       email: 'shitman@gmail.com',
-
-      password: 'shijgtneeewr',
-      passwordConfirm: 'shijgtneeewr'
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
