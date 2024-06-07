@@ -27,6 +27,8 @@ router.patch(
 
     const { name, email, avatar } = inputs;
 
+    console.log(req.params.id, 'from update route handler');
+
     const idIsMatched = await User.findById(req.params.id);
 
     if (!idIsMatched) {

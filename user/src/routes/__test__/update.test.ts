@@ -35,7 +35,7 @@ it('returns a 400 in invalid email', async () => {
 
   const notUpdatedUser = await User.findById(signupData.id);
 
-  expect(notUpdatedUser!.email).toBe('shitman@gmail.com');
+  expect(notUpdatedUser!.email).toEqual('shitman@gmail.com');
 });
 
 it('returns a 400 in invalid name', async () => {
@@ -61,10 +61,10 @@ it('returns a 400 in invalid name', async () => {
 
   const notUpdatedUser = await User.findById(signupData.id);
 
-  expect(notUpdatedUser!.email).toBe('Lisan Al-gaib');
+  expect(notUpdatedUser!.email).toEqual('Lisan Al-gaib');
 });
 
-it('returns a 200 in invalid name', async () => {
+it('returns a 200 on valid inputs', async () => {
   console.log(await User.find(), '333333333333333333333333');
 
   const response = await request(app)
@@ -81,6 +81,8 @@ it('returns a 200 in invalid name', async () => {
 
   const signupData = response.body.data;
 
+  console.log(signupData, 'from last update test');
+
   if (!cookie) return;
 
   await request(app)
@@ -95,5 +97,5 @@ it('returns a 200 in invalid name', async () => {
 
   console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
 
-  expect(notUpdatedUser!.email).toBe('mehdi Usul');
+  expect(notUpdatedUser!.email).toEqual('mehdi Usul');
 });
