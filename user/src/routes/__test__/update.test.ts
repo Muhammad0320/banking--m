@@ -12,7 +12,7 @@ it('returs a 404 on invalid id', async () => {
     .expect(400);
 });
 
-it('returns a 400 in invalid email', async () => {
+it('returns a 400 on invalid email', async () => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
@@ -31,7 +31,7 @@ it('returns a 400 in invalid email', async () => {
 
   await request(app)
     .patch('/api/v1/user/' + signupData.id)
-    .set('Cookie', await global.signin())
+    .set('Cookie', cookie)
     .send({ email: 'njvvfnjnvnjv' })
     .expect(400);
 
