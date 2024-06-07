@@ -16,7 +16,7 @@ it('returns a 400 in invalid email', async () => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man1',
+      name: 'Lisan Al-gaib',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
