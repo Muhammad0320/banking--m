@@ -97,5 +97,5 @@ it('returns a 200 on valid inputs', async () => {
 
   console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
 
-  expect(notUpdatedUser!.email).toEqual('mehdi Usul');
+  expect(notUpdatedUser!.name).toEqual('mehdi Usul');
 });

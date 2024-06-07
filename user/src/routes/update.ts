@@ -57,17 +57,13 @@ router.patch(
       'from route handlersssssssssssssssssss----------------'
     );
 
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      {
+    const user = await idIsMatched
+      .updateOne({
         name: name || idIsMatched.name,
         email: email || idIsMatched.email,
         avatar: avatar || idIsMatched.avatar
-      },
-      {
-        new: true
-      }
-    ).select('+password');
+      })
+      .select('+password');
 
     if (!user) {
       throw new BadRequest('Invalid  inputs');
