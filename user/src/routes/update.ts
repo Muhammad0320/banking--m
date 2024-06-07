@@ -6,6 +6,7 @@ import {
   Forbidden,
   NotFound,
   paramsChecker,
+  requestValidator,
   requireAuth,
   UserRole
 } from '@m0banking/common';
@@ -22,6 +23,8 @@ router.patch(
   requireAuth,
   paramsChecker('id'),
   [nameValidator().optional(), emailValidator().optional()],
+  requestValidator,
+
   async (req: Request, res: Response) => {
     const inputs = req.body;
 
@@ -56,7 +59,11 @@ router.patch(
 
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { name, email, avatar },
+      {
+        name: name || idIsMatched.name,
+        email: email || idIsMatched.email,
+        avatar: avatar || idIsMatched.avatar
+      },
       {
         new: true
       }

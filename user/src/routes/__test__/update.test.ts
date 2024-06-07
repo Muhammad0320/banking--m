@@ -9,7 +9,7 @@ it('returs a 404 on invalid id', async () => {
     .patch('/api/v1/user/' + new mongoose.Types.ObjectId().toString('hex'))
     .set('Cookie', await global.signin())
     .send({ email: 'njvvfnjnvnjv' })
-    .expect(404);
+    .expect(400);
 });
 
 it('returns a 400 in invalid email', async () => {
