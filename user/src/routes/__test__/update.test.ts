@@ -44,7 +44,7 @@ it('returns a 400 in invalid name', async () => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man2',
+      name: 'Lisan Al-gaib',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
@@ -65,7 +65,7 @@ it('returns a 400 in invalid name', async () => {
 
   const notUpdatedUser = await User.findById(signupData.id);
 
-  expect(notUpdatedUser!.email).toEqual('Lisan Al-gaib');
+  expect(notUpdatedUser!.name).toEqual('Lisan Al-gaib');
 });
 
 it('returns a 200 on valid inputs', async () => {
