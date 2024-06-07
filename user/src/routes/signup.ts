@@ -30,6 +30,8 @@ router.post(
 
     const existingUser = await User.findOne({ email });
 
+    console.log(await User.find(), 'from the user signup');
+
     console.log(existingUser, 'the existing user from signup ts');
 
     if (!!existingUser) {

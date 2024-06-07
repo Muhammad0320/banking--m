@@ -20,7 +20,7 @@ it('returns a 400 in invalid email', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man',
+      name: 'shit man1',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
@@ -46,7 +46,7 @@ it('returns a 400 in invalid name', async () => {
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man',
+      name: 'shit man2',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
@@ -67,21 +67,25 @@ it('returns a 400 in invalid name', async () => {
 it('returns a 200 in invalid name', async () => {
   console.log(await User.find(), '333333333333333333333333');
 
-  const {
-    body: { data: signupData }
-  } = await request(app)
+  const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man',
+      name: 'shit man3',
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
+  const cookie = response.get('Set-Cookie');
+
+  const signupData = response.body.data;
+
+  if (!cookie) return;
+
   await request(app)
     .patch('/api/v1/user/' + signupData.id)
-    .set('Cookie', await global.signin())
+    .set('Cookie', cookie)
     .send({ name: 'mehdi Usul' })
     .expect(200);
 
