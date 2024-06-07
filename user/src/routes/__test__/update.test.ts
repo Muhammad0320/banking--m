@@ -68,7 +68,7 @@ it('returns a 400 in invalid name', async () => {
   expect(notUpdatedUser!.name).toEqual('Lisan Al-gaib');
 });
 
-it('returns a 200 on valid inputs', async () => {
+it('returns a 200 on valid name', async () => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
@@ -98,4 +98,41 @@ it('returns a 200 on valid inputs', async () => {
   console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
 
   expect(notUpdatedUser!.name).toEqual('mehdi Usul');
+});
+
+it('returns a 200 on valid inputs', async () => {
+  const response = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'shit man3',
+      email: 'shitman@gmail.com',
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
+    })
+    .expect(201);
+
+  const cookie = response.get('Set-Cookie');
+
+  const signupData = response.body.data;
+
+  if (!cookie) return;
+
+  await request(app)
+    .patch('/api/v1/user/' + signupData.id)
+    .set('Cookie', cookie)
+    .send({
+      name: 'mehdi Usul',
+      email: 'shitman2@gmail.com',
+      avatar: 'shitvatar.png'
+    })
+    .expect(200);
+
+  const notUpdatedUser = await User.findById(signupData.id);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+
+  expect(notUpdatedUser!.name).toEqual('mehdi Usul');
+  expect(notUpdatedUser!.avatar).toEqual('shitvatar.png');
 });
