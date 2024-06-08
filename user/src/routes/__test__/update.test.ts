@@ -8,7 +8,7 @@ import { UserRole } from '@m0banking/common';
 it('returs a 404 on invalid id', async () => {
   await request(app)
     .patch('/api/v1/user/' + new mongoose.Types.ObjectId().toString('hex'))
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(UserRole.User))
     .send({ email: 'njvvfnjnvnjv' })
     .expect(400);
 });
@@ -75,26 +75,18 @@ it('returns a 403, if a user tries to update another user account ', async () =>
   } = await request(app)
     .post('/api/v1/user/signup')
     .send({
-      name: 'shit man3',
-      email: 'shitma@gmail.com',
+      name: 'shit man403',
+      email: 'shitman3@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
     .expect(201);
 
-  // const response = await request(app)
-  // .post('/api/v1/user/signup')
-  // .send({
-  //   name: 'shit man3',
-  //   email: 'shitma@gmail.com',
-  //   password: 'shijgtnjngnrgnr',
-  //   passwordConfirm: 'shijgtnjngnrgnr'
-  // })
-  // .expect(201);
+  console.log(data, 'from the 403 test');
 
   await request(app)
     .patch('/api/v1/user/' + data.id)
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(UserRole.User))
     .send({ name: 'mehdi Usul' })
     .expect(403);
 });

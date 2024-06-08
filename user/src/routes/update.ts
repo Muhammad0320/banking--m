@@ -30,8 +30,6 @@ router.patch(
 
     const { name, email, avatar } = inputs;
 
-    console.log(req.params.id, 'from update route handler');
-
     const idIsMatched = await User.findById(req.params.id);
 
     if (!idIsMatched) {
@@ -41,6 +39,17 @@ router.patch(
     console.log(idIsMatched, 'the mached user');
 
     console.log(req.currentUser, 'the current user that actally signed in');
+
+    console.log(
+      req.currentUser.id !== idIsMatched.id,
+      'from the id comparison 1'
+    );
+
+    console.log(
+      req.currentUser.role === UserRole.User,
+      'from the role comparison',
+      req.currentUser.role
+    );
 
     if (
       req.currentUser.role === UserRole.User &&

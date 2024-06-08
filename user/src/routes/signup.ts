@@ -8,7 +8,7 @@ import {
 } from '../services/validators';
 import { natsWrapper } from '../natswrapper';
 import express, { Request, Response } from 'express';
-import { BadRequest, requestValidator, UserStatus } from '@m0banking/common';
+import { BadRequest, requestValidator } from '@m0banking/common';
 import { UserCreatedPublisher } from '../events/publisher/UserCreatedPublisher';
 
 const router = express.Router();
@@ -29,10 +29,6 @@ router.post(
     const { email, ...attrs } = req.body;
 
     const existingUser = await User.findOne({ email });
-
-    console.log(await User.find(), 'from the user signup');
-
-    console.log(existingUser, 'the existing user from signup ts');
 
     if (!!existingUser) {
       throw new BadRequest(

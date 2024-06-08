@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import { UserRole } from '@m0banking/common';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { UserRole, UserStatus } from '@m0banking/common';
 
 let mongo: any;
 
 declare global {
-  var signin: (role?: UserRole, id?: string) => Promise<string[]>;
+  var signin: (role: UserRole, id?: string) => Promise<string[]>;
 }
 
 jest.mock('../natswrapper.ts');
@@ -38,7 +38,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async (role?, id?) => {
+global.signin = async (role, id?) => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
@@ -46,7 +46,7 @@ global.signin = async (role?, id?) => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      role: role || UserRole.User
+      role
     })
     .expect(201);
 
