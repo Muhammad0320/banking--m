@@ -38,7 +38,10 @@ router.patch(
 
     console.log(idIsMatched, 'the mached user');
 
-    console.log(req.currentUser, 'the current user that actally signed in');
+    // console.log(
+    //   (req.currentUser as any)._doc.role,
+    //   'the current user that actally signed in'
+    // );
 
     console.log(
       req.currentUser.id !== idIsMatched.id,
