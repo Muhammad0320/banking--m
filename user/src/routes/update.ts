@@ -38,6 +38,18 @@ router.patch(
       throw new NotFound('User not found');
     }
 
+    const user = await idIsMatched
+      .updateOne({
+        name: name || idIsMatched.name,
+        email: email || idIsMatched.email,
+        avatar: avatar || idIsMatched.avatar
+      })
+      .select('+password');
+
+    if (!user) {
+      throw new BadRequest('Invalid  inputs');
+    }
+
     let updates = idIsMatched.updates;
 
     // @ts-ignore
@@ -50,23 +62,6 @@ router.patch(
         new: value as string,
         old
       });
-    }
-
-    console.log(
-      updates,
-      'from route handlersssssssssssssssssss----------------'
-    );
-
-    const user = await idIsMatched
-      .updateOne({
-        name: name || idIsMatched.name,
-        email: email || idIsMatched.email,
-        avatar: avatar || idIsMatched.avatar
-      })
-      .select('+password');
-
-    if (!user) {
-      throw new BadRequest('Invalid  inputs');
     }
 
     // if (user.role === UserRole.User && req.currentUser.id !== user.id) {
