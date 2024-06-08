@@ -22,8 +22,6 @@ router.post(
       throw new BadRequest('Invalid login credentials email ');
     }
 
-    console.log(existingUser, 'first one');
-
     const isCorrectPassword = await CryptoManager.compare(
       existingUser.password,
       password

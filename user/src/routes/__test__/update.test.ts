@@ -82,8 +82,6 @@ it('returns a 403, if a user tries to update another user account ', async () =>
     })
     .expect(201);
 
-  console.log(data, 'from the 403 test');
-
   await request(app)
     .patch('/api/v1/user/' + data.id)
     .set('Cookie', await global.signin(UserRole.User))

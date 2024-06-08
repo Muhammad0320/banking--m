@@ -55,9 +55,7 @@ router.patch(
     ];
 
     user.set({ password: newHashedPassword, updates });
-    const newUser = await user.save();
-
-    console.log(newUser);
+    await user.save();
 
     res.status(200).json({
       status: 'success',
