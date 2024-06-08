@@ -123,8 +123,6 @@ it('increments signinTimestamps field on every signins', async () => {
     })
     .expect(201);
 
-  console.log(data, 'from signin test');
-
   await request(app)
     .post('/api/v1/user/signin')
     .send({
