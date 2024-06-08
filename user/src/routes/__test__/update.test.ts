@@ -3,6 +3,7 @@ import { app } from '../../app';
 import request from 'supertest';
 import User from '../../model/user';
 import { natsWrapper } from '../../natswrapper';
+import { UserRole } from '@m0banking/common';
 
 it('returs a 404 on invalid id', async () => {
   await request(app)
@@ -98,6 +99,30 @@ it('returns a 200 on valid name', async () => {
   console.log((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
 
   expect(notUpdatedUser!.name).toEqual('mehdi Usul');
+});
+
+it('returns a 200 if admin tried to update users data', async () => {
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'shit man3',
+      email: 'shitman@gmail.com',
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
+    })
+    .expect(201);
+
+  await request(app)
+    .patch('/api/v1/user/' + data.id)
+    .set('Cookie', await global.signin(_, UserRole.Admin))
+    .send({
+      name: 'mehdi Usul',
+      email: 'shitman2@gmail.com',
+      avatar: 'shitvatar.png'
+    })
+    .expect(200);
 });
 
 it('returns a 200 on valid inputs', async () => {
