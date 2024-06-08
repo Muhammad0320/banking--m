@@ -42,7 +42,7 @@ router.post(
     };
 
     await existingUser.updateOne({
-      signinTimeStamps: [existingUser.signinTimeStamps, new Date()]
+      signinTimeStamps: [...existingUser.signinTimeStamps, new Date()]
     });
 
     res.status(200).json({ status: 'success', data: existingUser });
