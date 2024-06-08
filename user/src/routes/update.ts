@@ -46,9 +46,9 @@ router.patch(
     );
 
     console.log(
-      req.currentUser.role === UserRole.User,
+      req.currentUser?.role === UserRole.User,
       'from the role comparison',
-      req.currentUser.role
+      req.currentUser?.role
     );
 
     if (

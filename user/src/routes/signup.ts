@@ -38,7 +38,7 @@ router.post(
 
     const user = await User.buildUser({ ...attrs, email });
 
-    const token = jwt.sign({ user }, process.env.JWT_KEY!, {
+    const token = jwt.sign({ ...user }, process.env.JWT_KEY!, {
       expiresIn: +process.env.JWT_EXPIRES_IN! * 60 * 60
     });
 
