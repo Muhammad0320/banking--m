@@ -38,7 +38,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async (id, role) => {
+global.signin = async (id?, role) => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({

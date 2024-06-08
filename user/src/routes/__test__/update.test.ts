@@ -116,7 +116,7 @@ it('returns a 200 if admin tried to update users data', async () => {
 
   await request(app)
     .patch('/api/v1/user/' + data.id)
-    .set('Cookie', await global.signin(_, UserRole.Admin))
+    .set('Cookie', await global.signin(UserRole.Admin))
     .send({
       name: 'mehdi Usul',
       email: 'shitman2@gmail.com',
