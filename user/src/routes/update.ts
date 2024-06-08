@@ -38,6 +38,10 @@ router.patch(
       throw new NotFound('User not found');
     }
 
+    console.log(idIsMatched, 'the mached user');
+
+    console.log(req.currentUser, 'the current user that actally signed in');
+
     if (
       idIsMatched.role === UserRole.User &&
       req.currentUser.id !== idIsMatched.id
