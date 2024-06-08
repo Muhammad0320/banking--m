@@ -43,7 +43,7 @@ router.patch(
     console.log(req.currentUser, 'the current user that actally signed in');
 
     if (
-      idIsMatched.role === UserRole.User &&
+      req.currentUser.role === UserRole.User &&
       req.currentUser.id !== idIsMatched.id
     ) {
       throw new Forbidden(
