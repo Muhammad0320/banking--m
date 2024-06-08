@@ -69,6 +69,36 @@ it('returns a 400 in invalid name', async () => {
   expect(notUpdatedUser!.name).toEqual('Lisan Al-gaib');
 });
 
+it('returns a 403, if a user tries to update another user account ', async () => {
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/user/signup')
+    .send({
+      name: 'shit man3',
+      email: 'shitma@gmail.com',
+      password: 'shijgtnjngnrgnr',
+      passwordConfirm: 'shijgtnjngnrgnr'
+    })
+    .expect(201);
+
+  // const response = await request(app)
+  // .post('/api/v1/user/signup')
+  // .send({
+  //   name: 'shit man3',
+  //   email: 'shitma@gmail.com',
+  //   password: 'shijgtnjngnrgnr',
+  //   passwordConfirm: 'shijgtnjngnrgnr'
+  // })
+  // .expect(201);
+
+  await request(app)
+    .patch('/api/v1/user/' + data.id)
+    .set('Cookie', await global.signin())
+    .send({ name: 'mehdi Usul' })
+    .expect(403);
+});
+
 it('returns a 200 on valid name', async () => {
   const response = await request(app)
     .post('/api/v1/user/signup')
