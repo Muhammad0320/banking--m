@@ -7,7 +7,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 let mongo: any;
 
 declare global {
-  var signin: (role: UserRole, id?: string) => Promise<string[]>;
+  var signin: (role?: UserRole, id?: string) => Promise<string[]>;
 }
 
 jest.mock('../natswrapper.ts');
@@ -38,7 +38,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async (role, id?) => {
+global.signin = async (role?, id?) => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({
@@ -46,7 +46,7 @@ global.signin = async (role, id?) => {
       email: 'shitman@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr',
-      role
+      role: role || UserRole.User
     })
     .expect(201);
 
