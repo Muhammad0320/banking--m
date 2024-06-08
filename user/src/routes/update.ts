@@ -38,6 +38,15 @@ router.patch(
       throw new NotFound('User not found');
     }
 
+    if (
+      idIsMatched.role === UserRole.User &&
+      req.currentUser.id !== idIsMatched.id
+    ) {
+      throw new Forbidden(
+        "You are not allowed to update another user's  profile"
+      );
+    }
+
     const user = await idIsMatched
       .updateOne({
         name: name || idIsMatched.name,
@@ -63,12 +72,6 @@ router.patch(
         old
       });
     }
-
-    // if (user.role === UserRole.User && req.currentUser.id !== user.id) {
-    //   throw new Forbidden(
-    //     "You are not allowed to update another user's  profile"
-    //   );
-    // }
 
     await new USerUpdatedPublisher(natsWrapper.client).publish({
       email: user.email,
