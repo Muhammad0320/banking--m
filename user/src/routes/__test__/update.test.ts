@@ -74,7 +74,7 @@ it('returns a 200 on valid name', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man3',
-      email: 'shitmanuser@gmail.com',
+      email: 'shitma@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
@@ -108,7 +108,7 @@ it('returns a 200 if admin tried to update users data', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man3',
-      email: 'shitman@gmail.com',
+      email: 'shitmanuser@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
