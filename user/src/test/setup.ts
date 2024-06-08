@@ -7,7 +7,7 @@ import { UserRole, UserStatus } from '@m0banking/common';
 let mongo: any;
 
 declare global {
-  var signin: (id?: string, role?: UserRole) => Promise<string[]>;
+  var signin: (role?: UserRole, id?: string) => Promise<string[]>;
 }
 
 jest.mock('../natswrapper.ts');
@@ -38,7 +38,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async (id?, role) => {
+global.signin = async (role?, id?) => {
   const response = await request(app)
     .post('/api/v1/user/signup')
     .send({

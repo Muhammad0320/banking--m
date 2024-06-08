@@ -74,7 +74,7 @@ it('returns a 200 on valid name', async () => {
     .post('/api/v1/user/signup')
     .send({
       name: 'shit man3',
-      email: 'shitman@gmail.com',
+      email: 'shitmanuser@gmail.com',
       password: 'shijgtnjngnrgnr',
       passwordConfirm: 'shijgtnjngnrgnr'
     })
