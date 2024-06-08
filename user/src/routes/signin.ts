@@ -33,7 +33,7 @@ router.post(
       throw new BadRequest('Invalid login credentials password ');
     }
 
-    const token = jwt.sign({ ...existingUser }, process.env.JWT_KEY!, {
+    const token = jwt.sign({ user: existingUser }, process.env.JWT_KEY!, {
       expiresIn: +process.env.JWT_EXPIRES_IN! * 60 * 60
     });
 
@@ -42,7 +42,7 @@ router.post(
     };
 
     await existingUser.updateOne({
-      signinTimeStamps: [...existingUser.signinTimeStamps, new Date()]
+      signinTimeStamps: [existingUser.signinTimeStamps, new Date()]
     });
 
     res.status(200).json({ status: 'success', data: existingUser });
