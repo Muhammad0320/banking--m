@@ -14,7 +14,7 @@ export interface Settings {
 }
 
 export interface Info {
-  no: number;
+  no: string;
   network: CardNetwork;
   status: CardStatus;
   type: CardType;
