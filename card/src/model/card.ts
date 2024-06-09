@@ -1,10 +1,10 @@
-import mongoose, { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 
-import { CardType } from '../enums/CardType';
 import { AccountDoc } from './account';
-import { Info, Settings, User } from '../types/CardFieldTypes';
-import { CardNetwork } from '../enums/CardNewtwork';
+import { CardType } from '../enums/CardType';
 import { CardStatus } from '../enums/CardStatus';
+import { CardNetwork } from '../enums/CardNewtwork';
+import { Info, Settings, User } from '../types/CardFieldTypes';
 
 // type CardAttrs = {
 
@@ -76,3 +76,16 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
     }
   }
 });
+
+cardSchema.statics.findByLastVersionAndId = async function(
+  id: string,
+  version: number
+) {
+  const __v = version - 1;
+
+  return await Card.findOne({ _id: id, version: __v });
+};
+
+const Card = mongoose.model<CardDoc, CardModel>('Card', cardSchema);
+
+export { Card };
