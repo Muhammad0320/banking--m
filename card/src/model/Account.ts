@@ -8,10 +8,15 @@ import {
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
+type UserObj = {
+  id: mongoose.Types.ObjectId;
+  name: string;
+};
+
 type AccountAttrs = {
   id: string;
   no: number;
-  userId: string;
+  user: UserObj;
   balance: number;
   pin: string;
   tier: AccountTier;
@@ -55,10 +60,16 @@ const accountSchema = new mongoose.Schema(
       required: true
     },
 
-    userId: {
-      type: String,
-      unique: true,
-      required: true
+    user: {
+      id: {
+        type: mongoose.Types.ObjectId,
+        required: true
+      },
+
+      name: {
+        type: 'name',
+        required: true
+      }
     },
 
     currency: {
