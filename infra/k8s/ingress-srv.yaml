@@ -49,3 +49,11 @@ spec:
                 name: report-srv
                 port:
                   number: 3000
+
+          - path: /api/v1/card/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: card-srv
+                port:
+                  number: 3000
