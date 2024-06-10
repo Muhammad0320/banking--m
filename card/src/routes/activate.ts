@@ -1,8 +1,7 @@
-import { NotFound, paramsChecker, requireAuth } from '@m0banking/common';
-import express, { Request, Response } from 'express';
-import { Account } from '../model/account';
 import { Card } from '../model/card';
 import { CardStatus } from '../enums/CardStatus';
+import express, { Request, Response } from 'express';
+import { NotFound, paramsChecker, requireAuth } from '@m0banking/common';
 
 const router = express.Router();
 

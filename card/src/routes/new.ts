@@ -16,6 +16,7 @@ import { Account } from '../model/account';
 import { Card } from '../model/card';
 import { hashingWork } from '../services/crypto';
 import { DateFxns } from '../services/helper';
+import { CardStatus } from '../enums/CardStatus';
 
 const router = express.Router();
 
@@ -43,8 +44,8 @@ router.post(
 
     const existingCard = await Card.findOne({ account: accountId });
 
-    if (!!existingCard)
-      throw new BadRequest("You can't own multiple cards for now!");
+    if (!!(existingCard?.info.status !== CardStatus.Expired))
+      throw new BadRequest("You can't own multiple unexpired cards for now!");
 
     const {
       cvv: { hashed: hashedCvv, unhashed: unhashedCvv },
