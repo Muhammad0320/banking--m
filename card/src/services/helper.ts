@@ -1,10 +1,15 @@
 interface DateReturnType {
-  year: number;
-  month: number;
+  yy: number;
+  mm: number;
+  dd: number;
 }
 
-export const calcDate = (): DateReturnType => {
+export const DateFxns = (): DateReturnType => {
   const date = new Date();
 
-  return { year: date.getFullYear() + 5, month: date.getMonth() };
+  return {
+    yy: date.getFullYear() + 5,
+    mm: date.getMonth(),
+    dd: date.getDate() - 1
+  };
 };
