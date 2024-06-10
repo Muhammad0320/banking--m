@@ -38,22 +38,36 @@ export const dailyLimits = () =>
   body('daily')
     .trim()
     .notEmpty()
-    .isNumeric()
-    .isLength({ min: 1, max: 500 })
-    .withMessage('Monthly update should not be greater than 500');
+    .isFloat({ gt: 0 })
+    .withMessage('please provide a valid number')
+    .custom(
+      (input: number, { req }) =>
+        input >= req.body.daily || input >= req.body.monthly
+    )
+    .withMessage('Daily limit must be less than weekly and monthly limits ');
 
 export const weeklyLimits = () =>
   body('weekly')
     .trim()
     .notEmpty()
-    .isNumeric()
-    .isLength({ min: 1, max: 5000 })
-    .withMessage('Monthly update should not be greater than 5000');
+    .isFloat({ gt: 0 })
+    .withMessage('please provide a valid number')
+    .custom(
+      (input: number, { req }) =>
+        input <= req.body.daily || input >= req.body.monthly
+    )
+    .withMessage(
+      'Weekly Limit must be greater than daily and less that monthly limit'
+    );
 
 export const monthlyLimits = () =>
-  body('month')
+  body('monthly')
     .trim()
     .notEmpty()
-    .isNumeric()
-    .isLength({ min: 1, max: 500000 })
-    .withMessage('Monthly update should not be greater than 50000');
+    .isFloat({ gt: 0 })
+    .withMessage('please provide a valid number')
+    .custom(
+      (input: number, { req }) =>
+        input <= req.body.daily || input <= req.body.monthly
+    )
+    .withMessage('Monthly Limit must be greater than daily and monthly limit');
