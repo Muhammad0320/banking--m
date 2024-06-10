@@ -24,6 +24,7 @@
     "@types/cookie-session": "^2.0.48",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/randomatic": "^3.1.5",
     "cookie-session": "^2.1.0",
     "crypto": "^1.0.1",
     "express": "^4.19.2",
