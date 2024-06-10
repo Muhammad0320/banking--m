@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 type UserObj = {
-  id: mongoose.Types.ObjectId;
+  id: string;
   name: string;
 };
 
@@ -62,12 +62,12 @@ const accountSchema = new mongoose.Schema(
 
     user: {
       id: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true
       },
 
       name: {
-        type: 'name',
+        type: String,
         required: true
       }
     },
