@@ -72,6 +72,9 @@ router.post(
     res.status(201).json({
       status: 'success',
 
+      message:
+        'Card Successfully created. Head over to the `/activate`, for card activation',
+
       data: newCard
     });
   }
