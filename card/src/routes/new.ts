@@ -74,8 +74,7 @@ router.post(
 
       message:
         'Card Successfully created. Head over to the `/activate`, for card activation',
-
-      data: newCard
+      data: { ...newCard, cvv: unhashedCvv, no: unhashedCard }
     });
   }
 );

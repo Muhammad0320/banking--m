@@ -1,18 +1,9 @@
 import mongoose from 'mongoose';
-
 import { AccountDoc } from './account';
 import { CardType } from '../enums/CardType';
 import { CardStatus } from '../enums/CardStatus';
 import { CardNetwork } from '../enums/CardNewtwork';
 import { Info, Settings, User } from '../types/CardFieldTypes';
-
-// type CardAttrs = {
-
-//     billingAddress: string,
-//     networkType: CardNetworkType,
-//     type: CardType
-
-// };
 
 type CardDoc = mongoose.Document & {
   account: AccountDoc;
@@ -38,9 +29,18 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
   },
 
   settings: {
-    dailyLimit: Number,
-    weeklyLimit: Number,
-    monthlyLimit: Number
+    dailyLimit: {
+      type: Number,
+      default: 100
+    },
+    weeklyLimit: {
+      type: Number,
+      default: 500
+    },
+    monthlyLimit: {
+      type: Number,
+      default: 5000
+    }
   },
 
   info: {
@@ -61,8 +61,13 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
     },
 
     cvv: String,
-    expiryDate: Date,
-    issueDate: Date,
+    expiryDate: {
+      type: Date
+    },
+    issueDate: {
+      type: Date,
+      default: new Date()
+    },
     billingAddress: {
       type: String,
       required: true,
