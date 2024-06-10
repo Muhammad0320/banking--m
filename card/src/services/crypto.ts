@@ -64,11 +64,18 @@ function decryptData(encryptedData: string, key: Buffer, iv: string): string {
 // Example usage
 
 type CryptoReturnType = {
-  hashed: string;
-  unhashed: string;
+  card: {
+    hashed: string;
+    unhashed: string;
+  };
+
+  cvv: {
+    hashed: string;
+    unhashed: string;
+  };
 };
 
-const hasingWork = (): CryptoReturnType => {
+export const hashingWork = (): CryptoReturnType => {
   const cardNumber = generateCardNumber();
   const cvv = generateCVV();
   const encryptionKey = crypto.randomBytes(32); // Key should be securely stored
@@ -78,8 +85,20 @@ const hasingWork = (): CryptoReturnType => {
 
   console.log('Card Number:', cardNumber);
   console.log('CVV:', cvv);
-  console.log('Encrypted Card:', encryptedCard);
-  console.log('Encrypted CVV:', encryptedCVV);
+  console.log('Encrypted Card:', encryptedCard.encryptedData);
+  console.log('Encrypted CVV:', encryptedCVV.encryptedData);
+
+  return {
+    card: {
+      hashed: encryptedCard.encryptedData,
+      unhashed: cardNumber
+    },
+
+    cvv: {
+      hashed: encryptedCVV.encryptedData,
+      unhashed: cvv
+    }
+  };
 };
 
 // To decrypt
