@@ -72,7 +72,8 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
 
     status: {
       type: String,
-      enum: Object.values(CardStatus)
+      enum: Object.values(CardStatus),
+      default: CardStatus.Inactive
     }
   }
 });

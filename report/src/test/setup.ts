@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { UserRole, UserStatus } from '@m0banking/common';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongo: any;
 

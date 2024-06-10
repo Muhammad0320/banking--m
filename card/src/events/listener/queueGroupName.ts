@@ -1,1 +1,1 @@
-export const queueGroupName = 'transaction-service';
+export const queueGroupName = 'card-service';

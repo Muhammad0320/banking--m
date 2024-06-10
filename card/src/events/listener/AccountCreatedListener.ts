@@ -11,7 +11,7 @@ export class AccountCreatedListener extends Listener<AccountCreatedEvent> {
   async onMessage(data: AccountCreatedEvent['data'], msg: Message) {
     await Account.buildAccount({
       ...data,
-      userId: data.user.id
+      user: { ...data.user }
     });
 
     msg.ack();
