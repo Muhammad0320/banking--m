@@ -31,7 +31,7 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
   settings: {
     dailyLimit: {
       type: Number,
-      default: 100
+      default: 500
     },
     weeklyLimit: {
       type: Number,

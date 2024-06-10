@@ -34,7 +34,7 @@ export const typeValidator = () =>
     )
     .withMessage('Please provide a valid Card type');
 
-export const dailyLimits = () =>
+export const dailyLimitsValidator = () =>
   body('daily')
     .trim()
     .notEmpty()
@@ -46,7 +46,7 @@ export const dailyLimits = () =>
     )
     .withMessage('Daily limit must be less than weekly and monthly limits ');
 
-export const weeklyLimits = () =>
+export const weeklyLimitsValidator = () =>
   body('weekly')
     .trim()
     .notEmpty()
@@ -60,7 +60,7 @@ export const weeklyLimits = () =>
       'Weekly Limit must be greater than daily and less that monthly limit'
     );
 
-export const monthlyLimits = () =>
+export const monthlyLimitsValidator = () =>
   body('monthly')
     .trim()
     .notEmpty()
