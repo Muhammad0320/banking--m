@@ -21,3 +21,5 @@ router.patch(
     res.status(200).json({ status: 'sucess', data: card });
   }
 );
+
+export { router as cardActivatedRouter };

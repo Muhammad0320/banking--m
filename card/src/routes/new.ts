@@ -44,7 +44,7 @@ router.post(
 
     const existingCard = await Card.findOne({ account: accountId });
 
-    if (!!(existingCard?.info.status !== CardStatus.Expired))
+    if (existingCard?.info.status !== CardStatus.Expired)
       throw new BadRequest("You can't own multiple unexpired cards for now!");
 
     const {
@@ -79,3 +79,5 @@ router.post(
     });
   }
 );
+
+export { router as cardCreatedRouter };

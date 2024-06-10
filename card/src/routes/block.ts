@@ -30,3 +30,5 @@ router.patch(
     res.status(200).json({ status: 'sucess', data: updatedCard });
   }
 );
+
+export { router as cardBlockedRouter };
