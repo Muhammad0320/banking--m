@@ -1,13 +1,12 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { createUserRouter } from './routes/signup';
-import { currentUserRouter } from './routes/currentUser';
-import { passwordUpdateRouter } from './routes/updatesPassword';
-import { globalErrorHandler, NotFound } from '@m0banking/common';
-import { updateUserRouter } from './routes/update';
+
+import { currentUser, globalErrorHandler, NotFound } from '@m0banking/common';
+import { cardCreatedRouter } from './routes/new';
+import { cardUpdateRouter } from './routes/settings';
+import { cardActivatedRouter } from './routes/activate';
+import { cardBlockedRouter } from './routes/block';
 
 const app = express();
 
@@ -27,14 +26,16 @@ app.use(
 
 console.log('Hi mom');
 
-const rootUrl = '/api/v1/user';
+const rootUrl = '/api/v1/card';
 
-app.use(rootUrl, signinRouter);
-app.use(rootUrl, signoutRouter);
-app.use(rootUrl, createUserRouter);
-app.use(rootUrl, updateUserRouter);
-app.use(rootUrl, currentUserRouter);
-app.use(rootUrl, passwordUpdateRouter);
+app.use(currentUser);
+
+app.use(rootUrl);
+
+app.use(cardUpdateRouter);
+app.use(cardCreatedRouter);
+app.use(cardBlockedRouter);
+app.use(cardActivatedRouter);
 
 app.all('*', () => {
   throw new NotFound('Route not found');
