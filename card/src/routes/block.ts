@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 router.patch(
-  '/:id',
+  '/:id/block',
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {

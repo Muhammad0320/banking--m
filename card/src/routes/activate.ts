@@ -6,7 +6,7 @@ import { NotFound, paramsChecker, requireAuth } from '@m0banking/common';
 const router = express.Router();
 
 router.patch(
-  '/:id',
+  '/:id/activate',
   requireAuth,
   paramsChecker('id'),
   async (req: Request, res: Response) => {
