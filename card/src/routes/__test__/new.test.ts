@@ -35,6 +35,54 @@ it('retuns a 400, for invalid accountId ', async () => {
     .expect(400);
 });
 
+it('returns a 400, for invalid billingAddress', async () => {
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: '',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(400);
+});
+
+it('returns a 404, for invalid network type', async () => {
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: 'viso',
+      type: CardType.Credit
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: '',
+      type: CardType.Credit
+    })
+    .expect(400);
+});
+
 it('returns a 404 on valid but not matched accountId', async () => {
   await request(app)
     .post('/api/v1/card')
