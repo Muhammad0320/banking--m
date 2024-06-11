@@ -7,18 +7,18 @@ import {
   requireAuth,
   UserRole
 } from '@m0banking/common';
-import express, { Response, Request } from 'express';
 import {
   accountValidator,
   billingAddressValidator,
   netwokTypeValidator,
   typeValidator
 } from '../services/validators';
-import { Account } from '../model/account';
 import { Card } from '../model/card';
-import { hashingWork } from '../services/crypto';
+import { Account } from '../model/account';
 import { DateFxns } from '../services/helper';
 import { CardStatus } from '../enums/CardStatus';
+import { hashingWork } from '../services/crypto';
+import express, { Response, Request } from 'express';
 
 const router = express.Router();
 
