@@ -59,7 +59,7 @@ it('returns a 400, for invalid billingAddress', async () => {
     .expect(400);
 });
 
-it('returns a 404, for invalid network type', async () => {
+it('returns a 400, for invalid network type', async () => {
   await request(app)
     .post('/api/v1/card')
     .set('Cookie', await global.signin())
@@ -79,6 +79,31 @@ it('returns a 404, for invalid network type', async () => {
       billingAddress: 'G50 Balogun gambari compd',
       networkType: '',
       type: CardType.Credit
+    })
+    .expect(400);
+});
+
+it('returns a 400, for invalid card type ', async () => {
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+
+      type: 'credo'
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: ''
     })
     .expect(400);
 });
