@@ -34,6 +34,30 @@ it('returns a 400 on invalid dailyLimit', async () => {
     .patch(`/${id}/settings`)
     .set('Cookie', await global.signin())
     .send({
+      daily: 0,
+      weekly: 500,
+      monthly: 5000
+    })
+    .expect(400);
+});
+
+it('returns a 400 on invalid weekly', async () => {
+  const id = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .patch(`/${id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
+      daily: 50,
+      weekly: 5000,
+      monthly: 500
+    })
+    .expect(400);
+
+  await request(app)
+    .patch(`/${id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
       daily: 500,
       weekly: 0,
       monthly: 5000
