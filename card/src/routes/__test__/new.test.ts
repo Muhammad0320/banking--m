@@ -3,6 +3,8 @@ import { app } from '../../app';
 import { CardNetwork } from '../../enums/CardNewtwork';
 import { CardType } from '../../enums/CardType';
 import mongoose from 'mongoose';
+import { accountBuilder } from '../../test/builders';
+import { AccountStatus } from '@m0banking/common';
 
 it('returns a 401 for unauthenticated route access', async () => {
   await request(app)
@@ -119,4 +121,36 @@ it('returns a 404 on valid but not matched accountId', async () => {
       type: CardType.Credit
     })
     .expect(404);
+});
+
+it('returns a 400 on valid but not matched accountId', async () => {
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: new mongoose.Types.ObjectId().toHexString(),
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(404);
+});
+
+it('returns a 400, if the provided accountId is blocked', async () => {
+  const account = await accountBuilder(
+    undefined,
+    undefined,
+    AccountStatus.Blocked
+  );
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(400);
 });
