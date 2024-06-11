@@ -154,3 +154,18 @@ it('returns a 400, if the provided accountId is blocked', async () => {
     })
     .expect(400);
 });
+
+it('returns a 403, if an user tried to create card for another user', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin())
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(403);
+});
