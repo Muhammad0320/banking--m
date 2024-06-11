@@ -88,3 +88,17 @@ it('returns a 400 on invalid monthlyLimit', async () => {
     })
     .expect(400);
 });
+
+it('returns a 404 when the provided id does not match any existing card', async () => {
+  const id = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .patch(`/${id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
+      daily: 50,
+      weekly: 500,
+      monthly: 5000
+    })
+    .expect(404);
+});
