@@ -23,7 +23,13 @@
 
 Before blocking a card, account pin must me provided.
 
+Deduct from dad's airtime tomorrow
+
+
+
 Before blocking a card, the card it self must have a status of ACTIVE
+
+Apart from assertion with status code, also use data
 
  Post on linkindin today, About the project and NEVER MISS A DAY and create a brand new X account, for all coding related stuffs.
 
