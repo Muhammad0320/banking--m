@@ -7,7 +7,11 @@ import {
   AccountType
 } from '@m0banking/common';
 
-export const accountBuilder = async (accId: string, userId: string) => {
+export const accountBuilder = async (
+  accId?: string,
+  userId?: string,
+  status?: AccountStatus
+) => {
   return await Account.buildAccount({
     id: accId || new mongoose.Types.ObjectId().toHexString(),
     no: 2349043000,
@@ -19,7 +23,7 @@ export const accountBuilder = async (accId: string, userId: string) => {
     pin: '1234',
     tier: AccountTier.Private,
     type: AccountType.Current,
-    status: AccountStatus.Active,
+    status: status || AccountStatus.Active,
     currency: AccountCurrency.USD,
 
     version: 0,
