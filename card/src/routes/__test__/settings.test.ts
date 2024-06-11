@@ -1,6 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
+import { accountBuilder } from '../../test/builders';
+import { CardNetwork } from '../../enums/CardNewtwork';
+import { CardType } from '../../enums/CardType';
 
 it(' returns a 401 for unauthenticated requests ', async () => {
   await request(app)
@@ -101,4 +104,31 @@ it('returns a 404 when the provided id does not match any existing card', async 
       monthly: 5000
     })
     .expect(404);
+});
+
+it('returns 200, when everything is working', async () => {
+  const account = await accountBuilder();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
+
+  await request(app)
+    .patch(`/${data.id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
+      daily: 50,
+      weekly: 500,
+      monthly: 5000
+    })
+    .expect(200);
 });
