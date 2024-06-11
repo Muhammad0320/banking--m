@@ -41,7 +41,7 @@ it('returns a 400 on invalid dailyLimit', async () => {
     .expect(400);
 });
 
-it('returns a 400 on invalid weekly', async () => {
+it('returns a 400 on invalid weeklyLimit', async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
@@ -61,6 +61,30 @@ it('returns a 400 on invalid weekly', async () => {
       daily: 500,
       weekly: 0,
       monthly: 5000
+    })
+    .expect(400);
+});
+
+it('returns a 400 on invalid monthlyLimit', async () => {
+  const id = new mongoose.Types.ObjectId().toHexString();
+
+  await request(app)
+    .patch(`/${id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
+      daily: 50,
+      weekly: 5000,
+      monthly: 5
+    })
+    .expect(400);
+
+  await request(app)
+    .patch(`/${id}/settings`)
+    .set('Cookie', await global.signin())
+    .send({
+      daily: 500,
+      weekly: 500,
+      monthly: 0
     })
     .expect(400);
 });
