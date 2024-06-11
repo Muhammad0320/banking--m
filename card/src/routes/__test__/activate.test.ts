@@ -17,7 +17,7 @@ it('returns a 400 for invalid card ', async () => {
     .patch('/shitid/activate')
     .set('Cookie', await global.signin())
     .send()
-    .expect(401);
+    .expect(400);
 });
 
 it('retuns a 404 if the id does not match any existing card', async () => {
@@ -50,5 +50,5 @@ it('returns a 200 when everyting is valid ', async () => {
     .patch(`/${data.id}/activate`)
     .set('Cookie', await global.signin())
     .send()
-    .expect(404);
+    .expect(200);
 });
