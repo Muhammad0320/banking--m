@@ -54,3 +54,26 @@ it('returns a 400 if the card is alredy blocked ', async () => {
     .send()
     .expect(400);
 });
+
+it('returns a 200, when everything is valid', async () => {
+  const account = await accountBuilder();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
+
+  await request(app)
+    .patch(`/${data.id}/block`)
+    .set('Cookie', await global.signin())
+    .send()
+    .expect(200);
+});

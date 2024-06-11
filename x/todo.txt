@@ -15,3 +15,16 @@
 
  // add year checking to params checker
 
+ // 11 june
+
+ Add a middlware that runs before all card handlers, in the app ts, that make sure that the account trying to do that is active,
+
+ Add a middleware that also runs after all card handlers, to make sure a card belonging to a user isn't blocked.
+
+Before blocking a card, account pin must me provided.
+
+Before blocking a card, the card it self must have a status of ACTIVE
+
+ Post on linkindin today, About the project and NEVER MISS A DAY and create a brand new X account, for all coding related stuffs.
+
+Look at a very good location to expire card
