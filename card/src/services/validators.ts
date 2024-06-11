@@ -14,7 +14,9 @@ export const billingAddressValidator = () =>
     .trim()
     .notEmpty()
     .isString()
-    .withMessage('Billing address must be a string');
+    .withMessage('Billing address must be a string')
+    .isLength({ min: 10, max: 200 })
+    .withMessage('Address must be at leat 10 and and at most 200 chars');
 
 export const netwokTypeValidator = () =>
   body('netwokType')
