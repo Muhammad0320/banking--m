@@ -1,9 +1,11 @@
 import {
   AccountStatus,
   BadRequest,
+  Forbidden,
   NotFound,
   requestValidator,
-  requireAuth
+  requireAuth,
+  UserRole
 } from '@m0banking/common';
 import express, { Response, Request } from 'express';
 import {
@@ -43,6 +45,14 @@ router.post(
       throw new BadRequest('Your account is blocked');
 
     const existingCard = await Card.findOne({ account: accountId });
+
+    if (
+      req.currentUser.role === UserRole.User &&
+      req.currentUser.id !== account.user.id
+    )
+      throw new Forbidden(
+        'You are not allowed to create card for another user'
+      );
 
     if (existingCard?.info.status !== CardStatus.Expired)
       throw new BadRequest("You can't own multiple unexpired cards for now!");
