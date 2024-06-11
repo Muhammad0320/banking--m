@@ -5,6 +5,8 @@ import { CardType } from '../../enums/CardType';
 import mongoose from 'mongoose';
 import { accountBuilder } from '../../test/builders';
 import { AccountStatus } from '@m0banking/common';
+import { CardStatus } from '../../enums/CardStatus';
+import { Card } from '../../model/card';
 
 it('returns a 401 for unauthenticated route access', async () => {
   await request(app)
@@ -170,6 +172,21 @@ it('returns a 403, if an user tried to create card for another user', async () =
     .expect(403);
 });
 
+it(' returns a 201 when there is no issue ', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
+});
+
 it(' returns a 400 if user has an unexpired card and tries to create another ', async () => {
   const account = await accountBuilder();
 
@@ -194,4 +211,38 @@ it(' returns a 400 if user has an unexpired card and tries to create another ', 
       type: CardType.Credit
     })
     .expect(400);
+});
+
+it('returns a 201, when the existing card has expired', async () => {
+  const account = await accountBuilder();
+
+  const {
+    body: { data }
+  } = await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
+
+  const updatedCard = await Card.findByIdAndUpdate(
+    data.id,
+    { info: { status: CardStatus.Expired } },
+    { new: true }
+  );
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
 });
