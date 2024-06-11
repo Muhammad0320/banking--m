@@ -169,3 +169,29 @@ it('returns a 403, if an user tried to create card for another user', async () =
     })
     .expect(403);
 });
+
+it(' returns a 400 if user has an unexpired card and tries to create another ', async () => {
+  const account = await accountBuilder();
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(201);
+
+  await request(app)
+    .post('/api/v1/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      accountId: account.id,
+      billingAddress: 'G50 Balogun gambari compd',
+      networkType: CardNetwork.Visa,
+      type: CardType.Credit
+    })
+    .expect(400);
+});
