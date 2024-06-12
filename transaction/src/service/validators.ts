@@ -1,8 +1,12 @@
 import { body, check } from 'express-validator';
 
-export const cardNo = () =>
+export const cardNumberValidator = () =>
   check('no')
+    .isCreditCard()
+    .withMessage('Invalid Credit Card format!');
+
+export const cvvValidator = () =>
+  check('cvv')
     .isNumeric()
-    .withMessage('card number must be numeric')
-    .isLength({ max: 16, min: 16 })
-    .withMessage('card number must be exactly 16 characters long');
+    .isLength({ min: 3, max: 3 })
+    .withMessage(' Invalid CVV format! ');
