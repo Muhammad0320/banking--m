@@ -15,3 +15,11 @@ export const expiryMonthValidator = () =>
   check('expMonth')
     .isInt({ min: 1, max: 12 })
     .withMessage(' Month should be within 1 - 12 ');
+
+export const expiryYearValidator = () => {
+  const { getFullYear } = new Date();
+
+  return check('expYear')
+    .isInt({ min: getFullYear(), max: getFullYear() + 5 })
+    .withMessage(' Invalid expiry year ');
+};
