@@ -1,4 +1,5 @@
 import { check } from 'express-validator';
+import mongoose from 'mongoose';
 
 export const cardNumberValidator = () =>
   check('no')
@@ -42,9 +43,16 @@ export const txnAmountValidator = () =>
     .isInt({ gt: 0 })
     .withMessage('Amount must be greater than 0');
 
-export const reasonValidator = () =>
+export const txnReasonValidator = () =>
   check('reason')
     .trim()
     .notEmpty()
     .isLength({ min: 4 })
     .withMessage('Txn reason should be more than 4 chars');
+
+export const beneficiaryValidator = () =>
+  check('beneficiary')
+    .trim()
+    .notEmpty()
+    .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+    .withMessage('Provide a valid mongoose id');
