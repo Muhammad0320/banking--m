@@ -144,14 +144,6 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-userSchema.pre('findOneAndUpdate', async function(this: any, next) {
-  const updates = this.getUpdate();
-
-  next();
-});
-
-userSchema.pre('findOneAndUpdate', async function(next) {});
-
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export default User;
