@@ -1,11 +1,14 @@
 import mongoose from 'mongoose';
 import { Account } from '../model/account';
+import { Card } from '../model/card';
 import {
   AccountCurrency,
   AccountStatus,
   AccountTier,
   AccountType
 } from '@m0banking/common';
+import { DateFxns } from '../services/helper';
+import { CardNetwork } from '../enums/CardNewtwork';
 
 export const accountBuilder = async (
   accId?: string,
@@ -30,3 +33,29 @@ export const accountBuilder = async (
     _block: false
   });
 };
+
+// export const cardBuilder = async () => {
+
+//     const { yy, mm, dd } = DateFxns();
+
+//     const account = await accountBuilder()
+
+//     return   await Card.create({
+//         account: account.id,
+
+//         user: {
+//           id: account.user.id,
+//           name: account.user.name
+//         },
+
+//         info: {
+//           billingAddress,
+//           network: CardNetwork.Visa,
+//           type,
+//           no: '124928928578566',
+//           cvv: '123',
+//           expiryDate: new Date(yy, mm, dd)
+//         }
+//       });
+
+// }

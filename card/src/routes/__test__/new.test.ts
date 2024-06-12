@@ -229,6 +229,8 @@ it('returns a 201, when the existing card has expired', async () => {
     })
     .expect(201);
 
+  // Assert the changes
+
   const updatedCard = await Card.findByIdAndUpdate(
     data.id,
     { info: { status: CardStatus.Expired } },
