@@ -23,3 +23,9 @@ export const expiryYearValidator = () => {
     .isInt({ min: getFullYear(), max: getFullYear() + 5 })
     .withMessage(' Invalid expiry year ');
 };
+export const cardNameValidator = () =>
+  check('cardName')
+    .trim()
+    .notEmpty()
+    .isLength({ min: 5 })
+    .withMessage('Invalid Name');
