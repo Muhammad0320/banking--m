@@ -50,7 +50,7 @@ router.post(
 
     const beneficiary = await Account.findById(beneficiaryId);
 
-    if (!account || !beneficiary) throw new NotFound('They are shit');
+    if (!account || !beneficiary) throw new NotFound('Accounts not found');
 
     const updatedAccount = await account.updateOne(
       { balance: account.balance - amount },
