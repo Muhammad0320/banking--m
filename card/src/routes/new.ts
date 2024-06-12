@@ -37,14 +37,7 @@ router.post(
 
     const account = await Account.findById(accountId);
 
-    const { yy, mm } = DateFxns();
-
     if (!!!account) throw new NotFound('Account not found');
-
-    if (account.status !== AccountStatus.Active)
-      throw new BadRequest('Your account is blocked');
-
-    const existingCard = await Card.findOne({ account: accountId });
 
     if (
       req.currentUser.role === UserRole.User &&
@@ -54,30 +47,11 @@ router.post(
         'You are not allowed to create card for another user'
       );
 
-    if (existingCard?.info.status !== CardStatus.Expired)
-      throw new BadRequest("You can't own multiple unexpired cards for now!");
-
-    const {
-      cvv: { hashed: hashedCvv, unhashed: unhashedCvv },
-      card: { hashed: hashedCard, unhashed: unhashedCard }
-    } = hashingWork();
-
-    const newCard = await Card.create({
-      account: account.id,
-
-      user: {
-        id: account.user.id,
-        name: account.user.name
-      },
-
-      info: {
-        billingAddress,
-        network: networkType,
-        type,
-        no: hashedCard,
-        cvv: hashedCvv,
-        expiryDate: new Date(yy, mm)
-      }
+    const newCard = await Card.buildCard({
+      accountId,
+      billingAddress,
+      networkType,
+      type
     });
 
     res.status(201).json({
@@ -85,7 +59,7 @@ router.post(
 
       message:
         'Card Successfully created. Head over to the `/activate`, for card activation',
-      data: { ...newCard, cvv: unhashedCvv, no: unhashedCard }
+      data: newCard
     });
   }
 );
