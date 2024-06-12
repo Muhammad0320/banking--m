@@ -107,17 +107,17 @@ router.post(
     if (beneficiaryAcc.status !== AccountStatus.Active)
       throw new BadRequest(' Inactive beneficiary account ');
 
-    await account.updateOne(
+    const updatedAccount = await account.updateOne(
       { balance: account.balance - amount },
       { new: true }
     );
 
-    const updatedBeneficiary = await beneficiary.updateOne(
-      { balance: beneficiary.balance + +amount },
+    const updatedBeneficiary = await beneficiaryAcc.updateOne(
+      { balance: beneficiaryAcc.balance + +amount },
       { new: true }
     );
 
-    const cardTxn = await Txn.buildTxn({
+    const newTransfer = await Txn.buildTxn({
       account: currentCard.account.id,
       amount,
       status: TxnStatusEnum.Success,
