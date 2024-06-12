@@ -153,3 +153,5 @@ router.post(
     res.status(201).json({ status: 'success', data: newTransfer });
   }
 );
+
+export { router as cardTxn };
