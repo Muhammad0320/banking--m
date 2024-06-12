@@ -9,7 +9,12 @@ import {
 import { Card } from '../model/card';
 import { decrypt } from '../service/crypto';
 import express, { Request, Response } from 'express';
-import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
+import {
+  BadRequest,
+  CardStatus,
+  requestValidator,
+  requireAuth
+} from '@m0banking/common';
 import { Account } from '../model/account';
 
 const router = express.Router();
@@ -67,5 +72,14 @@ router.post(
 
     if (currentCard.account.balance <= +amount)
       throw new BadRequest('Insufficient fund');
+
+    if (
+      currentCard.info.status === CardStatus.Inactive ||
+      currentCard.info.status === CardStatus.Blocked
+    )
+      throw new BadRequest(' Deactivated card ');
+
+    if (currentCard.info.status === CardStatus.Expired)
+      throw new BadRequest('Expired card');
   }
 );
