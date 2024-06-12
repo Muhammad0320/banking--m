@@ -21,5 +21,7 @@ export interface Info {
   cvv: string;
   expiryDate: Date;
   issueDate: Date;
+
   billingAddress: string;
+  maxCredit: number | undefined;
 }

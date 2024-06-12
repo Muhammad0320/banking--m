@@ -75,12 +75,25 @@ const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
       minlength: 20
     },
 
+    maxCredit: {
+      type: Number,
+      default: 50
+    },
+
     status: {
       type: String,
       enum: Object.values(CardStatus),
       default: CardStatus.Inactive
     }
   }
+});
+
+cardSchema.pre('save', async function(next) {
+  if (this.isModified() && this.info.type === CardType.Debit) {
+    this.info.maxCredit = undefined;
+  }
+
+  next();
 });
 
 cardSchema.statics.findByLastVersionAndId = async function(

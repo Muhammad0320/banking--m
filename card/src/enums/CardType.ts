@@ -1,5 +1,5 @@
 export enum CardType {
   Debit = 'debit',
-  Credit = 'credit',
-  Prepaid = 'prepaid'
+  Credit = 'credit'
+  // Prepaid = 'prepaid'
 }

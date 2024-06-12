@@ -25,11 +25,15 @@ Before blocking a card, account pin must me provided.
 
 Deduct from dad's airtime tomorrow
 
-
+Adhere to the fat model and thin controller principle - so add the card info hasing to the model.
 
 Before blocking a card, the card it self must have a status of ACTIVE
 
 Apart from assertion with status code, also use data
+
+
+Add test to chek for the new presave hook added in card model
+
 
  Post on linkindin today, About the project and NEVER MISS A DAY and create a brand new X account, for all coding related stuffs.
 
