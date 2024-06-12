@@ -37,7 +37,7 @@ router.post(
 
     const account = await Account.findById(accountId);
 
-    const { yy, mm, dd } = DateFxns();
+    const { yy, mm } = DateFxns();
 
     if (!!!account) throw new NotFound('Account not found');
 
@@ -76,7 +76,7 @@ router.post(
         type,
         no: hashedCard,
         cvv: hashedCvv,
-        expiryDate: new Date(yy, mm, dd)
+        expiryDate: new Date(yy, mm)
       }
     });
 
