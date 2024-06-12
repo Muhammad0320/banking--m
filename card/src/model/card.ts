@@ -9,8 +9,7 @@ import {
   Info,
   NotFound,
   Settings,
-  User,
-  UserRole
+  User
 } from '@m0banking/common';
 import { hashingWork } from '../services/crypto';
 import { DateFxns } from '../services/helper';
