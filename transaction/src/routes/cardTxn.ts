@@ -1,20 +1,29 @@
 import {
+  beneficiaryValidator,
   billingAddressValidator,
   cardNameValidator,
   cardNumberValidator,
   cvvValidator,
   expiryMonthValidator,
-  expiryYearValidator
+  expiryYearValidator,
+  txnAmountValidator,
+  txnReasonValidator
 } from '../service/validators';
 import { Card } from '../model/card';
 import { decrypt } from '../service/crypto';
 import express, { Request, Response } from 'express';
 import {
+  AccountStatus,
   BadRequest,
   CardStatus,
+  NotFound,
   requestValidator,
-  requireAuth
+  requireAuth,
+  TxnStatusEnum
 } from '@m0banking/common';
+import { Txn } from '../model/transaction';
+import { TxnTypeEnum } from '../enums/TxnTypeEnum';
+import { TxnMode } from '../enums/TxnModeEnum';
 import { Account } from '../model/account';
 
 const router = express.Router();
@@ -28,7 +37,10 @@ router.post(
     expiryMonthValidator,
     expiryYearValidator,
     cardNameValidator,
-    billingAddressValidator
+    billingAddressValidator,
+    txnAmountValidator,
+    txnReasonValidator,
+    beneficiaryValidator
   ],
   requestValidator,
   async (req: Request, res: Response) => {
@@ -39,10 +51,12 @@ router.post(
       cvv,
       billingAddress,
       cardName,
-      amount
+      amount,
+      reason,
+      beneficiary
     } = req.body;
 
-    const currentCard = (await Card.find().populate('account'))
+    const currentCard = (await Card.find())
       .map(card => {
         const decryptedNo = decrypt(card.info.no);
 
@@ -60,6 +74,10 @@ router.post(
     console.log(currentCard);
 
     if (!currentCard) throw new BadRequest('Invalid card credentials');
+
+    const account = await Account.findById(currentCard.account);
+
+    if (!account) throw new NotFound('Account not found');
 
     if (
       currentCard.info.billingAddress !== billingAddress ||
@@ -81,5 +99,34 @@ router.post(
 
     if (currentCard.info.status === CardStatus.Expired)
       throw new BadRequest('Expired card');
+
+    const beneficiaryAcc = await Account.findById(beneficiary);
+
+    if (!beneficiaryAcc) throw new NotFound('Beneficiary account not fount');
+
+    if (beneficiaryAcc.status !== AccountStatus.Active)
+      throw new BadRequest(' Inactive beneficiary account ');
+
+    await account.updateOne(
+      { balance: account.balance - amount },
+      { new: true }
+    );
+
+    const updatedBeneficiary = await beneficiary.updateOne(
+      { balance: beneficiary.balance + +amount },
+      { new: true }
+    );
+
+    const cardTxn = await Txn.buildTxn({
+      account: currentCard.account.id,
+      amount,
+      status: TxnStatusEnum.Success,
+      type: TxnTypeEnum.Transfer,
+      mode: TxnMode.Card,
+
+      reason,
+
+      beneficiary: beneficiary.id
+    });
   }
 );
