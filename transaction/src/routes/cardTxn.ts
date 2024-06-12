@@ -1,5 +1,3 @@
-import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
-import express, { Request, Response } from 'express';
 import {
   billingAddressValidator,
   cardNameValidator,
@@ -10,6 +8,8 @@ import {
 } from '../service/validators';
 import { Card } from '../model/card';
 import { decrypt } from '../service/crypto';
+import express, { Request, Response } from 'express';
+import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
 
 const router = express.Router();
 
@@ -58,7 +58,7 @@ router.post(
       currentCard.info.billingAddress !== billingAddress ||
       currentCard.info.expiryDate.getMonth() !== +expMonth - 1 ||
       currentCard.info.expiryDate.getFullYear() !== +expYear ||
-      currentCard.info.cvv !== cvv ||
+      currentCard.info.cvv !== decryptedCvv ||
       currentCard.user.name !== cardName
     )
       throw new BadRequest('Invalid card credentials');

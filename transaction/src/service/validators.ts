@@ -36,3 +36,8 @@ export const billingAddressValidator = () =>
     .notEmpty()
     .isLength({ min: 20 })
     .withMessage('Invalid billing address');
+
+export const txnAmountValidator = () =>
+  check('amount')
+    .isInt({ gt: 0 })
+    .withMessage('Amount must be greater than 0');
