@@ -4,6 +4,7 @@ import { TxnTypeEnum } from '../enums/TxnTypeEnum';
 import { TxnStatusEnum } from '../enums/TxnStatusEnum';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { AccountDoc } from './account';
+import { TxnMode } from '../enums/TxnModeEnum';
 
 type TxnAttrs = {
   account: AccountDoc;
@@ -60,6 +61,12 @@ const txnSchema = new mongoose.Schema({
   createdAt: {
     type: mongoose.Schema.Types.Date,
     default: new Date()
+  },
+
+  mode: {
+    type: String,
+    enum: Object.values(TxnMode),
+    default: TxnMode.Cardless
   }
 });
 
