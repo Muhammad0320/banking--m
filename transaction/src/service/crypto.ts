@@ -95,23 +95,12 @@ export const hashingWork = (): CryptoReturnType => {
 
 // To decrypt
 
-export const decrypt = (
-  encryptedCard: string,
-  encryptedCVV: string
-): CryptoReturnType => {
-  const [encryptedCardData, cardkey, cardiv] = encryptedCard.split('.');
+export const decrypt = (encryptedData: string): string => {
+  const [encrypted, key, iv] = encryptedData.split('.');
 
-  const [encryptedCvvData, cvvKey, cvviv] = encryptedCVV.split('.');
-
-  const decryptedCard = decryptData(encryptedCardData, cardkey, cardiv);
-
-  const decryptedCVV = decryptData(encryptedCvvData, cvvKey, cvviv);
+  const decryptedCard = decryptData(encrypted, key, iv);
 
   console.log('Decrypted Card:', decryptedCard);
-  console.log('Decrypted CVV:', decryptedCVV);
 
-  return {
-    card: decryptedCard,
-    cvv: decryptedCVV
-  };
+  return decryptedCard;
 };
