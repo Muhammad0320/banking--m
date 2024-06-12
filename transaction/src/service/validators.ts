@@ -30,7 +30,7 @@ export const cardNameValidator = () =>
     .isLength({ min: 5 })
     .withMessage('Invalid Name');
 
-export const billingAddress = () =>
+export const billingAddressValidator = () =>
   check('billingAddress')
     .trim()
     .notEmpty()
