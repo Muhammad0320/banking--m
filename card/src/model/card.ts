@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
 import { AccountDoc } from './account';
-import { CardType } from '../enums/CardType';
-import { CardStatus } from '../enums/CardStatus';
-import { CardNetwork } from '../enums/CardNewtwork';
-import { Info, Settings, User } from '../types/CardFieldTypes';
+import {
+  CardNetwork,
+  CardStatus,
+  CardType,
+  Info,
+  Settings,
+  User
+} from '@m0banking/common';
 
 type CardDoc = mongoose.Document & {
   account: AccountDoc;
@@ -13,8 +17,16 @@ type CardDoc = mongoose.Document & {
   version: number;
 };
 
+type CardAttrs = {
+  accountId: string;
+  billingAddress: string;
+  networkType: CardNetwork;
+  type: CardType;
+};
+
 type CardModel = mongoose.Model<CardDoc> & {
   findByLastVersionAndId(id: string, version: number): Promise<CardDoc | null>;
+  buildCard(attrs: CardAttrs): Promise<CardDoc>;
 };
 
 const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
