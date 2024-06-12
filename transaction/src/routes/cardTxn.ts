@@ -35,13 +35,32 @@ router.post(
       cardName
     } = req.body;
 
-    const cardNo = (await Card.find())
-      .map(card => card.info.no)
-      .map(nos => {
-        return decrypt(nos);
-      })
-      .find(no => no === cardNumber);
+    const currentCard = (await Card.find())
+      .map(card => {
+        const decryptedNo = decrypt(card.info.no);
 
-    if (!cardNo) throw new BadRequest('Invalid credentials');
+        const decryptedCvv = decrypt(card.info.cvv);
+
+        return {
+          ...card,
+          info: { ...card.info, no: decryptedNo, cvv: decryptedCvv }
+        };
+      })
+      .find(el => el.info.no === `${cardNumber}`);
+
+    const decryptedCvv = decrypt(cvv);
+
+    console.log(currentCard);
+
+    if (!currentCard) throw new BadRequest('Invalid card credentials');
+
+    if (
+      currentCard.info.billingAddress !== billingAddress ||
+      currentCard.info.expiryDate.getMonth() !== +expMonth - 1 ||
+      currentCard.info.expiryDate.getFullYear() !== +expYear ||
+      currentCard.info.cvv !== cvv ||
+      currentCard.user.name !== cardName
+    )
+      throw new BadRequest('Invalid card credentials');
   }
 );
