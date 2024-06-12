@@ -7,8 +7,6 @@ type CryptoReturnType = {
   cvv: string;
 };
 
-type DecryptAttrs = { encryptedData: string; iv: string };
-
 // Function to generate a 16-digit card number
 function generateCardNumber(): string {
   let cardNumber = randomatic('0', 15); // Generate first 15 digits
@@ -89,28 +87,25 @@ export const hashingWork = (): CryptoReturnType => {
   console.log('Encrypted CVV:', encryptedCVV.encryptedData);
 
   return {
-    card: `${encryptedCard.encryptedData}.${encryptionKey}`,
+    card: `${encryptedCard.encryptedData}.${encryptionKey}.${encryptedCard.iv}`,
 
-    cvv: `${encryptedCVV.encryptedData}.${encryptionKey}`
+    cvv: `${encryptedCVV.encryptedData}.${encryptionKey}.${encryptedCVV.iv}`
   };
 };
 
 // To decrypt
 
 export const decrypt = (
-  encryptedCard: DecryptAttrs,
-  encryptedCVV: DecryptAttrs
+  encryptedCard: string,
+  encryptedCVV: string
 ): CryptoReturnType => {
-  const [encryptedCardData, cardkey] = encryptedCard.encryptedData.split('.');
+  const [encryptedCardData, cardkey, cardiv] = encryptedCard.split('.');
 
-  const [encryptedCvvData, cvvKey] = encryptedCVV.encryptedData.split('.');
+  const [encryptedCvvData, cvvKey, cvviv] = encryptedCVV.split('.');
 
-  const decryptedCard = decryptData(
-    encryptedCardData,
-    cardkey,
-    encryptedCard.iv
-  );
-  const decryptedCVV = decryptData(encryptedCvvData, cvvKey, encryptedCVV.iv);
+  const decryptedCard = decryptData(encryptedCardData, cardkey, cardiv);
+
+  const decryptedCVV = decryptData(encryptedCvvData, cvvKey, cvviv);
 
   console.log('Decrypted Card:', decryptedCard);
   console.log('Decrypted CVV:', decryptedCVV);
