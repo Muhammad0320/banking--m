@@ -130,10 +130,7 @@ cardSchema.statics.buildCard = async function(attrs: CardAttrs) {
   if (existingCard?.info.status !== CardStatus.Expired)
     throw new BadRequest("You can't own multiple unexpired cards for now!");
 
-  const {
-    cvv: { hashed: hashedCvv, unhashed: unhashedCvv },
-    card: { hashed: hashedCard, unhashed: unhashedCard }
-  } = hashingWork();
+  const { cvv: hashedCvv, card: hashedCard } = hashingWork();
 
   const card = await Card.create({
     account: account.id,
