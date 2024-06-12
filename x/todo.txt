@@ -25,7 +25,11 @@ Before blocking a card, account pin must me provided.
 
 Deduct from dad's airtime tomorrow
 
-Adhere to the fat model and thin controller principle - so add the card info hasing to the model.
+Add The cryto and helper fxns to common.
+
+Add show, getAll and getOne card to card srv.
+
+Adhere to the fat model and thin controller principle - so add the card info hasing to the model. ✅
 
 Before blocking a card, the card it self must have a status of ACTIVE
 

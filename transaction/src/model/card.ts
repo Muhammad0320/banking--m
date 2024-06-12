@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
-import { AccountDoc } from './account';
+import { Account, AccountDoc } from './account';
 import {
+  AccountStatus,
+  BadRequest,
   CardNetwork,
   CardStatus,
   CardType,
   Info,
+  NotFound,
   Settings,
   User
 } from '@m0banking/common';
+import { hashingWork } from '../service/crypto';
+import { DateFxns } from '../service/helper';
 
 type CardDoc = mongoose.Document & {
   account: AccountDoc;
@@ -17,8 +22,16 @@ type CardDoc = mongoose.Document & {
   version: number;
 };
 
+type CardAttrs = {
+  accountId: string;
+  billingAddress: string;
+  networkType: CardNetwork;
+  type: CardType;
+};
+
 type CardModel = mongoose.Model<CardDoc> & {
   findByLastVersionAndId(id: string, version: number): Promise<CardDoc | null>;
+  buildCard(attrs: CardAttrs): Promise<CardDoc>;
 };
 
 const cardSchema = new mongoose.Schema<CardDoc, CardModel>({
@@ -99,6 +112,49 @@ cardSchema.pre('save', async function(next) {
 
   next();
 });
+
+cardSchema.statics.buildCard = async function(attrs: CardAttrs) {
+  const { accountId, billingAddress, networkType, type } = attrs;
+
+  const { yy, mm } = DateFxns();
+
+  const account = await Account.findById(accountId);
+
+  if (!!!account) throw new NotFound('Account not found');
+
+  if (account.status !== AccountStatus.Active)
+    throw new BadRequest('Your account is blocked');
+
+  const existingCard = await Card.findOne({ account: accountId });
+
+  if (existingCard?.info.status !== CardStatus.Expired)
+    throw new BadRequest("You can't own multiple unexpired cards for now!");
+
+  const {
+    cvv: { hashed: hashedCvv, unhashed: unhashedCvv },
+    card: { hashed: hashedCard, unhashed: unhashedCard }
+  } = hashingWork();
+
+  const card = await Card.create({
+    account: account.id,
+
+    user: {
+      id: account.user.id,
+      name: account.user.name
+    },
+
+    info: {
+      billingAddress,
+      network: networkType,
+      type,
+      no: hashedCard,
+      cvv: hashedCvv,
+      expiryDate: new Date(yy, mm)
+    }
+  });
+
+  return card;
+};
 
 cardSchema.statics.findByLastVersionAndId = async function(
   id: string,

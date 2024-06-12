@@ -3,7 +3,7 @@ import {
   AccountStatus,
   AccountTier,
   AccountType,
-  CryptoManager
+  User
 } from '@m0banking/common';
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
@@ -11,7 +11,7 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 type AccountAttrs = {
   id: string;
   no: number;
-  userId: string;
+  user: User;
   balance: number;
   pin: string;
   tier: AccountTier;
