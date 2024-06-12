@@ -10,6 +10,7 @@ import { Card } from '../model/card';
 import { decrypt } from '../service/crypto';
 import express, { Request, Response } from 'express';
 import { BadRequest, requestValidator, requireAuth } from '@m0banking/common';
+import { Account } from '../model/account';
 
 const router = express.Router();
 
@@ -32,10 +33,11 @@ router.post(
       no: cardNumber,
       cvv,
       billingAddress,
-      cardName
+      cardName,
+      amount
     } = req.body;
 
-    const currentCard = (await Card.find())
+    const currentCard = (await Card.find().populate('account'))
       .map(card => {
         const decryptedNo = decrypt(card.info.no);
 
@@ -62,5 +64,8 @@ router.post(
       currentCard.user.name !== cardName
     )
       throw new BadRequest('Invalid card credentials');
+
+    if (currentCard.account.balance <= +amount)
+      throw new BadRequest('Insufficient fund');
   }
 );
