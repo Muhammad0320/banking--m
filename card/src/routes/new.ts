@@ -1,6 +1,4 @@
 import {
-  AccountStatus,
-  BadRequest,
   Forbidden,
   NotFound,
   requestValidator,
@@ -15,9 +13,6 @@ import {
 } from '../services/validators';
 import { Card } from '../model/card';
 import { Account } from '../model/account';
-import { DateFxns } from '../services/helper';
-import { CardStatus } from '../enums/CardStatus';
-import { hashingWork } from '../services/crypto';
 import express, { Response, Request } from 'express';
 
 const router = express.Router();
