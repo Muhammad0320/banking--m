@@ -1,4 +1,4 @@
-import { body, check } from 'express-validator';
+import { check } from 'express-validator';
 
 export const cardNumberValidator = () =>
   check('no')
@@ -35,9 +35,16 @@ export const billingAddressValidator = () =>
     .trim()
     .notEmpty()
     .isLength({ min: 20 })
-    .withMessage('Invalid billing address');
+    .withMessage('Billing address should have a minimum chars of 20');
 
 export const txnAmountValidator = () =>
   check('amount')
     .isInt({ gt: 0 })
     .withMessage('Amount must be greater than 0');
+
+export const reasonValidator = () =>
+  check('reason')
+    .trim()
+    .notEmpty()
+    .isLength({ min: 4 })
+    .withMessage('Txn reason should be more than 4 chars');
