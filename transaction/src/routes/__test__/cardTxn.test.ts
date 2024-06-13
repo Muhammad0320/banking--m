@@ -38,6 +38,7 @@ type cardDataType = {
   no: string;
   billingAddress: string;
   cvv: string;
+  status?: CardStatus;
 };
 
 const cardBuilder = async (account: AccountDoc, cardData: cardDataType) => {
@@ -55,10 +56,11 @@ const cardBuilder = async (account: AccountDoc, cardData: cardDataType) => {
       weeklyLimit: 500,
       monthlyLimit: 5000
     },
+
     info: {
       no: cardData.no,
       network: CardNetwork.Visa,
-      status: CardStatus.Active,
+      status: cardData.status || CardStatus.Active,
       type: CardType.Debit,
       cvv: cardData.cvv,
       expiryDate: new Date(yy, mm),
@@ -449,7 +451,7 @@ it('returns a 404  for unmatched accounts', async () => {
     .expect(404);
 });
 
-it('reurns 404 if beneficiary account is inactive', async () => {
+it('returns 400 if beneficiary account is inactive', async () => {
   const {
     card: { hashed: hashedNo, unhashed: unhashedNo },
     cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
@@ -459,6 +461,42 @@ it('reurns 404 if beneficiary account is inactive', async () => {
     no: hashedNo,
     cvv: hashedcvv,
     billingAddress: 'G50, Balogun Gambari compound'
+  };
+
+  const account = await accountBuilder(AccountStatus.Active, 5000);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Blocked, 50);
+
+  const card = await cardBuilder(account, cardData);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: 1,
+      expYear: 2025,
+      cardName: 'Muhammad Awwal',
+      billingAddress: card.info.billingAddress,
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
+});
+
+it('returns a 400 for expired or inactive card', async () => {
+  const {
+    card: { hashed: hashedNo, unhashed: unhashedNo },
+    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
+  } = hashingWork();
+
+  const cardData: cardDataType = {
+    no: hashedNo,
+    cvv: hashedcvv,
+    billingAddress: 'G50, Balogun Gambari compound',
+    status: CardStatus.Expired
   };
 
   const account = await accountBuilder(AccountStatus.Active, 5000);
