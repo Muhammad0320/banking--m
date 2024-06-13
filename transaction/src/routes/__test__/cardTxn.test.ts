@@ -397,7 +397,7 @@ it('returns a 400 on invalid credentials ', async () => {
     .expect(400);
 });
 
-it('returns a 404  for unmatched acccounts', async () => {
+it('returns a 404  for unmatched accounts', async () => {
   const {
     card: { hashed: hashedNo, unhashed: unhashedNo },
     cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
@@ -447,4 +447,39 @@ it('returns a 404  for unmatched acccounts', async () => {
       account: new mongoose.Types.ObjectId().toHexString()
     })
     .expect(404);
+});
+
+it('reurns 404 if beneficiary account is inactive', async () => {
+  const {
+    card: { hashed: hashedNo, unhashed: unhashedNo },
+    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
+  } = hashingWork();
+
+  const cardData: cardDataType = {
+    no: hashedNo,
+    cvv: hashedcvv,
+    billingAddress: 'G50, Balogun Gambari compound'
+  };
+
+  const account = await accountBuilder(AccountStatus.Active, 5000);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Blocked, 50);
+
+  const card = await cardBuilder(account, cardData);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: 1,
+      expYear: 2025,
+      cardName: 'Muhammad Awwal',
+      billingAddress: card.info.billingAddress,
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
 });
