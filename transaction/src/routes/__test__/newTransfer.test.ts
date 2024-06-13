@@ -20,7 +20,10 @@ const accountBuilder = async (bal?: number) => {
 
     pin: await CryptoManager.hash('1234'),
 
-    userId: userSender,
+    user: {
+      id: userSender,
+      name: 'Muad ib'
+    },
 
     status: AccountStatus.Active,
 
@@ -40,7 +43,11 @@ const benAccountBuilder = async () => {
 
     pin: await CryptoManager.hash('1234'),
 
-    userId: new mongoose.Types.ObjectId().toHexString(),
+    user: {
+      id: new mongoose.Types.ObjectId().toHexString(),
+
+      name: 'Paul '
+    },
 
     status: AccountStatus.Active,
 
@@ -123,7 +130,7 @@ it('returns a  400 for invalid pin', async () => {
 
   await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: account.id,
@@ -138,7 +145,7 @@ it('returns  a 400, if beneficiary the ids are the same', async () => {
 
   await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: account.id,
@@ -153,7 +160,7 @@ it('returns a 404, if the beneficiary account is not found', async () => {
 
   await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: account.id,
@@ -170,7 +177,7 @@ it('returns a 400 for a transaction higher than balance ', async () => {
 
   await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: account.id,
@@ -189,7 +196,7 @@ it('returns an 201 when everything is valid', async () => {
     body: { data }
   } = await request(app)
     .post('/api/v1/txn/transfer')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: account.id,
