@@ -138,7 +138,6 @@ router.post(
       status: TxnStatusEnum.Success,
       type: TxnTypeEnum.Transfer,
       mode: TxnMode.Card,
-
       reason,
 
       beneficiary: beneficiary.id
