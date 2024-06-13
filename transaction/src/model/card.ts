@@ -11,10 +11,19 @@ import {
   Settings,
   User
 } from '@m0banking/common';
-import { hashingWork } from '../service/crypto';
 import { DateFxns } from '../service/helper';
+import { decrypt, hashingWork } from '../service/crypto';
 
-type CardDoc = mongoose.Document & {
+type CardTxnAttrs = {
+  no: string;
+  cvv: string;
+  expYear: number;
+  cardName: string;
+  expMonth: number;
+  billingAddress: string;
+};
+
+type CardAttrs = {
   account: AccountDoc;
   user: User;
   settings: Settings;
@@ -22,12 +31,7 @@ type CardDoc = mongoose.Document & {
   version: number;
 };
 
-type CardAttrs = {
-  accountId: string;
-  billingAddress: string;
-  networkType: CardNetwork;
-  type: CardType;
-};
+type CardDoc = mongoose.Document & CardAttrs;
 
 type CardModel = mongoose.Model<CardDoc> & {
   findByLastVersionAndId(id: string, version: number): Promise<CardDoc | null>;
@@ -113,42 +117,12 @@ cardSchema.pre('save', async function(next) {
   next();
 });
 
+cardSchema.methods.validateTxn = async function(attrs: CardTxnAttrs) {
+  // const {card: decryptedCard, cvv: decryptedCvv} = decrypt(no, cvv)
+};
+
 cardSchema.statics.buildCard = async function(attrs: CardAttrs) {
-  const { accountId, billingAddress, networkType, type } = attrs;
-
-  const { yy, mm } = DateFxns();
-
-  const account = await Account.findById(accountId);
-
-  if (!!!account) throw new NotFound('Account not found');
-
-  if (account.status !== AccountStatus.Active)
-    throw new BadRequest('Your account is blocked');
-
-  const existingCard = await Card.findOne({ account: accountId });
-
-  if (existingCard?.info.status !== CardStatus.Expired)
-    throw new BadRequest("You can't own multiple unexpired cards for now!");
-
-  const { cvv: hashedCvv, card: hashedCard } = hashingWork();
-
-  const card = await Card.create({
-    account: account.id,
-
-    user: {
-      id: account.user.id,
-      name: account.user.name
-    },
-
-    info: {
-      billingAddress,
-      network: networkType,
-      type,
-      no: hashedCard,
-      cvv: hashedCvv,
-      expiryDate: new Date(yy, mm)
-    }
-  });
+  const card = await Card.create(attrs);
 
   return card;
 };
