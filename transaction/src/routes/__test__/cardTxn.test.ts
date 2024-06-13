@@ -298,7 +298,7 @@ it('returns a 400 on invalid credentials: billingAddress ', async () => {
 
   await request(app)
     .post('/api/v1/txn/card')
-    .set('Cookie', await global.signin())
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       no: +unhashedNo,
       cvv: +unhashedcvv,
