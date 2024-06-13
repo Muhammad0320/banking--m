@@ -500,7 +500,7 @@ it('returns a 400 for expired or inactive card', async () => {
   };
 
   const account = await accountBuilder(AccountStatus.Active, 5000);
-  const beneficiaryAccount = await accountBuilder(AccountStatus.Blocked, 50);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Active, 50);
 
   const card = await cardBuilder(account, cardData);
 
@@ -535,7 +535,7 @@ it('returns a 400 for insufficient fund', async () => {
   };
 
   const account = await accountBuilder(AccountStatus.Active, 50);
-  const beneficiaryAccount = await accountBuilder(AccountStatus.Blocked, 50);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Active, 50);
 
   const card = await cardBuilder(account, cardData);
 
@@ -555,4 +555,39 @@ it('returns a 400 for insufficient fund', async () => {
       account: account.id
     })
     .expect(400);
+});
+
+it('returns a 200 when everything is valid', async () => {
+  const {
+    card: { hashed: hashedNo, unhashed: unhashedNo },
+    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
+  } = hashingWork();
+
+  const cardData: cardDataType = {
+    no: hashedNo,
+    cvv: hashedcvv,
+    billingAddress: 'G50, Balogun Gambari compound'
+  };
+
+  const account = await accountBuilder(AccountStatus.Active, 50000);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Active, 50);
+
+  const card = await cardBuilder(account, cardData);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: card.info.expiryDate.getMonth() + 1,
+      expYear: card.info.expiryDate.getFullYear(),
+      cardName: card.user.name,
+      billingAddress: card.info.billingAddress,
+      amount: 500,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(200);
 });
