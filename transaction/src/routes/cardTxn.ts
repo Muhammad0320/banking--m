@@ -1,5 +1,5 @@
 import {
-  beneficiaryValidator,
+  accountValidator,
   billingAddressValidator,
   cardNameValidator,
   cardNumberValidator,
@@ -42,7 +42,8 @@ router.post(
     billingAddressValidator,
     txnAmountValidator,
     txnReasonValidator,
-    beneficiaryValidator
+    accountValidator('account'),
+    accountValidator('beneficiary')
   ],
   requestValidator,
   async (req: Request, res: Response) => {
@@ -55,10 +56,11 @@ router.post(
       cardName,
       amount,
       reason,
-      beneficiary
+      beneficiary,
+      account: senderAccount
     } = req.body;
 
-    const currentCard = (await Card.find())
+    const currentCardTest = (await Card.find())
       .map(card => {
         const decryptedNo = decrypt(card.info.no);
 
@@ -71,11 +73,16 @@ router.post(
       })
       .find(el => el.info.no === `${cardNumber}`);
 
-    const decryptedCvv = decrypt(cvv);
+    console.log(currentCardTest, 'From the card test');
+
+    const currentCard = await Card.findOne({ account: senderAccount });
+
+    if (!currentCard) throw new BadRequest('Invalid card credentials');
 
     console.log(currentCard);
 
-    if (!currentCard) throw new BadRequest('Invalid card credentials');
+    const decryptedCvv = decrypt(currentCard.info.cvv);
+    const decryptedCard = decrypt(currentCard.info.no);
 
     const account = await Account.findById(currentCard.account);
 
@@ -85,7 +92,8 @@ router.post(
       currentCard.info.billingAddress !== billingAddress ||
       currentCard.info.expiryDate.getMonth() !== +expMonth - 1 ||
       currentCard.info.expiryDate.getFullYear() !== +expYear ||
-      currentCard.info.cvv !== decryptedCvv ||
+      decryptedCvv !== '' + cvv ||
+      decryptedCard !== '' + cardNumber ||
       currentCard.user.name !== cardName
     )
       throw new BadRequest('Invalid card credentials');
