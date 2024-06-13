@@ -311,7 +311,7 @@ it('returns a 403 if a user tried to transact with another users card', async ()
     .expect(403);
 });
 
-it('returns a 400 on invalid credentials: billingAddress ', async () => {
+it('returns a 400 on invalid credentials ', async () => {
   const {
     card: { hashed: hashedNo, unhashed: unhashedNo },
     cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
@@ -338,6 +338,57 @@ it('returns a 400 on invalid credentials: billingAddress ', async () => {
       expYear: card.info.expiryDate.getFullYear(),
       cardName: card.user.name,
       billingAddress: 'G50',
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: 123,
+      expMonth: card.info.expiryDate.getMonth() + 1,
+      expYear: card.info.expiryDate.getFullYear(),
+      cardName: card.user.name,
+      billingAddress: card.info.billingAddress,
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: card.info.expiryDate.getMonth() + 1,
+      expYear: card.info.expiryDate.getFullYear(),
+      cardName: 'Muhammad Awwal',
+      billingAddress: card.info.billingAddress,
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: 1,
+      expYear: 2025,
+      cardName: 'Muhammad Awwal',
+      billingAddress: card.info.billingAddress,
       amount: 50,
       reason: 'Shit',
       beneficiary: beneficiaryAccount.id,
