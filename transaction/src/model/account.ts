@@ -55,10 +55,16 @@ const accountSchema = new mongoose.Schema(
       required: true
     },
 
-    userId: {
-      type: String,
-      unique: true,
-      required: true
+    user: {
+      id: {
+        type: String,
+        required: true
+      },
+
+      name: {
+        type: String,
+        required: true
+      }
     },
 
     currency: {

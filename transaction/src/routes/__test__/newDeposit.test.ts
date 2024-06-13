@@ -19,7 +19,10 @@ const accountBuilder = async () => {
 
     pin,
 
-    userId: new mongoose.Types.ObjectId().toHexString(),
+    user: {
+      id: new mongoose.Types.ObjectId().toHexString(),
+      name: 'Lisan al gaib'
+    },
 
     status: AccountStatus.Active,
 
@@ -61,13 +64,13 @@ it('returns a 400 for invalid pin', async () => {
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({ amount: 100, accountId: account.id })
     .expect(400);
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({ amount: 240, accountId: account.id, pin: 2212 })
     .expect(400);
 });
@@ -77,7 +80,7 @@ it('returns a 400, for invalid accountId', async () => {
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({ amount: 100, accountId: 'shit id', pin: 1234 })
     .expect(400);
 
@@ -93,7 +96,7 @@ it('returns a 404, for valid but incorrect accountId', async () => {
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 100,
       accountId: new mongoose.Types.ObjectId().toHexString(),
@@ -123,7 +126,7 @@ it('returns returns a 201 when everything is valid ', async () => {
     body: { data }
   } = await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 1000,
       accountId: account.id,
@@ -142,7 +145,7 @@ it(' publishes a TxnDepositCreatedPublisher event when everything is valid ', as
 
   await request(app)
     .post('/api/v1/txn/deposit')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({
       amount: 1000,
       accountId: account.id,
