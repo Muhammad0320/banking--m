@@ -77,14 +77,14 @@ router.post(
       amount: newTransfer.amount,
       account: {
         id: updatedAccount.id,
-        userId: updatedAccount.userId,
+        userId: updatedAccount.user.id,
         balance: updatedAccount.balance,
         version: updatedAccount.version
       },
 
       beneficiary: {
         id: updatedBeneficiary.id,
-        userId: updatedBeneficiary.userId,
+        userId: updatedBeneficiary.user.id,
         balance: updatedBeneficiary.balance,
         version: updatedBeneficiary.version
       }
