@@ -2,9 +2,15 @@ import crypto from 'crypto';
 import randomatic from 'randomatic';
 
 type CryptoReturnType = {
-  card: string;
+  card: {
+    hashed: string;
+    unhashed: string;
+  };
 
-  cvv: string;
+  cvv: {
+    hashed: string;
+    unhashed: string;
+  };
 };
 
 // Function to generate a 16-digit card number
@@ -76,6 +82,7 @@ function decryptData(encryptedData: string, key: string, iv: string): string {
 export const hashingWork = (): CryptoReturnType => {
   const cardNumber = generateCardNumber();
   const cvv = generateCVV();
+
   const encryptionKey = crypto.randomBytes(32).toString('hex'); // Key should be securely stored
 
   const encryptedCard = encryptData(cardNumber, encryptionKey);
@@ -87,9 +94,15 @@ export const hashingWork = (): CryptoReturnType => {
   console.log('Encrypted CVV:', encryptedCVV.encryptedData);
 
   return {
-    card: `${encryptedCard.encryptedData}.${encryptionKey}.${encryptedCard.iv}`,
+    card: {
+      hashed: `${encryptedCard.encryptedData}.${encryptionKey}.${encryptedCard.iv}`,
+      unhashed: cardNumber
+    },
 
-    cvv: `${encryptedCVV.encryptedData}.${encryptionKey}.${encryptedCVV.iv}`
+    cvv: {
+      hashed: `${encryptedCVV.encryptedData}.${encryptionKey}.${encryptedCVV.iv}`,
+      unhashed: cvv
+    }
   };
 };
 
