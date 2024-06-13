@@ -276,8 +276,40 @@ it('returns a 400 if the provides account are not of valid format ', async () =>
     .expect(400);
 });
 
-// It depends if the i'm able to use a robust soln
-// it('returns a 400 for invalid and invalid credentials msg on invalid  ');
+it('returns a 403 if a user tried to transact with another users card', async () => {
+  const {
+    card: { hashed: hashedNo, unhashed: unhashedNo },
+    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
+  } = hashingWork();
+
+  const cardData: cardDataType = {
+    no: hashedNo,
+    cvv: hashedcvv,
+    billingAddress: 'G50, Balogun Gambari compound'
+  };
+
+  const account = await accountBuilder(AccountStatus.Active, 5000);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Active, 50);
+
+  const card = await cardBuilder(account, cardData);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin(account.user.id))
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: card.info.expiryDate.getMonth() + 1,
+      expYear: card.info.expiryDate.getFullYear(),
+      cardName: card.user.name,
+      billingAddress: card.info.billingAddress,
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(403);
+});
 
 it('returns a 400 on invalid credentials: billingAddress ', async () => {
   const {
