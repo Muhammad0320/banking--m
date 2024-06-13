@@ -90,10 +90,7 @@ router.post(
 
     if (!account) throw new NotFound('Account not found');
 
-    if (
-      req.currentUser.id !== account.user.id &&
-      req.currentUser.role === UserRole.User
-    )
+    if (req.currentUser.id !== account.user.id)
       throw new Forbidden('You are not authorized to perform this action');
 
     if (
