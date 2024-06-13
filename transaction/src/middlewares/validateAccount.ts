@@ -19,7 +19,7 @@ export const validateAccount = (type?: string) => async (
 
   if (!account) throw new NotFound('Account not found');
 
-  if (account.userId !== req.currentUser.id)
+  if (account.user.id !== req.currentUser.id)
     throw new Forbidden('You are not allowed to perform this transaction');
 
   if (!(await CryptoManager.compare(account.pin, String(pin))))
@@ -52,6 +52,6 @@ export const validateAccount = (type?: string) => async (
     if (beneficiaryAccount.status === AccountStatus.Blocked)
       throw new Forbidden('Beneficiary is blocked');
   }
-  
+
   next();
 };
