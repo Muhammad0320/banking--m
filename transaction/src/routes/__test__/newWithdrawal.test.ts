@@ -18,7 +18,10 @@ const accountBuilder = async (bal?: number) => {
 
     pin,
 
-    userId: new mongoose.Types.ObjectId().toHexString(),
+    user: {
+      id: new mongoose.Types.ObjectId().toHexString(),
+      name: ' Lisan al gaib '
+    },
 
     status: AccountStatus.Active,
 
@@ -60,7 +63,7 @@ it('returns a 201, on successful withdrawal', async () => {
 
   await request(app)
     .post('/api/v1/txn/withdrawal')
-    .set('Cookie', await global.signin(account.userId))
+    .set('Cookie', await global.signin(account.user.id))
     .send({ amount: 100, accountId: account.id, pin: 1234 })
     .expect(201);
 });
