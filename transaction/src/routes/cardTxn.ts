@@ -16,10 +16,12 @@ import {
   AccountStatus,
   BadRequest,
   CardStatus,
+  Forbidden,
   NotFound,
   requestValidator,
   requireAuth,
-  TxnStatusEnum
+  TxnStatusEnum,
+  UserRole
 } from '@m0banking/common';
 import { Txn } from '../model/transaction';
 import { TxnTypeEnum } from '../enums/TxnTypeEnum';
@@ -87,6 +89,12 @@ router.post(
     const account = await Account.findById(currentCard.account);
 
     if (!account) throw new NotFound('Account not found');
+
+    if (
+      req.currentUser.id !== account.user.id &&
+      req.currentUser.role === UserRole.User
+    )
+      throw new Forbidden('You are not authorized to perform this action');
 
     if (
       currentCard.info.billingAddress !== billingAddress ||

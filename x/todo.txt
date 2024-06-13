@@ -23,7 +23,12 @@
 
 Before blocking a card, account pin must me provided.
 
-Deduct from dad's airtime tomorrow
+Add eventing to card srv route handlers
+
+Deduct from dad's airtime tomorrow.
+
+will change all card forbidden to a middle that automatically does that.
+
 
 Add The cryto and helper fxns to common.
 
@@ -40,5 +45,3 @@ Add test to chek for the new presave hook added in card model
 
 
  Post on linkindin today, About the project and NEVER MISS A DAY and create a brand new X account, for all coding related stuffs.
-
-Look at a very good location to expire card
