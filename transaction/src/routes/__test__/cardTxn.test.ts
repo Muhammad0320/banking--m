@@ -13,6 +13,7 @@ import {
 } from '@m0banking/common';
 import { Card } from '../../model/card';
 import { dateFxns } from '../../service/helper';
+import { hashingWork } from '../../service/crypto';
 
 const accountBuilder = async (status?: AccountStatus, balance?: number) => {
   return await Account.buildAccount({
@@ -278,4 +279,37 @@ it('returns a 400 if the provides account are not of valid format ', async () =>
 // It depends if the i'm able to use a robust soln
 // it('returns a 400 for invalid and invalid credentials msg on invalid  ');
 
-it('returns a 400 on invalid credentials: billingAddress ', async () => {});
+it('returns a 400 on invalid credentials: billingAddress ', async () => {
+  const {
+    card: { hashed: hashedNo, unhashed: unhashedNo },
+    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
+  } = hashingWork();
+
+  const cardData: cardDataType = {
+    no: hashedNo,
+    cvv: hashedcvv,
+    billingAddress: 'G50, Balogun Gambari compound'
+  };
+
+  const account = await accountBuilder(AccountStatus.Active, 5000);
+  const beneficiaryAccount = await accountBuilder(AccountStatus.Active, 50);
+
+  const card = await cardBuilder(account, cardData);
+
+  await request(app)
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
+    .send({
+      no: +unhashedNo,
+      cvv: +unhashedcvv,
+      expMonth: card.info.expiryDate.getMonth() + 1,
+      expYear: card.info.expiryDate.getFullYear(),
+      cardName: card.user.name,
+      billingAddress: 'G50',
+      amount: 50,
+      reason: 'Shit',
+      beneficiary: beneficiaryAccount.id,
+      account: account.id
+    })
+    .expect(400);
+});
