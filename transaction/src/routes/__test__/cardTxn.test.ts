@@ -11,7 +11,8 @@ it('returns a 401 for unauthenticated access', async () => {
 
 it('returns a 400 for invalid card number format', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_39,
       cvv: 345,
@@ -27,7 +28,8 @@ it('returns a 400 for invalid card number format', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 0,
       cvv: 345,
@@ -45,7 +47,8 @@ it('returns a 400 for invalid card number format', async () => {
 
 it('returns a 400 for invalid cvv  format', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 34,
@@ -61,7 +64,8 @@ it('returns a 400 for invalid cvv  format', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 34323,
@@ -79,7 +83,8 @@ it('returns a 400 for invalid cvv  format', async () => {
 
 it('returns a 400 for invalid expiry date', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -95,7 +100,8 @@ it('returns a 400 for invalid expiry date', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -111,7 +117,8 @@ it('returns a 400 for invalid expiry date', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -129,7 +136,8 @@ it('returns a 400 for invalid expiry date', async () => {
 
 it('returns a 400 for invalid cardName', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -145,7 +153,8 @@ it('returns a 400 for invalid cardName', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -163,7 +172,9 @@ it('returns a 400 for invalid cardName', async () => {
 
 it('returns a 400 if the provides account are not valid ', async () => {
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
+
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -179,7 +190,8 @@ it('returns a 400 if the provides account are not valid ', async () => {
     .expect(400);
 
   await request(app)
-    .post('/api/v1/txn/deposit')
+    .post('/api/v1/txn/card')
+    .set('Cookie', await global.signin())
     .send({
       no: 1_234_899_183_918_329,
       cvv: 343,
@@ -194,3 +206,5 @@ it('returns a 400 if the provides account are not valid ', async () => {
     })
     .expect(400);
 });
+
+it('returns a 400 for invalid');
