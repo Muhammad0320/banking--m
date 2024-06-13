@@ -81,7 +81,7 @@ it('returns a 400 for invalid cvv  format', async () => {
     .expect(400);
 });
 
-it('returns a 400 for invalid expiry date', async () => {
+it('returns a 400 for invalid expiry date format', async () => {
   await request(app)
     .post('/api/v1/txn/card')
     .set('Cookie', await global.signin())
@@ -134,7 +134,7 @@ it('returns a 400 for invalid expiry date', async () => {
     .expect(400);
 });
 
-it('returns a 400 for invalid cardName', async () => {
+it('returns a 400 for invalid cardName format ', async () => {
   await request(app)
     .post('/api/v1/txn/card')
     .set('Cookie', await global.signin())
@@ -170,7 +170,7 @@ it('returns a 400 for invalid cardName', async () => {
     .expect(400);
 });
 
-it('returns a 400 if the provides account are not valid ', async () => {
+it('returns a 400 if the provides account are not of valid format ', async () => {
   await request(app)
     .post('/api/v1/txn/card')
     .set('Cookie', await global.signin())
@@ -207,4 +207,5 @@ it('returns a 400 if the provides account are not valid ', async () => {
     .expect(400);
 });
 
-it('returns a 400 for invalid');
+// It depends if the i'm able to use a robust soln
+// it('returns a 400 for invalid and invalid credentials msg on invalid  ');
