@@ -4,7 +4,7 @@ interface DateReturnType {
   dd: number;
 }
 
-export const DateFxns = (): DateReturnType => {
+export const dateFxns = (): DateReturnType => {
   const date = new Date();
 
   return {

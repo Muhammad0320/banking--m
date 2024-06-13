@@ -1,6 +1,74 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
+import { Account, AccountDoc } from '../../model/account';
+import {
+  AccountCurrency,
+  AccountStatus,
+  AccountTier,
+  AccountType,
+  CardNetwork,
+  CardStatus,
+  CardType
+} from '@m0banking/common';
+import { Card } from '../../model/card';
+import { dateFxns } from '../../service/helper';
+
+const accountBuilder = async (status?: AccountStatus, balance?: number) => {
+  return await Account.buildAccount({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    no: 9381347599,
+    user: {
+      id: new mongoose.Types.ObjectId().toHexString(),
+      name: 'Lisan al Gaib'
+    },
+    balance: balance || 5000,
+    pin: '1123',
+    tier: AccountTier.Basic,
+    type: AccountType.Current,
+    status: status || AccountStatus.Active,
+    currency: AccountCurrency.USD,
+    version: 0,
+    _block: false
+  });
+};
+
+type cardDataType = {
+  no: string;
+  billingAddress: string;
+  cvv: string;
+};
+
+const cardBuilder = async (account: AccountDoc, cardData: cardDataType) => {
+  const { yy, mm } = dateFxns();
+
+  return Card.buildCard({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    account,
+    user: {
+      id: account.user.id,
+      name: account.user.name
+    },
+    settings: {
+      dailyLimit: 50,
+      weeklyLimit: 500,
+      monthlyLimit: 5000
+    },
+    info: {
+      no: cardData.no,
+      network: CardNetwork.Visa,
+      status: CardStatus.Active,
+      type: CardType.Debit,
+      cvv: cardData.cvv,
+      expiryDate: new Date(yy, mm),
+      issueDate: new Date(),
+
+      billingAddress: cardData.billingAddress,
+      maxCredit: undefined // for now sha
+    },
+    version: 0
+  });
+};
 
 it('returns a 401 for unauthenticated access', async () => {
   await request(app)
@@ -209,3 +277,5 @@ it('returns a 400 if the provides account are not of valid format ', async () =>
 
 // It depends if the i'm able to use a robust soln
 // it('returns a 400 for invalid and invalid credentials msg on invalid  ');
+
+it('returns a 400 on invalid credentials: billingAddress ', async () => {});
