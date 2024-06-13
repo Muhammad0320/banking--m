@@ -24,6 +24,7 @@ type CardTxnAttrs = {
 };
 
 type CardAttrs = {
+  id: string;
   account: AccountDoc;
   user: User;
   settings: Settings;
