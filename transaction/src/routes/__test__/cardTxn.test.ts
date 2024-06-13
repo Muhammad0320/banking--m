@@ -161,4 +161,36 @@ it('returns a 400 for invalid cardName', async () => {
     .expect(400);
 });
 
-it('returns a 400');
+it('returns a 400 if the provides account are not valid ', async () => {
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .send({
+      no: 1_234_899_183_918_329,
+      cvv: 343,
+      expMonth: 11,
+      expYear: 2026,
+      cardName: 'Lisan al Gaib',
+      billingAddress: 'G50, Balogun Gambari compod',
+      amount: 500,
+      reason: 'Shit',
+      beneficiary: 'shit id',
+      account: new mongoose.Types.ObjectId().toHexString()
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .send({
+      no: 1_234_899_183_918_329,
+      cvv: 343,
+      expMonth: 11,
+      expYear: 2026,
+      cardName: 'Lisan al Gaib',
+      billingAddress: 'G50, Balogun Gambari compod',
+      amount: 500,
+      reason: 'Shit',
+      beneficiary: new mongoose.Types.ObjectId().toHexString(),
+      account: 'shit id'
+    })
+    .expect(400);
+});
