@@ -20,7 +20,7 @@ it('returns a 400 for invalid card number format', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -36,7 +36,7 @@ it('returns a 400 for invalid card number format', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -54,7 +54,7 @@ it('returns a 400 for invalid cvv  format', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -70,7 +70,7 @@ it('returns a 400 for invalid cvv  format', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -88,7 +88,7 @@ it('returns a 400 for invalid expiry date', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -104,7 +104,7 @@ it('returns a 400 for invalid expiry date', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
@@ -120,9 +120,45 @@ it('returns a 400 for invalid expiry date', async () => {
       cardName: 'Lisan Al gaib',
       billingAddress: 'G50, Balogun Gambari compod',
       amount: 500,
-      reasin: 'Shit',
+      reason: 'Shit',
       beneficiary: new mongoose.Types.ObjectId().toHexString(),
       account: new mongoose.Types.ObjectId().toHexString()
     })
     .expect(400);
 });
+
+it('returns a 400 for invalid cardName', async () => {
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .send({
+      no: 1_234_899_183_918_329,
+      cvv: 343,
+      expMonth: 11,
+      expYear: 2026,
+      cardName: 'shit',
+      billingAddress: 'G50, Balogun Gambari compod',
+      amount: 500,
+      reason: 'Shit',
+      beneficiary: new mongoose.Types.ObjectId().toHexString(),
+      account: new mongoose.Types.ObjectId().toHexString()
+    })
+    .expect(400);
+
+  await request(app)
+    .post('/api/v1/txn/deposit')
+    .send({
+      no: 1_234_899_183_918_329,
+      cvv: 343,
+      expMonth: 11,
+      expYear: 2026,
+      cardName: '',
+      billingAddress: 'G50, Balogun Gambari compod',
+      amount: 500,
+      reason: 'Shit',
+      beneficiary: new mongoose.Types.ObjectId().toHexString(),
+      account: new mongoose.Types.ObjectId().toHexString()
+    })
+    .expect(400);
+});
+
+it('returns a 400');
