@@ -40,8 +40,8 @@ export const billingAddressValidator = () =>
   check('billingAddress')
     .trim()
     .notEmpty()
-    .isLength({ min: 20 })
-    .withMessage('Billing address should have a minimum chars of 20');
+    .isLength({ min: 10 })
+    .withMessage('Billing address should have a minimum chars of 10');
 
 export const txnAmountValidator = () =>
   check('amount')
@@ -55,8 +55,8 @@ export const txnReasonValidator = () =>
     .isLength({ min: 4 })
     .withMessage('Txn reason should be more than 4 chars');
 
-export const beneficiaryValidator = () =>
-  check('beneficiary')
+export const accountValidator = (field: string) =>
+  check(field)
     .trim()
     .notEmpty()
     .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
