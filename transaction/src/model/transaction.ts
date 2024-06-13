@@ -13,6 +13,7 @@ type TxnAttrs = {
   type: TxnTypeEnum;
   beneficiary?: AccountDoc;
   reason?: string;
+  mode?: TxnMode;
 };
 
 type TxnDoc = mongoose.Document &
