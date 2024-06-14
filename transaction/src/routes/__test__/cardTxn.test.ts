@@ -453,10 +453,12 @@ it('returns a 404  for unmatched accounts', async () => {
 });
 
 it('returns 400 if beneficiary account is inactive', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
