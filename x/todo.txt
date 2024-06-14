@@ -17,6 +17,10 @@
 
  // 11 june
 
+Cvv and card no hasing should be done in the model
+
+Update how user send jwt data as session: i.e just the user object only and nothing else
+
  Add a middlware that runs before all card handlers, in the app ts, that make sure that the account trying to do that is active,
 
  Add a middleware that also runs after all card handlers, to make sure a card belonging to a user isn't blocked.
@@ -25,10 +29,11 @@ Before blocking a card, account pin must me provided.
 
 Add eventing to card srv route handlers
 
+Tranferring naira to dollar account and vise versa.
+
 Deduct from dad's airtime tomorrow.
 
 will change all card forbidden to a middle that automatically does that.
-
 
 Add The cryto and helper fxns to common.
 
