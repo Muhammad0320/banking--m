@@ -31,7 +31,7 @@ const rootUrl = '/api/v1/txn';
 
 app.use(currentUser);
 
-app.use(invalidAttemptTracker);
+// app.use(invalidAttemptTracker);
 
 app.use(rootUrl, cardTxn);
 app.use(rootUrl, createTxnRouter);
