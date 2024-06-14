@@ -1,4 +1,24 @@
 import {
+  AccountStatus,
+  BadRequest,
+  CardStatus,
+  CryptoManager,
+  Forbidden,
+  NotFound,
+  requestValidator,
+  requireAuth,
+  TxnStatusEnum
+} from '@m0banking/common';
+import express, { Request, Response } from 'express';
+import { TxnMode } from '../enums/TxnModeEnum';
+import { TxnTypeEnum } from '../enums/TxnTypeEnum';
+import { TxnTransferPublisher } from '../events/publisher/TxnTransferPublisher';
+import { Account } from '../model/account';
+import { Card } from '../model/card';
+import { Txn } from '../model/transaction';
+import { natsWrapper } from '../natswrapper';
+import { decrypt } from '../service/crypto';
+import {
   accountValidator,
   billingAddressValidator,
   cardNameValidator,
@@ -9,26 +29,6 @@ import {
   txnAmountValidator,
   txnReasonValidator
 } from '../service/validators';
-import { Card } from '../model/card';
-import { decrypt } from '../service/crypto';
-import express, { Request, Response } from 'express';
-import {
-  AccountStatus,
-  BadRequest,
-  CardStatus,
-  Forbidden,
-  NotFound,
-  requestValidator,
-  requireAuth,
-  TxnStatusEnum,
-  UserRole
-} from '@m0banking/common';
-import { Txn } from '../model/transaction';
-import { TxnTypeEnum } from '../enums/TxnTypeEnum';
-import { TxnMode } from '../enums/TxnModeEnum';
-import { Account } from '../model/account';
-import { TxnTransferPublisher } from '../events/publisher/TxnTransferPublisher';
-import { natsWrapper } from '../natswrapper';
 
 const router = express.Router();
 
@@ -62,29 +62,22 @@ router.post(
       account: senderAccount
     } = req.body;
 
-    const currentCardTest = (await Card.find())
-      .map(card => {
-        const decryptedNo = decrypt(card.info.no);
-
-        const decryptedCvv = decrypt(card.info.cvv);
-
-        return {
-          ...card,
-          info: { ...card.info, no: decryptedNo, cvv: decryptedCvv }
-        };
-      })
-      .find(el => el.info.no === `${cardNumber}`);
-
-    console.log(currentCardTest, 'From the card test');
-
     const currentCard = await Card.findOne({ account: senderAccount });
 
-    if (!currentCard) throw new BadRequest('Invalid card credentials');
+    if (!currentCard)
+      throw new BadRequest('Invalid card credentials: account ');
 
     console.log(currentCard);
 
-    const decryptedCvv = decrypt(currentCard.info.cvv);
-    const decryptedCard = decrypt(currentCard.info.no);
+    const isCorrectCardNo = await CryptoManager.compare(
+      currentCard.info.no,
+      cardNumber
+    );
+
+    const isCorrectCardCvv = await CryptoManager.compare(
+      currentCard.info.cvv,
+      cvv
+    );
 
     const account = await Account.findById(currentCard.account);
 
@@ -97,8 +90,8 @@ router.post(
       currentCard.info.billingAddress !== billingAddress ||
       currentCard.info.expiryDate.getMonth() !== +expMonth - 1 ||
       currentCard.info.expiryDate.getFullYear() !== +expYear ||
-      decryptedCvv !== '' + cvv ||
-      decryptedCard !== '' + cardNumber ||
+      !isCorrectCardNo ||
+      !isCorrectCardCvv ||
       currentCard.user.name !== cardName
     )
       throw new BadRequest('Invalid card credentials');
