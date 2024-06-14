@@ -9,7 +9,8 @@ import {
   AccountType,
   CardNetwork,
   CardStatus,
-  CardType
+  CardType,
+  CryptoManager
 } from '@m0banking/common';
 import { Card } from '../../model/card';
 import { dateFxns } from '../../service/helper';
@@ -487,10 +488,12 @@ it('returns 400 if beneficiary account is inactive', async () => {
 });
 
 it('returns a 400 for expired or inactive card', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
@@ -523,10 +526,12 @@ it('returns a 400 for expired or inactive card', async () => {
 });
 
 it('returns a 400 for insufficient fund', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
@@ -558,10 +563,12 @@ it('returns a 400 for insufficient fund', async () => {
 });
 
 it('returns a 200 when everything is valid', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
