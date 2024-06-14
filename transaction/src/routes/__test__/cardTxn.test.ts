@@ -280,10 +280,12 @@ it('returns a 400 if the provides account are not of valid format ', async () =>
 });
 
 it('returns a 403 if a user tried to transact with another users card', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
@@ -315,10 +317,12 @@ it('returns a 403 if a user tried to transact with another users card', async ()
 });
 
 it('returns a 400 on invalid credentials ', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
@@ -401,10 +405,12 @@ it('returns a 400 on invalid credentials ', async () => {
 });
 
 it('returns a 404  for unmatched accounts', async () => {
-  const {
-    card: { hashed: hashedNo, unhashed: unhashedNo },
-    cvv: { hashed: hashedcvv, unhashed: unhashedcvv }
-  } = hashingWork();
+  const unhashedNo = '1234899183918329';
+  const unhashedcvv = '123';
+
+  const hashedNo = await CryptoManager.hash(unhashedNo);
+
+  const hashedcvv = await CryptoManager.hash(unhashedcvv);
 
   const cardData: cardDataType = {
     no: hashedNo,
