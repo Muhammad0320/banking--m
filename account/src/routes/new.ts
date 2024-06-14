@@ -28,6 +28,8 @@ router.post(
   async (req: Request, res: Response) => {
     const { currency, tier, pin, pinConfirm } = req.body;
 
+    console.log(req.currentUser, 'from the new account ts');
+
     const user = await User.findById(req.currentUser.id);
 
     if (!user) throw new NotFound('user not found');
